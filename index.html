@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LocusQuant — The operating system that runs a hedge fund, agentically</title>
+    <meta name="description"
+        content="LocusQuant is an AI-native hedge fund operating system: multi-agent AI that researches, allocates, executes, and manages a fund end-to-end, with deterministic risk guardrails and a full audit trail.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://locusquant.com/">
+    <meta property="og:title" content="LocusQuant — The operating system that runs a hedge fund, agentically">
+    <meta property="og:description"
+        content="Multi-agent AI that researches, allocates, executes, and manages a fund end-to-end — with deterministic risk guardrails and a full audit trail.">
+    <meta property="og:image" content="https://locusquant.com/dAVb.png">
+    <meta property="og:image:alt" content="LocusQuant — a dAVb product">
+    <meta property="og:site_name" content="LocusQuant">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LocusQuant — an AI-native hedge fund operating system">
+    <meta name="twitter:description"
+        content="Multi-agent AI that researches, allocates, executes, and manages a fund end-to-end — with deterministic risk guardrails and a full audit trail.">
+    <meta name="twitter:image" content="https://locusquant.com/dAVb.png">
+
+    <!-- Favicon generated from the dAVb logo mark -->
+    <link rel="icon" type="image/png" href="dAVb.png">
+    <link rel="apple-touch-icon" href="dAVb.png">
+
+    <!-- Victorian calligraphy wordmark font (Pinyon Script), matching the product theme -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+
+    <style>
+        /* -------------------------------------------
+           THEME VARIABLE CONFIGURATION MATRIX
+           (copied verbatim from the product OS theme)
+           ------------------------------------------- */
+        :root {
+            /* Default Dark Mode Constants */
+            --bg-base: #040608;
+            --bg-radial: radial-gradient(circle at 50% 30%, #151d28 0%, #040608 70%);
+            --bg-card: rgba(11, 17, 22, 0.4);
+            --bg-card-hover: rgba(17, 24, 34, 0.7);
+            --bg-header: rgba(6, 9, 12, 0.85);
+            --bg-form: rgba(11, 17, 22, 0.4);
+            --bg-form-focus: rgba(11, 17, 22, 0.8);
+            --border-ui: rgba(255, 153, 0, 0.3);
+            --border-card: rgba(26, 35, 44, 0.7);
+            --border-card-hover: rgba(255, 153, 0, 0.4);
+            --text-main: #d1d5db;
+            --text-heading-start: #ffffff;
+            --text-heading-end: #a1a1a6;
+            --text-accent: #ff9900;
+            --text-accent-hover: #e65c00;
+            --text-btn-label: #000000;
+            --text-muted: #86868b;
+            --badge-bg: rgba(255, 153, 0, 0.1);
+            --glow-logo: drop-shadow(0px 0px 8px rgba(255, 153, 0, 0.4));
+            --terminal-bg: #06090c;
+            --terminal-border: rgba(255, 153, 0, 0.3);
+
+            /* Text Wipe Gradient Variables (Dark Mode: Orange -> White) */
+            --wipe-start: #ff9900;
+            --wipe-mid: #ff9900;
+            --wipe-end-1: #ffffff;
+            --wipe-end-2: #ffffff;
+
+            --show-dark-logo: block;
+            --show-light-logo: none;
+        }
+
+        [data-theme="light"] {
+            /* Light Mode Constants */
+            --bg-base: #f5f5f7;
+            --bg-radial: radial-gradient(circle at 50% 30%, #ffffff 0%, #f5f5f7 70%);
+            --bg-card: rgba(255, 255, 255, 0.7);
+            --bg-card-hover: rgba(255, 255, 255, 1);
+            --bg-header: rgba(255, 255, 255, 0.8);
+            --bg-form: rgba(255, 255, 255, 0.6);
+            --bg-form-focus: rgba(255, 255, 255, 1);
+
+            --border-ui: rgba(124, 58, 237, 0.3);
+            --border-card: rgba(0, 0, 0, 0.08);
+            --border-card-hover: rgba(59, 130, 246, 0.4);
+            --text-main: #424245;
+            --text-heading-start: #1d1d1f;
+            --text-heading-end: #6e6e73;
+            --text-accent: #7c3aed;
+            --text-accent-hover: #3b82f6;
+            --text-btn-label: #ffffff;
+            --text-muted: #6e6e73;
+            --badge-bg: rgba(124, 58, 237, 0.08);
+            --glow-logo: drop-shadow(0px 4px 12px rgba(124, 58, 237, 0.25));
+            --terminal-bg: #ffffff;
+            --terminal-border: rgba(0, 0, 0, 0.1);
+
+            /* Text Wipe Gradient Variables (Light Mode: Purple/Blue -> Dark Gray) */
+            --wipe-start: #7c3aed;
+            --wipe-mid: #3b82f6;
+            --wipe-end-1: #1d1d1f;
+            --wipe-end-2: #1d1d1f;
+
+            --show-dark-logo: none;
+            --show-light-logo: block;
+        }
+
+        /* Modern Global Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: var(--bg-radial);
+            background-attachment: fixed;
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: transparent;
+        }
+
+        header.scrolled {
+            background-color: var(--bg-header);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-card);
+            padding: 16px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-img-dark {
+            display: var(--show-dark-logo);
+            height: 45px;
+            width: auto;
+            filter: var(--glow-logo);
+        }
+
+        .logo-img-light {
+            display: var(--show-light-logo);
+            height: 45px;
+            width: auto;
+            filter: var(--glow-logo);
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .logo-cursive {
+            font-family: 'Pinyon Script', cursive;
+            font-size: 2.6rem;
+            font-weight: 400;
+            color: var(--text-heading-start);
+            line-height: 0.8;
+            letter-spacing: 1px;
+        }
+
+        .logo-cursive span {
+            color: #ff9900;
+        }
+
+        [data-theme="light"] .logo-cursive span {
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-os {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-heading-start);
+            letter-spacing: -0.02em;
+            text-transform: uppercase;
+        }
+
+        .nav-right-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .terminal-badge {
+            font-size: 0.75rem;
+            border: 1px solid var(--border-ui);
+            color: var(--text-accent);
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            background-color: var(--badge-bg);
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .theme-toggle-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--border-ui);
+            color: var(--text-heading-start);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            padding: 160px 0 90px 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 980px;
+            padding: 0 24px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cinematicReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        @keyframes cinematicReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-eyebrow {
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-accent);
+            margin-bottom: 28px;
+        }
+
+        .hero-eyebrow .cursor::after {
+            content: '█';
+            animation: blink 1s step-start infinite;
+            color: var(--text-accent);
+            margin-left: 4px;
+        }
+
+        /* BULLETPROOF H1 TEXT WIPE ENGINE */
+        h1 {
+            font-size: 4.2rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            line-height: 1.08;
+            margin-bottom: 28px;
+
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            background-image: linear-gradient(to right,
+                    var(--wipe-start) 0%,
+                    var(--wipe-mid) var(--scroll-fill, 0%),
+                    var(--wipe-end-1) var(--scroll-fill, 0%),
+                    var(--wipe-end-2) 100%);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 760px;
+            margin: 0 auto 44px auto;
+            line-height: 1.65;
+        }
+
+        /* CTA */
+        .cta-row {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #ff9900;
+            color: var(--text-btn-label);
+            border: none;
+            padding: 16px 30px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="light"] .cta-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.03);
+            opacity: 0.95;
+            box-shadow: 0 12px 28px rgba(255, 153, 0, 0.18);
+        }
+
+        [data-theme="light"] .cta-btn:hover {
+            box-shadow: 0 12px 28px rgba(124, 58, 237, 0.18);
+        }
+
+        .cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+            border: 1px solid var(--border-ui);
+            background: var(--bg-form);
+            padding: 15px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--text-accent);
+            color: var(--text-heading-start);
+        }
+
+        .cta-secondary .prompt {
+            color: var(--text-accent);
+            font-weight: 800;
+        }
+
+        /* Section scaffolding */
+        section.block {
+            padding: 60px 0;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-accent);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-label .prompt {
+            font-weight: 800;
+        }
+
+        .section-title {
+            font-size: 2.3rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--text-heading-start);
+            line-height: 1.15;
+            margin-bottom: 16px;
+            max-width: 820px;
+        }
+
+        .section-intro {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 760px;
+            margin-bottom: 40px;
+        }
+
+        /* Reveal animations */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Live Terminal */
+        .terminal-wrapper {
+            margin: -20px auto 40px auto;
+            max-width: 900px;
+            background: var(--terminal-bg);
+            border: 1px solid var(--terminal-border);
+            border-radius: 8px;
+            min-height: 340px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            padding: 48px 24px 24px 24px;
+            text-align: left;
+        }
+
+        .terminal-wrapper::before {
+            content: "LOCUS_QUANT // LIVE_AUDIT_TRAIL";
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            font-size: 0.75rem;
+            color: var(--text-accent);
+            opacity: 0.9;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        .terminal-dots {
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            display: flex;
+            gap: 7px;
+        }
+
+        .terminal-dots span {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+            background: var(--text-muted);
+        }
+
+        .terminal-content {
+            font-family: 'SF Mono', Consolas, Menlo, monospace;
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: var(--text-main);
+        }
+
+        .log-time {
+            color: var(--text-muted);
+        }
+
+        .log-agent {
+            color: #3b82f6;
+        }
+
+        .log-warn {
+            color: #ff9900;
+        }
+
+        [data-theme="light"] .log-warn {
+            color: #7c3aed;
+        }
+
+        .log-error {
+            color: #ef4444;
+        }
+
+        .log-success {
+            color: #10b981;
+        }
+
+        .cursor::after {
+            content: '█';
+            animation: blink 1s step-start infinite;
+            color: var(--text-accent);
+            margin-left: 6px;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Pipeline */
+        .pipeline {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pipe-node {
+            flex: 1 1 150px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-left: 2px solid var(--text-accent);
+            border-radius: 6px;
+            padding: 18px 16px;
+            position: relative;
+        }
+
+        [data-theme="light"] .pipe-node {
+            border-left: 2px solid #7c3aed;
+        }
+
+        .pipe-node .pipe-step {
+            font-size: 0.7rem;
+            color: var(--text-accent);
+            letter-spacing: 0.08em;
+            margin-bottom: 8px;
+        }
+
+        .pipe-node .pipe-name {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-heading-start);
+            line-height: 1.35;
+        }
+
+        .pipe-arrow {
+            align-self: center;
+            color: var(--text-accent);
+            font-size: 1.3rem;
+            font-weight: 800;
+            flex: 0 0 auto;
+        }
+
+        .pipe-feedback {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border: 1px dashed var(--border-ui);
+            border-radius: 6px;
+            padding: 12px 16px;
+            background: var(--badge-bg);
+        }
+
+        .pipe-feedback .loop-glyph {
+            color: var(--text-accent);
+            font-weight: 800;
+        }
+
+        /* Feature / swarm / team cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-top: 2px solid var(--text-accent);
+            padding: 34px 30px;
+            border-radius: 8px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="light"] .feature-card {
+            border-top: 2px solid transparent;
+            border-image: linear-gradient(to right, #7c3aed, #3b82f6) 1;
+        }
+
+        .feature-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-card-hover);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card .card-tag {
+            font-size: 0.72rem;
+            color: var(--text-accent);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            color: var(--text-heading-start);
+            margin-bottom: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.93rem;
+            line-height: 1.65;
+        }
+
+        /* Guardrails callout */
+        .guard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .guard-item {
+            background: var(--terminal-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 8px;
+            padding: 28px 26px;
+        }
+
+        .guard-item .guard-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .guard-item .guard-glyph {
+            color: var(--text-accent);
+            font-weight: 800;
+            font-size: 1.05rem;
+        }
+
+        .guard-item h4 {
+            font-size: 1rem;
+            color: var(--text-heading-start);
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+
+        .guard-item p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        .guard-item strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* Today: status list + stack */
+        .today-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 28px;
+        }
+
+        .status-panel,
+        .stack-panel {
+            background: var(--terminal-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 8px;
+            padding: 30px 28px;
+        }
+
+        .panel-caption {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-accent);
+            margin-bottom: 18px;
+        }
+
+        .status-line {
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+            font-family: 'SF Mono', Consolas, Menlo, monospace;
+            font-size: 0.92rem;
+            color: var(--text-main);
+            padding: 7px 0;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .status-line:last-child {
+            border-bottom: none;
+        }
+
+        .status-line .ok {
+            color: #10b981;
+            font-weight: 800;
+        }
+
+        .stack-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stack-badge {
+            font-size: 0.8rem;
+            border: 1px solid var(--border-ui);
+            color: var(--text-accent);
+            padding: 6px 12px;
+            border-radius: 4px;
+            background-color: var(--badge-bg);
+            letter-spacing: 0.02em;
+        }
+
+        .stack-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 18px;
+            line-height: 1.6;
+        }
+
+        /* Road ahead */
+        .road-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-left: 3px solid var(--text-accent);
+            border-radius: 8px;
+            padding: 36px 34px;
+        }
+
+        [data-theme="light"] .road-panel {
+            border-left: 3px solid #7c3aed;
+        }
+
+        .road-panel p {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            line-height: 1.7;
+            max-width: 820px;
+        }
+
+        .road-panel .road-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-accent);
+            margin-bottom: 14px;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 34px;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 8px;
+            padding: 30px 28px;
+        }
+
+        .team-card .team-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--text-heading-start);
+            margin-bottom: 6px;
+        }
+
+        .team-card .team-role {
+            font-size: 0.9rem;
+            color: var(--text-accent);
+            margin-bottom: 12px;
+            letter-spacing: 0.02em;
+        }
+
+        .team-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .contact-line {
+            font-size: 0.98rem;
+            color: var(--text-muted);
+        }
+
+        .contact-line a {
+            color: var(--text-accent);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .contact-line a:hover {
+            text-decoration: underline;
+        }
+
+        .link-inline {
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+            font-size: inherit;
+            color: var(--text-accent);
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .link-inline:hover {
+            color: var(--text-heading-start);
+        }
+
+        /* Footer */
+        .brand-stripe {
+            width: 100%;
+            height: 4px;
+            background: var(--text-accent);
+        }
+
+        [data-theme="light"] .brand-stripe {
+            background: linear-gradient(to right, #7c3aed, #3b82f6);
+        }
+
+        footer {
+            background-color: var(--terminal-bg);
+            padding: 60px 0;
+            border-top: 1px solid var(--border-card);
+        }
+
+        .footer-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-logo-dark {
+            display: var(--show-dark-logo);
+            height: auto;
+            width: auto;
+            max-width: 190px;
+            max-height: 60px;
+            object-fit: contain;
+            align-self: flex-start;
+            border-radius: 6px;
+        }
+
+        .footer-logo-light {
+            display: var(--show-light-logo);
+            height: auto;
+            width: auto;
+            max-width: 190px;
+            max-height: 60px;
+            object-fit: contain;
+            align-self: flex-start;
+            border-radius: 6px;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 420px;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .product-attribution {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .product-attribution span.footer-cursive {
+            font-family: 'Pinyon Script', cursive;
+            color: var(--text-heading-start);
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
+
+        .disclaimer-strong {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        /* Team contact button */
+        .team-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .team-card p {
+            flex: 1;
+        }
+
+        .team-contact-btn,
+        .cta-btn-js {
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .team-contact-btn {
+            align-self: flex-start;
+            margin-top: 18px;
+            background: transparent;
+            color: var(--text-accent);
+            border: 1px solid var(--border-ui);
+            padding: 9px 18px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .team-contact-btn:hover {
+            background: var(--badge-bg);
+            border-color: var(--text-accent);
+            color: var(--text-heading-start);
+            transform: translateY(-2px);
+        }
+
+        /* Contact modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(2, 4, 6, 0.72);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        [data-theme="light"] .modal-overlay {
+            background: rgba(20, 20, 25, 0.45);
+        }
+
+        .modal-overlay.open {
+            display: flex;
+            animation: modalFade 0.25s ease forwards;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-card {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            background: var(--terminal-bg);
+            border: 1px solid var(--terminal-border);
+            border-radius: 10px;
+            padding: 46px 28px 30px 28px;
+            box-shadow: 0 40px 90px rgba(0, 0, 0, 0.45);
+            max-height: calc(100vh - 48px);
+            overflow-y: auto;
+        }
+
+        .modal-card::before {
+            content: "LOCUS_QUANT // SECURE_CHANNEL";
+            position: absolute;
+            top: 15px;
+            left: 22px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-accent);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-family: inherit;
+        }
+
+        .modal-close:hover {
+            color: var(--text-accent);
+        }
+
+        .modal-heading {
+            font-size: 1.35rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: var(--text-heading-start);
+            margin-bottom: 4px;
+        }
+
+        .modal-recipient {
+            font-size: 0.78rem;
+            color: var(--text-accent);
+            margin-bottom: 22px;
+            letter-spacing: 0.03em;
+        }
+
+        .modal-label {
+            display: block;
+            font-size: 0.78rem;
+            color: var(--text-accent);
+            margin: 14px 0 6px 0;
+            letter-spacing: 0.03em;
+        }
+
+        .modal-input {
+            width: 100%;
+            background: var(--bg-form);
+            border: 1px solid var(--border-card);
+            border-radius: 6px;
+            padding: 12px 14px;
+            color: var(--text-heading-start);
+            font-family: inherit;
+            font-size: 0.92rem;
+        }
+
+        .modal-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--text-accent);
+            background: var(--bg-form-focus);
+            box-shadow: 0 0 0 3px var(--badge-bg);
+        }
+
+        .modal-textarea {
+            resize: vertical;
+            min-height: 92px;
+            line-height: 1.5;
+        }
+
+        /* Honeypot — must stay hidden from real users */
+        .modal-honeypot {
+            position: absolute !important;
+            left: -9999px !important;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+        }
+
+        .modal-submit {
+            width: 100%;
+            margin-top: 22px;
+            background-color: #ff9900;
+            color: var(--text-btn-label);
+            border: none;
+            padding: 15px 24px;
+            font-weight: 800;
+            font-size: 0.92rem;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            font-family: inherit;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="light"] .modal-submit {
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+        }
+
+        .modal-submit:hover:not(:disabled) {
+            transform: scale(1.02);
+            opacity: 0.96;
+        }
+
+        .modal-submit:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .modal-status {
+            margin-top: 18px;
+            font-family: 'SF Mono', Consolas, Menlo, monospace;
+            font-size: 0.95rem;
+            min-height: 1.2em;
+        }
+
+        .modal-status.pending {
+            color: var(--text-accent);
+        }
+
+        .modal-status.success {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .modal-status.failure {
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .modal-status-sub {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.6rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .today-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pipe-arrow {
+                transform: rotate(90deg);
+                align-self: center;
+                width: 100%;
+                text-align: center;
+            }
+
+            .pipe-node {
+                flex-basis: 100%;
+            }
+
+            .footer-wrapper {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
+
+            .footer-left {
+                align-items: center;
+                text-align: center;
+            }
+
+            .cta-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="nav-wrapper">
+            <div class="brand-container">
+                <img src="dAVb.png" alt="dAVb dark logo" class="logo-img-dark" onerror="this.style.display='none';">
+                <img src="dAVb-light.png" alt="dAVb light logo" class="logo-img-light"
+                    onerror="this.style.display='none';">
+                <div class="logo-wrapper">
+                    <div class="logo-cursive">Locus<span>Quant</span></div>
+                    <div class="logo-os">OS</div>
+                </div>
+            </div>
+
+            <div class="nav-right-block">
+                <div class="terminal-badge">v1.0.0-PREVIEW</div>
+                <button class="theme-toggle-btn" id="theme-btn">🌓 MODE</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-eyebrow">$ ./locusquant --boot<span class="cursor"></span></div>
+            <h1 id="scroll-title">The operating system that runs<br>a hedge fund — agentically.</h1>
+            <p class="subtitle">Multi-agent AI that researches, allocates, executes, and manages a fund
+                end-to-end — with deterministic risk guardrails and a full audit trail.</p>
+
+            <div class="cta-row">
+                <button type="button" class="cta-btn cta-btn-js" data-modal="both">
+                    Request Access →
+                </button>
+                <button type="button" class="cta-secondary" data-modal="both">
+                    <span class="prompt">$</span> open secure channel
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+
+        <!-- LIVE TERMINAL / BOOT SEQUENCE -->
+        <section class="terminal-wrapper reveal-on-scroll">
+            <div class="terminal-dots"><span></span><span></span><span></span></div>
+            <div class="terminal-content" id="terminal-output"></div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="block reveal-on-scroll" id="how-it-works">
+            <div class="section-label"><span class="prompt">$</span> ./how-it-works</div>
+            <h2 class="section-title">One continuous loop, from market feed to managed capital.</h2>
+            <p class="section-intro">Every stage runs as coordinated agents under a central orchestrator. Outputs
+                flow forward through deterministic gates, and open positions feed back into research as the fund
+                is managed over time.</p>
+
+            <div class="pipeline">
+                <div class="pipe-node"><div class="pipe-step">01</div><div class="pipe-name">Live Market Feed</div></div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-node"><div class="pipe-step">02</div><div class="pipe-name">Thematic Segregation</div></div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-node"><div class="pipe-step">03</div><div class="pipe-name">Research &amp; Stock Selection</div></div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-node"><div class="pipe-step">04</div><div class="pipe-name">Risk &amp; Direction Gates</div></div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-node"><div class="pipe-step">05</div><div class="pipe-name">Execution &amp; Capital Allocation</div></div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-node"><div class="pipe-step">06</div><div class="pipe-name">Continuous Fund Management</div></div>
+            </div>
+            <div class="pipe-feedback">
+                <span class="loop-glyph">⟲ feedback loop:</span>
+                managed positions and realized outcomes flow back into Research &amp; Stock Selection.
+            </div>
+        </section>
+
+        <!-- THREE SWARMS -->
+        <section class="block reveal-on-scroll" id="swarms">
+            <div class="section-label"><span class="prompt">$</span> ./swarms --list</div>
+            <h2 class="section-title">Three coordinated swarms.</h2>
+            <p class="section-intro">Specialized agent groups, each owning a stage of the fund's operation and
+                reporting through the orchestrator.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 01</div>
+                    <h3>Research Swarm</h3>
+                    <p>Enterprise-grade analyst agents working across historical data, market trends, and behavioral
+                        sentiment — grounded in established quantitative methodologies and technical indicators, not
+                        guesswork.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 02</div>
+                    <h3>Execution &amp; Orchestration Swarm</h3>
+                    <p>Capital-deployment strategies for the selected equities, driven by the central orchestrator that
+                        sequences agents and routes every proposal through the risk and direction gates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 03</div>
+                    <h3>Fund Management Engine</h3>
+                    <p>Portfolio-manager agents that keep ledger records and make state-based decisions — continuously
+                        rebalancing from the current as-is book toward the intended to-be allocation for profitability.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST & GUARDRAILS -->
+        <section class="block reveal-on-scroll" id="guardrails">
+            <div class="section-label"><span class="prompt">$</span> ./trust --verify</div>
+            <h2 class="section-title">The model proposes. Deterministic code disposes.</h2>
+            <p class="section-intro">What makes LocusQuant different from a chatbot pointed at a brokerage: the
+                guardrails are code, not prompts — and every decision is on the record.</p>
+
+            <div class="guard-grid">
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">▚</span><h4>Deterministic code gates</h4></div>
+                    <p>Risk boundaries and house-view consistency are enforced by <strong>plain Python gates</strong>,
+                        not by prompt guidance a model can talk its way around. A non-compliant proposal is rejected
+                        before it can execute.</p>
+                </div>
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">▟</span><h4>Append-only audit trail</h4></div>
+                    <p>Every agent output and gate decision streams to an <strong>append-only store</strong>, so each
+                        decision is traceable back to the inputs that produced it — no silent overrides.</p>
+                </div>
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">▞</span><h4>Honest-by-default UI</h4></div>
+                    <p>Degraded desks, missing data, and gate interventions are <strong>surfaced, not hidden</strong>.
+                        The interface shows what actually happened, including when the system overrode the model.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TODAY -->
+        <section class="block reveal-on-scroll" id="today">
+            <div class="section-label"><span class="prompt">$</span> ./status --today</div>
+            <h2 class="section-title">A working prototype, today.</h2>
+            <p class="section-intro">Not a mockup — a running multi-agent system you can watch deliberate,
+                backtest, and audit.</p>
+
+            <div class="today-grid">
+                <div class="status-panel">
+                    <div class="panel-caption">// operational</div>
+                    <div class="status-line"><span class="ok">✓</span> Multi-agent deliberation &mdash; the Boardroom</div>
+                    <div class="status-line"><span class="ok">✓</span> Backtesting on a 252-trading-day basis &mdash; Strategy Lab</div>
+                    <div class="status-line"><span class="ok">✓</span> Portfolio &amp; risk views</div>
+                    <div class="status-line"><span class="ok">✓</span> Full append-only audit log</div>
+                </div>
+                <div class="stack-panel">
+                    <div class="panel-caption">// built on</div>
+                    <div class="stack-badges">
+                        <span class="stack-badge">LangGraph</span>
+                        <span class="stack-badge">Groq-served Llama</span>
+                        <span class="stack-badge">FinBERT</span>
+                        <span class="stack-badge">SEC EDGAR</span>
+                        <span class="stack-badge">FRED</span>
+                    </div>
+                    <p class="stack-note">Orchestrated multi-agent graphs over Groq-served Llama models, with FinBERT
+                        sentiment and grounded market &amp; macro data from SEC EDGAR and FRED.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROAD AHEAD -->
+        <section class="block reveal-on-scroll" id="road-ahead">
+            <div class="section-label"><span class="prompt">$</span> ./roadmap --next</div>
+            <div class="road-panel">
+                <div class="road-tag">// the road ahead</div>
+                <p>A foundational model layered over the operating system — learning from the OS's own operational
+                    history to iteratively improve its strategies over time, so the fund gets sharper the longer it runs.</p>
+            </div>
+        </section>
+
+        <!-- TEAM -->
+        <section class="block reveal-on-scroll" id="team">
+            <div class="section-label"><span class="prompt">$</span> ./team --whoami</div>
+            <h2 class="section-title">Who's building it.</h2>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-name">Divyanshu Bhardwaj</div>
+                    <div class="team-role">Data Science</div>
+                    <p>Data science background across credit-bureau and fintech systems — the quantitative and modeling
+                        core of LocusQuant.</p>
+                    <button type="button" class="team-contact-btn" data-modal="divyanshu">Contact →</button>
+                </div>
+                <div class="team-card">
+                    <div class="team-name">Ayush</div>
+                    <div class="team-role">Enterprise Integration</div>
+                    <p>Enterprise integration background — wiring the operating system into robust, production-grade
+                        infrastructure.</p>
+                    <button type="button" class="team-contact-btn" data-modal="ayush">Contact →</button>
+                </div>
+            </div>
+            <p class="contact-line"><span style="color:var(--text-accent);font-weight:800;">$</span> reach the team
+                through the <button type="button" class="link-inline" data-modal="both">secure contact channel</button>.</p>
+        </section>
+
+    </main>
+
+    <div class="brand-stripe"></div>
+
+    <footer>
+        <div class="container footer-wrapper">
+            <div class="footer-left">
+                <img src="logo.jpeg" alt="dAVb dark wordmark" class="footer-logo-dark" onerror="this.style.display='none';">
+                <img src="logo-light.jpeg" alt="dAVb light wordmark" class="footer-logo-light"
+                    onerror="this.style.display='none';">
+                <p class="footer-meta">&copy; 2026 LocusQuant. <span class="disclaimer-strong">Nothing on this site is
+                        investment advice.</span></p>
+            </div>
+            <div class="footer-right">
+                <p class="product-attribution"><span class="footer-cursive">LocusQuant</span> <span
+                        style="color:var(--text-heading-start); font-weight: 800;">OS</span> is a dAVb product.</p>
+                <p class="footer-meta">Paper-trading preview &middot; no live capital</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Reusable contact modal (recipient set per trigger via data-modal) -->
+    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+            <button type="button" class="modal-close" id="modal-close" aria-label="Close">✕</button>
+            <div class="modal-heading" id="modal-heading">Request Access</div>
+            <div class="modal-recipient" id="modal-recipient"></div>
+            <form id="contact-form" novalidate>
+                <label class="modal-label" for="cf-name">$ name</label>
+                <input class="modal-input" id="cf-name" name="name" type="text" required
+                    autocomplete="name" placeholder="your name">
+
+                <label class="modal-label" for="cf-email">$ email</label>
+                <input class="modal-input" id="cf-email" name="email" type="email" required
+                    autocomplete="email" placeholder="your email address">
+
+                <label class="modal-label" for="cf-message">$ message</label>
+                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
+                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
+
+                <!-- Honeypot: bots fill this; real users never see it -->
+                <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
+                    aria-hidden="true">
+
+                <button type="submit" class="modal-submit" id="modal-submit">Transmit Request →</button>
+                <div class="modal-status" id="modal-status" role="status" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Theme Engine
+        const themeBtn = document.getElementById('theme-btn');
+        const rootElement = document.documentElement;
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = rootElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                rootElement.removeAttribute('data-theme');
+            } else {
+                rootElement.setAttribute('data-theme', 'light');
+            }
+        });
+
+        // Header scroll + hero text-wipe engine
+        const header = document.getElementById('main-header');
+        const scrollTitle = document.getElementById('scroll-title');
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            if (scrollPos > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            const maxScrollDistance = 260;
+            let scrollPercent = (scrollPos / maxScrollDistance) * 100;
+            if (scrollPercent > 100) scrollPercent = 100;
+            if (scrollPercent < 0) scrollPercent = 0;
+            scrollTitle.style.setProperty('--scroll-fill', `${scrollPercent}%`);
+        });
+
+        // Cinematic reveal-on-scroll (boot-sequence style section reveals)
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        const revealOptions = { threshold: 0.12, rootMargin: "0px 0px -50px 0px" };
+        const revealOnScroll = new IntersectionObserver(function (entries, observer) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, revealOptions);
+        revealElements.forEach(el => { revealOnScroll.observe(el); });
+
+        // Terminal typewriter — illustrative replay of a gated deliberation
+        const terminalOutput = document.getElementById('terminal-output');
+        const logLines = [
+            "<span class='log-time'>[boot]</span> [SYS] LocusQuant OS online — initiating multi-agent deliberation...",
+            "<span class='log-time'>[research]</span> <span class='log-agent'>[RESEARCH_SWARM]</span> Desks reporting: technical, fundamental, sentiment, filings, macro.",
+            "<span class='log-time'>[debate]</span> <span class='log-agent'>[BOARDROOM]</span> House view adjudicated from bull/bear deliberation.",
+            "<span class='log-time'>[propose]</span> <span class='log-agent'>[STRATEGY_AGENT]</span> Proposal drafted for the selected equity.",
+            "<span class='log-time'>[gate]</span> [SYS] Routing proposal through deterministic risk + direction gates...",
+            "<span class='log-time'>[gate]</span> <span class='log-warn'>[DIRECTION_GATE]</span> House view inconsistent with proposed direction — intervention raised.",
+            "<span class='log-time'>[gate]</span> <span class='log-error'>[OVERRIDE]</span> Order corrected by hard-coded gate — logged as NO POSITION, not an approved trade.",
+            "<span class='log-time'>[ledger]</span> <span class='log-success'>[AUDIT_LOG]</span> Every desk output + gate decision appended to the immutable trail.",
+            "<span class='log-time'>[idle]</span> [SYS] Awaiting next environment state..."
+        ];
+
+        let currentLine = 0;
+        let animationTriggered = false;
+
+        const terminalObserver = new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting && !animationTriggered) {
+                animationTriggered = true;
+                setTimeout(typeLine, 700);
+            }
+        });
+        terminalObserver.observe(document.querySelector('.terminal-wrapper'));
+
+        function typeLine() {
+            if (currentLine < logLines.length) {
+                terminalOutput.innerHTML = terminalOutput.innerHTML.replace('<span class="cursor"></span>', '');
+                terminalOutput.innerHTML += `<div>${logLines[currentLine]}<span class="cursor"></span></div>`;
+                currentLine++;
+                let typingDelay = Math.floor(Math.random() * 700) + 400;
+                if (currentLine === 7 || currentLine === 8) typingDelay = 200;
+                setTimeout(typeLine, typingDelay);
+            }
+        }
+
+        // ── Contact modal (single reusable component, recipient-parameterized) ──
+        const WEB3FORMS_KEY = "a91d092d-9247-49a5-98f2-77c461eee51d";
+        const RECIPIENTS = {
+            both: { intended_for: "Both founders", tag: "[ACCESS REQUEST]", heading: "Request Access" },
+            divyanshu: { intended_for: "Divyanshu", tag: "[FOR: DIVYANSHU]", heading: "Contact Divyanshu" },
+            ayush: { intended_for: "Ayush", tag: "[FOR: AYUSH]", heading: "Contact Ayush" }
+        };
+
+        const modal = document.getElementById('contact-modal');
+        const modalHeading = document.getElementById('modal-heading');
+        const modalRecipient = document.getElementById('modal-recipient');
+        const contactForm = document.getElementById('contact-form');
+        const modalStatus = document.getElementById('modal-status');
+        const modalSubmit = document.getElementById('modal-submit');
+        let currentRecipient = RECIPIENTS.both;
+
+        function openModal(key) {
+            currentRecipient = RECIPIENTS[key] || RECIPIENTS.both;
+            modalHeading.textContent = currentRecipient.heading;
+            modalRecipient.textContent = "// intended_for: " + currentRecipient.intended_for;
+            contactForm.reset();
+            contactForm.style.display = '';
+            modalStatus.textContent = '';
+            modalStatus.className = 'modal-status';
+            modalSubmit.disabled = false;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('[data-modal]').forEach(function (el) {
+            el.addEventListener('click', function () { openModal(el.getAttribute('data-modal')); });
+        });
+        document.getElementById('modal-close').addEventListener('click', closeModal);
+        modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+        });
+
+        contactForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const fd = new FormData(contactForm);
+            // Honeypot: if the hidden checkbox is set, silently drop (treat as bot).
+            if (fd.get('botcheck')) return;
+
+            const name = (fd.get('name') || '').toString().trim();
+            const email = (fd.get('email') || '').toString().trim();
+            const message = (fd.get('message') || '').toString().trim();
+            if (!name || !email || !message) {
+                modalStatus.className = 'modal-status failure';
+                modalStatus.innerHTML = '$ missing_fields ✕<span class="modal-status-sub">Name, email and message are all required.</span>';
+                return;
+            }
+
+            const payload = {
+                access_key: WEB3FORMS_KEY,
+                subject: "LocusQuant " + currentRecipient.tag + " from " + (name || "anonymous"),
+                name: name,
+                email: email,
+                message: message,
+                intended_for: currentRecipient.intended_for,
+                from_url: window.location.href,
+                botcheck: false
+            };
+
+            modalSubmit.disabled = true;
+            modalStatus.className = 'modal-status pending';
+            modalStatus.textContent = '$ transmitting...';
+
+            try {
+                const res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json().catch(function () { return {}; });
+                if (res.ok && data.success) {
+                    contactForm.style.display = 'none';
+                    modalStatus.className = 'modal-status success';
+                    modalStatus.innerHTML = '$ request_transmitted ✓<span class="modal-status-sub">We\'ll be in touch. You can close this window.</span>';
+                } else {
+                    throw new Error((data && data.message) || 'submit failed');
+                }
+            } catch (err) {
+                modalSubmit.disabled = false;
+                modalStatus.className = 'modal-status failure';
+                modalStatus.innerHTML = '$ transmission_failed ✕<span class="modal-status-sub">Please try again in a moment.</span>';
+            }
+        });
+    </script>
+</body>
+
+</html>
