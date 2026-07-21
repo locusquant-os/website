@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LocusQuant — What's Next | Roadmap</title>
+    <meta name="description"
+        content="The LocusQuant pipeline: six releases from deliberation pipeline to fund-in-a-box. Prediction swarm, execution engine, governance layer, LocusOS.">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://locusquant.com/whats-next.html">
+    <meta property="og:title" content="LocusQuant — What's Next | Roadmap">
+    <meta property="og:description"
+        content="Six releases from deliberation pipeline to fund-in-a-box — prediction swarm, execution engine, governance layer, LocusOS.">
+    <meta property="og:image" content="https://locusquant.com/dAVb.png">
+    <meta property="og:site_name" content="LocusQuant">
+
+    <!-- Favicon generated from the dAVb logo mark -->
+    <link rel="icon" type="image/png" href="dAVb.png">
+    <link rel="apple-touch-icon" href="dAVb.png">
+
+    <!-- Victorian calligraphy wordmark font (Pinyon Script), matching the product theme -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="theme.css">
+
+    <!-- Apply the persisted theme before first paint to avoid a flash of the wrong mode -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('locusquant-theme') === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            } catch (e) { }
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header id="main-header">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-container" style="text-decoration:none;" aria-label="LocusQuant — home">
+                <img src="dAVb.png" alt="dAVb dark logo" class="logo-img-dark" onerror="this.style.display='none';">
+                <img src="dAVb-light.png" alt="dAVb light logo" class="logo-img-light"
+                    onerror="this.style.display='none';">
+                <div class="logo-wrapper">
+                    <div class="logo-cursive">Locus<span>Quant</span></div>
+                    <div class="logo-os">OS</div>
+                </div>
+            </a>
+
+            <div class="nav-right-block">
+                <a href="/whats-next.html" class="nav-link">./whats-next</a>
+                <a href="/" class="terminal-badge" style="text-decoration:none;">v1.0.0-PREVIEW</a>
+                <button class="theme-toggle-btn" id="theme-btn">🌓 MODE</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="wn-header">
+        <div class="container">
+            <div class="section-label"><span class="prompt">$</span> ./locusquant --whats-next</div>
+            <h1>Six releases from pipeline to <em>fund-in-a-box.</em></h1>
+            <p class="wn-sub">What's shipping after v1.0.0-PREVIEW: a prediction swarm scored against reality, a
+                production execution engine, a governance layer, and an operating system where the guardrails live
+                below every agent.</p>
+            <div class="wn-principle">The AI proposes. The code disposes.</div>
+            <p class="wn-back contact-line"><a href="/">$ cd ~ — back to the main page</a></p>
+        </div>
+    </section>
+
+    <main class="container">
+
+        <!-- ROADMAP -->
+        <section class="block" id="roadmap">
+            <div class="section-label"><span class="prompt">$</span> ./roadmap --list</div>
+            <h2 class="section-title">The pipeline.</h2>
+            <p class="section-intro">Each version ships a usable fund. Value first, armor when there's something worth
+                armoring, learning loop once there's history to learn from.</p>
+
+            <div class="wn-timeline">
+
+                <div class="wn-rel now">
+                    <div class="wn-dot"></div>
+                    <div class="wn-ver">v0.5 — in build</div>
+                    <h3>Replatform</h3>
+                    <p>Streamlit retires. A real web platform: browser-based Admin Console with role-based access,
+                        kill switches, and live Boardroom streaming — on an event-driven core with a tamper-evident,
+                        hash-chained audit store.</p>
+                    <div class="stack-badges">
+                        <span class="stack-badge">admin console</span>
+                        <span class="stack-badge">rbac</span>
+                        <span class="stack-badge">kill switches</span>
+                        <span class="stack-badge">hash-chained audit</span>
+                    </div>
+                </div>
+
+                <div class="wn-rel">
+                    <div class="wn-dot"></div>
+                    <div class="wn-ver">v0.6</div>
+                    <h3>Prediction Swarm</h3>
+                    <p>A dedicated forecasting swarm: regime detection, time-series foundation models, and Bayesian
+                        estimators issue probabilistic predictions into a registry — then get scored against realized
+                        data. Calibration decides whose forecasts the fund trusts, and position size shrinks
+                        automatically as uncertainty rises.</p>
+                    <div class="stack-badges">
+                        <span class="stack-badge">forecast registry</span>
+                        <span class="stack-badge">reality scoring</span>
+                        <span class="stack-badge">regime engine</span>
+                        <span class="stack-badge">uncertainty-scaled sizing</span>
+                    </div>
+                </div>
+
+                <div class="wn-rel">
+                    <div class="wn-dot"></div>
+                    <div class="wn-ver">v0.7</div>
+                    <h3>Execution &amp; Breadth</h3>
+                    <p>From one ticker to a screened universe. An ingestion swarm supervises every data feed, an
+                        uncertainty-driven screener decides which names earn a full boardroom, and a production-grade
+                        execution engine works orders — paper first, always through the gates.</p>
+                    <div class="stack-badges">
+                        <span class="stack-badge">execution engine</span>
+                        <span class="stack-badge">universe screener</span>
+                        <span class="stack-badge">ingestion swarm</span>
+                        <span class="stack-badge">live orchestration map</span>
+                    </div>
+                </div>
+
+                <div class="wn-rel">
+                    <div class="wn-dot"></div>
+                    <div class="wn-ver">v0.8</div>
+                    <h3>Governance Layer</h3>
+                    <p>A compliance swarm audits every agent against the rulebook and files findings with citations.
+                        Humans steer any agent through an instruction console — and a dedicated risk agent scores every
+                        instruction against fund strategy before it dispatches. An analytics agent can surface any
+                        dataset any agent ever used.</p>
+                    <div class="stack-badges">
+                        <span class="stack-badge">compliance swarm</span>
+                        <span class="stack-badge">instruction console</span>
+                        <span class="stack-badge">instruction risk scoring</span>
+                        <span class="stack-badge">analytics agent</span>
+                    </div>
+                </div>
+
+                <div class="wn-rel">
+                    <div class="wn-dot"></div>
+                    <div class="wn-ver">v0.9</div>
+                    <h3>LocusOS</h3>
+                    <p>The fund becomes a machine. An immutable, reproducible operating-system image runs every agent
+                        in its own micro-VM with kernel-level network and policy enforcement. Validated "golden rules"
+                        compile into an OS-level policy kernel that no agent — however clever, however compromised —
+                        can route around.</p>
+                    <div class="stack-badges">
+                        <span class="stack-badge">immutable os image</span>
+                        <span class="stack-badge">per-agent micro-vms</span>
+                        <span class="stack-badge">os-level policy kernel</span>
+                        <span class="stack-badge">gpu-ready runtime</span>
+                    </div>
+                </div>
+
+                <div class="wn-rel">
+                    <div class="wn-dot"></div>
+                    <div class="wn-ver">v1.0</div>
+                    <h3>Fund-in-a-Box</h3>
+                    <p>The learning loop closes: a neural engine trains on the fund's own audit history to tune strategy
+                        weights, and a meta-research agent runs sandboxed experiments on the agents themselves.
+                        Multi-book support. Install the image, get a hedge fund.</p>
+                    <div class="stack-badges">
+                        <span class="stack-badge">neural engine</span>
+                        <span class="stack-badge">meta-research agent</span>
+                        <span class="stack-badge">golden-rule lifecycle</span>
+                        <span class="stack-badge">multi-book</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SWARMS -->
+        <section class="block" id="swarms">
+            <div class="section-label"><span class="prompt">$</span> ./swarms --future</div>
+            <h2 class="section-title">Three swarms become six.</h2>
+            <p class="section-intro">Specialists, not a monolith. Every swarm evolves — and every swarm is watched.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 01</div>
+                    <h3>Ingestion</h3>
+                    <p>Agent-supervised data pipelines that detect drift, gaps, and staleness — filing incidents instead
+                        of failing silently.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 02</div>
+                    <h3>Prediction</h3>
+                    <p>Probabilistic forecasts with credible intervals, scored daily against realized data. Skill earns
+                        trust; decay loses it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 03</div>
+                    <h3>Research</h3>
+                    <p>Desks, debates, and adjudicated house views — consuming predictions weighted by the predictor's
+                        live track record.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 04</div>
+                    <h3>Execution</h3>
+                    <p>Deliberately not an LLM: a deterministic engine that only accepts tickets that clear every gate
+                        and every policy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">// swarm 05</div>
+                    <h3>Compliance</h3>
+                    <p>Continuous rule checks on every action, plus auditors that replay agent histories against
+                        regulation — with citations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">// meta</div>
+                    <h3>Neural Engine &amp; Meta-Research</h3>
+                    <p>The audit trail becomes training data. A research agent studies the agents themselves and A/B
+                        tests improvements in sandboxes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HUMANS IN THE LOOP -->
+        <section class="block" id="humans">
+            <div class="section-label"><span class="prompt">$</span> ./humans --in-the-loop</div>
+            <h2 class="section-title">Where humans stay.</h2>
+            <p class="section-intro">We automate everything a fund does that machines do better — and we're explicit
+                about what they don't.</p>
+
+            <table class="wn-table">
+                <tr>
+                    <th>function</th>
+                    <th>who runs it</th>
+                </tr>
+                <tr>
+                    <td>Research, forecasting, backtesting, order flow, monitoring</td>
+                    <td class="wn-auto">AUTOMATED — gate-checked</td>
+                </tr>
+                <tr>
+                    <td>Reconciliation &amp; NAV</td>
+                    <td class="wn-auto">AUTOMATED</td>
+                </tr>
+                <tr class="wn-row-human">
+                    <td>Exception resolution</td>
+                    <td class="wn-human">HUMAN</td>
+                </tr>
+                <tr class="wn-row-human">
+                    <td>Compliance judgment &amp; regulatory sign-off</td>
+                    <td class="wn-human">HUMAN</td>
+                </tr>
+                <tr class="wn-row-human">
+                    <td>Capital allocation across strategies</td>
+                    <td class="wn-human">HUMAN — machine proposes</td>
+                </tr>
+                <tr class="wn-row-human">
+                    <td>Crisis discretion &amp; kill switches</td>
+                    <td class="wn-human">HUMAN — by design</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- FOLLOW THE BUILD -->
+        <section class="block" id="follow">
+            <div class="section-label"><span class="prompt">$</span> open secure channel</div>
+            <h2 class="section-title">Follow the build.</h2>
+            <p class="section-intro">Paper-trading preview today; each release above lands with a recorded, auditable
+                run.</p>
+            <button type="button" class="cta-btn cta-btn-js" data-modal="both">Request Access →</button>
+        </section>
+
+    </main>
+
+    <div class="brand-stripe"></div>
+
+    <footer>
+        <div class="container footer-wrapper">
+            <div class="footer-left">
+                <img src="logo.jpeg" alt="dAVb dark wordmark" class="footer-logo-dark" onerror="this.style.display='none';">
+                <img src="logo-light.jpeg" alt="dAVb light wordmark" class="footer-logo-light"
+                    onerror="this.style.display='none';">
+                <p class="footer-meta">&copy; 2026 LocusQuant.</p>
+            </div>
+            <div class="footer-right">
+                <p class="product-attribution"><span class="footer-cursive">LocusQuant</span> <span
+                        style="color:var(--text-heading-start); font-weight: 800;">OS</span> is a dAVb product.</p>
+                <p class="footer-meta">Paper-trading preview &middot; no live capital</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Reusable contact modal (recipient set per trigger via data-modal) -->
+    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+            <button type="button" class="modal-close" id="modal-close" aria-label="Close">✕</button>
+            <div class="modal-heading" id="modal-heading">Request Access</div>
+            <div class="modal-recipient" id="modal-recipient"></div>
+            <form id="contact-form" novalidate>
+                <label class="modal-label" for="cf-name">$ name</label>
+                <input class="modal-input" id="cf-name" name="name" type="text" required
+                    autocomplete="name" placeholder="your name">
+
+                <label class="modal-label" for="cf-email">$ email</label>
+                <input class="modal-input" id="cf-email" name="email" type="email" required
+                    autocomplete="email" placeholder="your email address">
+
+                <label class="modal-label" for="cf-message">$ message</label>
+                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
+                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
+
+                <!-- Honeypot: bots fill this; real users never see it -->
+                <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
+                    aria-hidden="true">
+
+                <button type="submit" class="modal-submit" id="modal-submit">Transmit Request →</button>
+                <div class="modal-status" id="modal-status" role="status" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Shared: theme-toggle persistence + contact modal -->
+    <script src="app.js"></script>
+
+    <!-- Opaque, blurred nav once scrolled (mirrors the main page header behaviour) -->
+    <script>
+        (function () {
+            var header = document.getElementById('main-header');
+            if (!header) return;
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
