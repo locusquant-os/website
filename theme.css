@@ -10,7 +10,8 @@
     --bg-sunken: #ece6d9;
     --ink: #17140d;
     --ink-soft: #4c4840;
-    --ink-mute: #8b867a;
+    /* WCAG AA: ~5.2:1 on the cream bg for small muted text (eyebrows, labels) */
+    --ink-mute: #666052;
     --line: rgba(23, 20, 13, 0.12);
     --line-soft: rgba(23, 20, 13, 0.06);
     --accent: #17140d;
@@ -47,6 +48,20 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+}
+
+/* Subtle paper grain over the whole surface — tactile, "expensive" texture.
+   Very low opacity so it never affects text contrast. Non-interactive. */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 140px 140px;
 }
 
 .container {
@@ -194,10 +209,11 @@ header.scrolled {
     -webkit-font-smoothing: antialiased;
 }
 
-/* On load: an empty full-height stage — only the wordmark floats over it. */
+/* On load: an empty stage — only the wordmark floats over it. Slightly under
+   full-height so the first content payoff arrives a touch sooner on scroll. */
 .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 88vh;
 }
 
 /* Subtle scroll affordance, fades out as you begin scrolling */
@@ -565,6 +581,36 @@ section.block {
     line-height: 1.6;
 }
 
+/* Featured (wide) card — breaks the uniform grid into an asymmetric lead */
+.feature-card.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 0.85fr 1.25fr;
+    gap: 30px;
+    align-items: center;
+    background: var(--bg-sunken);
+}
+
+.feature-card.featured h3 {
+    font-size: 1.45rem;
+    margin-bottom: 4px;
+}
+
+/* Small "New" pill to flag the v2 additions */
+.badge-new {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bg-elevated);
+    background: var(--ink);
+    padding: 3px 8px;
+    border-radius: 999px;
+    vertical-align: middle;
+}
+
 .feature-card strong,
 .guard-item strong {
     color: var(--ink);
@@ -867,31 +913,30 @@ footer {
     user-select: none;
 }
 
+/* Meta row lives OUTSIDE the gradient box (on solid cream) so its text always
+   meets contrast — no small text sits on the animated gradient. */
 .footer-meta-row {
-    position: relative;
-    z-index: 1;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 26px;
-    padding-top: 22px;
-    border-top: 1px solid var(--line-soft);
+    margin-top: 22px;
+    padding: 0 6px;
 }
 
 .footer-meta {
-    font-size: 0.82rem;
-    color: var(--ink-mute);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
 }
 
 .footer-meta a {
-    color: var(--ink-soft);
-    text-decoration: none;
-    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 .footer-meta a:hover {
-    color: var(--ink);
+    color: var(--ink-soft);
 }
 
 /* ------------------------------------------------------------
@@ -1262,6 +1307,11 @@ footer {
         padding: 36px 0;
     }
 
+    .feature-card.featured {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
     .statement {
         padding: 64px 24px;
     }
@@ -1333,20 +1383,12 @@ footer {
         scroll-behavior: auto !important;
     }
 
-    .scroll-cue::before {
-        animation: none;
-    }
-
-    /* Signature brand motion is kept on purpose, even under reduced motion */
-    .footer-liquid::before {
-        animation: liquidA 12s ease-in-out infinite alternate !important;
-    }
-
-    .footer-liquid::after {
-        animation: liquidB 9s ease-in-out infinite alternate !important;
-    }
-
+    /* Respect the preference: the gradient keeps its colours but stops moving;
+       the eye-catch word holds a static slice of its gradient. */
+    .scroll-cue::before,
+    .footer-liquid::before,
+    .footer-liquid::after,
     .grad-word {
-        animation: gradWord 18s ease-in-out infinite alternate !important;
+        animation: none !important;
     }
 }
