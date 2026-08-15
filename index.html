@@ -380,6 +380,11 @@
             wm.style.fontSize = (bigPx + (smallPx - bigPx) * e).toFixed(1) + 'px';
             wm.style.top = (topBig + (topSmall - topBig) * e).toFixed(1) + 'px';
 
+            // Horizontal dock: centred on desktop; on mobile it slides from centre
+            // to the left as it docks, so the LQ monogram clears the CTA button.
+            var leftPct = mobile ? (50 + (14 - 50) * e) : 50;
+            wm.style.left = leftPct + '%';
+
             // Full name on load; collapse to "LQ" on mobile once docking is underway
             var desired = (mobile && p > 0.55) ? 'LQ' : 'LocusQuant';
             if (wm.textContent !== desired) wm.textContent = desired;
