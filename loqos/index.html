@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LoQOS — the agentic operating system beneath LocusQuant</title>
+    <meta name="description"
+        content="LoQOS is the operating-system layer beneath LocusQuant: an immutable image that runs every agent in its own micro-VM under a policy kernel no agent can route around. Mandate and budget envelopes enforced at the OS level.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://locusquant.com/loqos/">
+    <meta property="og:title" content="LoQOS — the agentic operating system beneath LocusQuant">
+    <meta property="og:description"
+        content="An immutable OS that runs every agent in its own micro-VM under a policy kernel no agent can route around.">
+    <meta property="og:site_name" content="LocusQuant">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/theme.css">
+</head>
+
+<body>
+
+    <header id="main-header" class="scrolled">
+        <div class="nav-wrapper">
+            <a href="/" class="nav-brand" aria-label="LocusQuant — home"><span class="brand-full">LocusQuant</span><span class="brand-short">LQ</span></a>
+            <nav class="nav-links">
+                <a href="/loqos/" class="nav-link">LoQOS</a>
+                <a href="/whats-next/" class="nav-link">What's Next</a>
+                <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="subpage-hero">
+        <div class="eyebrow">The operating system</div>
+        <h1><span class="loqos-mark" style="font-size:1.15em;">LoQOS</span> — where the guardrails live
+            <em>below every agent.</em></h1>
+        <p class="subpage-sub">LoQOS is the runtime beneath LocusQuant: an immutable, reproducible operating-system
+            image that runs every agent in its own micro-VM. Validated rules and human-signed mandates compile into a
+            policy kernel no agent — however clever, however compromised — can route around.</p>
+        <a href="/" class="back-link">← Back to the main page</a>
+    </section>
+
+    <main>
+
+        <!-- WHY AN OS -->
+        <section class="block" id="why">
+            <div class="eyebrow">Why an OS</div>
+            <h2 class="section-title">Not policy an agent obeys — physics it cannot break.</h2>
+            <p class="section-intro">Prompt-level guardrails are guidance a model can talk its way around. LoQOS moves
+                the guardrails below the agents entirely: what an agent may touch, spend, or reach is enforced by the
+                operating system, so an out-of-bounds action isn't forbidden — it's impossible.</p>
+
+            <div class="spec-grid">
+                <div class="spec-card">
+                    <h4>Immutable image</h4>
+                    <p>A reproducible OS image built on NixOS — the same fund, byte-for-byte, every time it boots. No
+                        drift, no snowflake servers, a clean audit of exactly what is running.</p>
+                </div>
+                <div class="spec-card">
+                    <h4>Per-agent micro-VMs</h4>
+                    <p>Every agent runs isolated in its own Firecracker micro-VM. A compromised or misbehaving agent is
+                        contained to its own sandbox — it cannot reach the rest of the fund.</p>
+                </div>
+                <div class="spec-card">
+                    <h4>OS-level policy kernel</h4>
+                    <p>Validated "golden rules" compile to an OPA policy layer that adjudicates every tool call, file
+                        write and spend — the single choke point no agent can bypass.</p>
+                </div>
+                <div class="spec-card">
+                    <h4>Kernel-level egress</h4>
+                    <p>eBPF network rules physically constrain what each VM can reach. An experiment on-path can work; the
+                        same experiment off-path simply has nowhere to go.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ENVELOPES -->
+        <section class="block" id="envelopes">
+            <div class="eyebrow">Mandate &amp; budget envelopes</div>
+            <h2 class="section-title">Humans approve the envelope once. Agents are free inside it.</h2>
+            <p class="section-intro">Every autonomous campaign — research or self-improvement — runs strictly inside a
+                human-signed <strong>Mandate</strong>: its objective, the exact files it may touch, its budget in
+                tokens, dollars and wall-clock, its legal scope, and what earns promotion to human review.</p>
+
+            <div class="guard-grid">
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Compiled two ways</h4></div>
+                    <p>A mandate compiles to <strong>OPA policy at the control layer</strong> (denying any tool call,
+                        file write or spend outside the envelope) and to <strong>eBPF egress rules at the network
+                        layer</strong> (so the VM physically cannot reach anything off-path).</p>
+                </div>
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Autonomy inside, hard-stop outside</h4></div>
+                    <p>Within the envelope the agent has full autonomy — no per-step approvals. Budget exhaustion
+                        hard-stops the run and returns the best artifact plus unresolved issues; it never hides a partial
+                        failure.</p>
+                </div>
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Budget envelopes</h4></div>
+                    <p>The Budget Governor enforces spend caps with priority-class shedding that always exempts safety
+                        spend — so cost control can never quietly disable the fund's own guardrails.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STACK -->
+        <section class="block" id="stack">
+            <div class="eyebrow">The stack</div>
+            <h2 class="section-title">Deliberately boring, deliberately layered.</h2>
+            <p class="section-intro">No kernel fork. LoQOS is assembled from proven components, each doing one job, so
+                the security story is legible to an examiner and to us.</p>
+
+            <div class="today-grid">
+                <div class="stack-panel">
+                    <div class="panel-caption">Runtime</div>
+                    <div class="stack-badges">
+                        <span class="stack-badge">NixOS</span>
+                        <span class="stack-badge">Firecracker</span>
+                        <span class="stack-badge">OPA</span>
+                        <span class="stack-badge">eBPF</span>
+                    </div>
+                    <p class="stack-note">An immutable image, per-agent micro-VMs, a policy kernel, and kernel-level
+                        network enforcement — the four layers that make the envelope real.</p>
+                </div>
+                <div class="stack-panel">
+                    <div class="panel-caption">Enforced at the OS</div>
+                    <div class="status-line"><span class="ok">✓</span> No self-modification outside an approved mandate</div>
+                    <div class="status-line"><span class="ok">✓</span> No spend outside an approved budget envelope</div>
+                    <div class="status-line"><span class="ok">✓</span> No network path an agent's mandate didn't grant</div>
+                    <div class="status-line"><span class="ok">✓</span> Every action append-only and hash-chained</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROADMAP POINTER -->
+        <section class="block" id="when">
+            <div class="eyebrow">When it ships</div>
+            <h2 class="section-title">LoQOS lands at v0.9, with the Foundry.</h2>
+            <p class="section-intro">The platform is designed now and hardened over the roadmap: policy and mandate
+                consoles arrive at v0.8, and the OS image itself — with self-improvement running inside it — at v0.9.</p>
+            <a href="/whats-next/" class="btn btn-ghost">See the full roadmap →</a>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-liquid">
+            <span class="footer-wordmark"><span class="brand-full">LocusQuant</span><span class="brand-short">LQ</span></span>
+            <div class="footer-meta-row">
+                <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
+                <p class="footer-meta">Paper-trading preview · no live capital ·
+                    <a href="/whats-next/">What's Next</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Reusable contact modal -->
+    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+            <button type="button" class="modal-close" id="modal-close" aria-label="Close">✕</button>
+            <div class="modal-heading" id="modal-heading">Request Access</div>
+            <div class="modal-recipient" id="modal-recipient"></div>
+            <form id="contact-form" novalidate>
+                <label class="modal-label" for="cf-name">Name</label>
+                <input class="modal-input" id="cf-name" name="name" type="text" required
+                    autocomplete="name" placeholder="your name">
+
+                <label class="modal-label" for="cf-email">Email</label>
+                <input class="modal-input" id="cf-email" name="email" type="email" required
+                    autocomplete="email" placeholder="your email address">
+
+                <label class="modal-label" for="cf-message">Message</label>
+                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
+                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
+
+                <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
+                    aria-hidden="true">
+
+                <button type="submit" class="modal-submit" id="modal-submit">Send request →</button>
+                <div class="modal-status" id="modal-status" role="status" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/app.js"></script>
+</body>
+
+</html>

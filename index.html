@@ -7,203 +7,218 @@
 
     <title>LocusQuant — The operating system that runs a hedge fund, agentically</title>
     <meta name="description"
-        content="LocusQuant is an AI-native hedge fund operating system: multi-agent AI that researches, allocates, executes, and manages a fund end-to-end, with deterministic risk guardrails and a full audit trail.">
+        content="LocusQuant is an AI-native hedge fund operating system: multi-agent AI that researches, allocates, executes, and stewards a fund end-to-end, with deterministic risk guardrails and a full audit trail.">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://locusquant.com/">
     <meta property="og:title" content="LocusQuant — The operating system that runs a hedge fund, agentically">
     <meta property="og:description"
-        content="Multi-agent AI that researches, allocates, executes, and manages a fund end-to-end — with deterministic risk guardrails and a full audit trail.">
-    <meta property="og:image" content="https://locusquant.com/dAVb.png">
-    <meta property="og:image:alt" content="LocusQuant — a dAVb product">
+        content="Multi-agent AI that researches, allocates, executes, and stewards a fund end-to-end — with deterministic risk guardrails and a full audit trail.">
     <meta property="og:site_name" content="LocusQuant">
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="LocusQuant — an AI-native hedge fund operating system">
     <meta name="twitter:description"
-        content="Multi-agent AI that researches, allocates, executes, and manages a fund end-to-end — with deterministic risk guardrails and a full audit trail.">
-    <meta name="twitter:image" content="https://locusquant.com/dAVb.png">
+        content="Multi-agent AI that researches, allocates, executes, and stewards a fund end-to-end.">
 
-    <!-- Favicon generated from the dAVb logo mark -->
-    <link rel="icon" type="image/png" href="dAVb.png">
-    <link rel="apple-touch-icon" href="dAVb.png">
-
-    <!-- Victorian calligraphy wordmark font (Pinyon Script), matching the product theme -->
+    <!-- Blackletter wordmark font (UnifrakturCook), used only for the LocusQuant mark -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="theme.css">
-
-    <!-- Apply the persisted theme before first paint to avoid a flash of the wrong mode -->
-    <script>
-        (function () {
-            try {
-                if (localStorage.getItem('locusquant-theme') === 'light') {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                }
-            } catch (e) { }
-        })();
-    </script>
 </head>
 
 <body>
 
-    <header id="main-header">
-        <div class="nav-wrapper">
-            <a href="/" class="brand-container" style="text-decoration:none;" aria-label="LocusQuant — home">
-                <img src="dAVb.png" alt="dAVb dark logo" class="logo-img-dark" onerror="this.style.display='none';">
-                <img src="dAVb-light.png" alt="dAVb light logo" class="logo-img-light"
-                    onerror="this.style.display='none';">
-                <div class="logo-wrapper">
-                    <div class="logo-cursive">Locus<span>Quant</span></div>
-                    <div class="logo-os">OS</div>
-                </div>
-            </a>
+    <!-- Animated wordmark: large on load, docks to top-centre on scroll (JS-driven) -->
+    <a href="/" class="brand-wordmark" id="brand-wm" aria-label="LocusQuant — home">LocusQuant</a>
 
-            <div class="nav-right-block">
-                <a href="/whats-next.html" class="nav-link">./whats-next</a>
-                <div class="terminal-badge">v1.0.0-PREVIEW</div>
-                <button class="theme-toggle-btn" id="theme-btn">🌓 MODE</button>
-            </div>
+    <header id="main-header" class="nav-hidden">
+        <div class="nav-wrapper">
+            <nav class="nav-links">
+                <a href="/loqos/" class="nav-link">LoQOS</a>
+                <a href="/whats-next/" class="nav-link">What's Next</a>
+                <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
+            </nav>
         </div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-eyebrow">$ ./locusquant --boot<span class="cursor"></span></div>
-            <h1 id="scroll-title">The operating system that runs<br>a hedge fund — agentically.</h1>
-            <p class="subtitle">Multi-agent AI that researches, forecasts, and trades — governed by deterministic
-                code gates, fully auditable, and proven against real outcomes before a dollar is at risk.</p>
+    <!-- HERO: on load, only the wordmark is shown over an empty stage -->
+    <section class="hero"></section>
+    <div class="scroll-cue" id="scroll-cue" aria-hidden="true"></div>
 
+    <main>
+
+        <!-- INTRO (revealed on scroll, once the wordmark has docked) -->
+        <section class="block lead reveal-on-scroll">
+            <div class="eyebrow">AI-native hedge-fund operating system</div>
+            <h1>The operating system that runs a hedge fund — <span class="grad-word">agentically</span>.</h1>
+            <p class="subtitle">Multi-agent AI that researches, forecasts, and trades — governed by deterministic code
+                gates, fully auditable, and proven against real outcomes before a dollar is at risk.</p>
             <div class="cta-row">
-                <button type="button" class="cta-btn cta-btn-js" data-modal="both">
-                    Request Access →
-                </button>
+                <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                <a href="/loqos/" class="btn btn-ghost">Explore LoQOS →</a>
             </div>
-        </div>
-    </section>
-
-    <main class="container">
-
-        <!-- LIVE TERMINAL / BOOT SEQUENCE -->
-        <section class="terminal-wrapper reveal-on-scroll">
-            <div class="terminal-dots"><span></span><span></span><span></span></div>
-            <div class="terminal-content" id="terminal-output"></div>
         </section>
 
         <!-- HOW IT WORKS -->
         <section class="block reveal-on-scroll" id="how-it-works">
-            <div class="section-label"><span class="prompt">$</span> ./how-it-works</div>
+            <div class="eyebrow">How it works</div>
             <h2 class="section-title">One continuous loop, from market feed to managed capital.</h2>
-            <p class="section-intro">Every stage runs as coordinated agents under a central orchestrator. Outputs
-                flow forward through deterministic gates, and open positions feed back into research as the fund
-                is managed over time.</p>
+            <p class="section-intro">Every stage runs as coordinated agents under a central orchestrator. Outputs flow
+                forward through deterministic gates, and open positions feed back into research as the fund is managed
+                over time.</p>
 
             <div class="pipeline">
                 <div class="pipe-node"><div class="pipe-step">01</div><div class="pipe-name">Live Market Feed</div></div>
                 <div class="pipe-arrow">→</div>
                 <div class="pipe-node"><div class="pipe-step">02</div><div class="pipe-name">Thematic Segregation</div></div>
                 <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">03</div><div class="pipe-name">Research &amp; Stock Selection</div></div>
+                <div class="pipe-node"><div class="pipe-step">03</div><div class="pipe-name">Research &amp; Selection</div></div>
                 <div class="pipe-arrow">→</div>
                 <div class="pipe-node"><div class="pipe-step">04</div><div class="pipe-name">Risk &amp; Direction Gates</div></div>
                 <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">05</div><div class="pipe-name">Execution &amp; Capital Allocation</div></div>
+                <div class="pipe-node"><div class="pipe-step">05</div><div class="pipe-name">Execution &amp; Allocation</div></div>
                 <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">06</div><div class="pipe-name">Continuous Fund Management</div></div>
+                <div class="pipe-node"><div class="pipe-step">06</div><div class="pipe-name">Continuous Stewardship</div></div>
             </div>
             <div class="pipe-feedback">
-                <span class="loop-glyph">⟲ feedback loop:</span>
-                managed positions and realized outcomes flow back into Research &amp; Stock Selection.
+                <span class="loop-glyph">⟲ feedback loop</span>
+                managed positions and realized outcomes flow back into Research &amp; Selection.
             </div>
         </section>
 
-        <!-- THREE SWARMS -->
+        <!-- SEVEN SWARMS -->
         <section class="block reveal-on-scroll" id="swarms">
-            <div class="section-label"><span class="prompt">$</span> ./swarms --list</div>
-            <h2 class="section-title">Three coordinated swarms.</h2>
-            <p class="section-intro">Specialized agent groups, each owning a stage of the fund's operation and
-                reporting through the orchestrator.</p>
+            <div class="eyebrow">Architecture</div>
+            <h2 class="section-title">Seven coordinated swarms, one meta layer.</h2>
+            <p class="section-intro">Specialized agent groups, each owning a stage of the fund's operation. Every swarm
+                is a framework of typed capability slots — agents plug in through a signed manifest, so the platform's
+                governance is permanent and the agents inside it are swappable.</p>
 
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="card-tag">// swarm 01</div>
-                    <h3>Research Swarm</h3>
-                    <p>Enterprise-grade analyst agents working across historical data, market trends, and behavioral
-                        sentiment — grounded in established quantitative methodologies and technical indicators, not
-                        guesswork.</p>
+                    <div class="card-tag">Swarm 01</div>
+                    <h3>Ingestion</h3>
+                    <p>Agent-supervised data pipelines that file incidents instead of failing silently — feeding
+                        search-interest, options-chain and futures-basis data for behavioral and timing signals.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="card-tag">// swarm 02</div>
-                    <h3>Execution &amp; Orchestration Swarm</h3>
-                    <p>Capital-deployment strategies for the selected equities, driven by the central orchestrator that
-                        sequences agents and routes every proposal through the risk and direction gates.</p>
+                    <div class="card-tag">Swarm 02</div>
+                    <h3>Prediction</h3>
+                    <p>A probability-weighted market model plus a time-series foundation-model ensemble, and a
+                        <strong>Behavioral Desk</strong> — attention, prospect-theory and extrapolation signals scored on
+                        the same reality-checked discipline.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="card-tag">// swarm 03</div>
-                    <h3>Fund Management Engine</h3>
-                    <p>Portfolio-manager agents that keep ledger records and make state-based decisions — continuously
-                        rebalancing from the current as-is book toward the intended to-be allocation for profitability.</p>
+                    <div class="card-tag">Swarm 03</div>
+                    <h3>Research</h3>
+                    <p>Desks debate into an adjudicated house view — grounded in a shared <strong>knowledge graph</strong>
+                        and policed by deterministic <strong>bias gates</strong> that catch herding and overconfidence in
+                        our own agents.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Swarm 04</div>
+                    <h3>Execution</h3>
+                    <p>Deliberately not an LLM — a deterministic engine with a <strong>timing overlay</strong>: trading
+                        windows, calendar-risk days, participation caps and order-to-trade hygiene enforced as policy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Swarm 05 · new</div>
+                    <h3>Stewardship</h3>
+                    <p>The post-purchase layer: <strong>living theses</strong> re-underwritten on cadence, deterministic
+                        exit discipline through the same gates as entries, a hedging module and a drawdown governor.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Swarm 06</div>
+                    <h3>Compliance</h3>
+                    <p>OPA rules plus LLM auditors — running <strong>manipulation-pattern detectors</strong> on our own
+                        order flow as examiner-ready proof of what we don't do.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Meta layer</div>
+                    <h3>Neural Engine, Foundry &amp; Bursar</h3>
+                    <p>Meta-research and analytics agents, plus <strong>The Foundry</strong> (governed self-improvement)
+                        and <strong>the Bursar</strong>, which meters every dollar into net-of-cost P&amp;L under hard
+                        budget envelopes.</p>
                 </div>
             </div>
         </section>
 
-        <!-- TRUST & GUARDRAILS -->
-        <section class="block reveal-on-scroll" id="guardrails">
-            <div class="section-label"><span class="prompt">$</span> ./trust --verify</div>
-            <h2 class="section-title">The model proposes. Deterministic code disposes.</h2>
-            <p class="section-intro">What makes LocusQuant different from a chatbot pointed at a brokerage: the
-                guardrails are code, not prompts — and every decision is on the record.</p>
-            <p class="section-intro">The edge isn't a magic signal — it's the layer that scores every forecast against
-                reality, sizes down when it's uncertain, and proves its own skill on the record.</p>
+        <!-- GOVERNED AUTONOMY -->
+        <section class="block reveal-on-scroll" id="governance">
+            <div class="eyebrow">Governed autonomy</div>
+            <h2 class="section-title">Full autonomy — inside an envelope the OS makes impossible to leave.</h2>
+            <p class="section-intro">Humans approve a <strong>Mandate</strong> once — its objective, the exact files an
+                agent may touch, its budget, its legal scope. Inside that envelope the agent is fully autonomous. Outside
+                it, actions aren't just forbidden — they're impossible: the mandate compiles to policy in <span
+                    class="loqos-mark">LoQOS</span>, so an experiment can't reach anything off-path.</p>
 
             <div class="guard-grid">
                 <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">▚</span><h4>Deterministic code gates</h4></div>
-                    <p>Risk boundaries and house-view consistency are enforced by <strong>plain Python gates</strong>,
-                        not by prompt guidance a model can talk its way around. A non-compliant proposal is rejected
-                        before it can execute.</p>
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>The Foundry</h4></div>
+                    <p>Governed self-improvement: ratchet loops run experiments on allowlisted surfaces only, each a
+                        commit in a per-swarm lineage graph. Everything is reversible; a deterministic scorer, independent
+                        of the proposer, decides what's kept.</p>
                 </div>
                 <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">▟</span><h4>Append-only audit trail</h4></div>
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Shared knowledge graph</h4></div>
+                    <p>One memory across every swarm — entities, claims, forecasts, theses and their provenance. Agents
+                        get bounded subgraphs with citations instead of replaying transcripts.</p>
+                </div>
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>The Bursar</h4></div>
+                    <p>Every token and compute dollar is metered and attributed to an agent, swarm and decision — reported
+                        as net-of-cost P&amp;L, with budget envelopes enforced and safety spend always exempt.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GUARDRAILS -->
+        <section class="block reveal-on-scroll" id="guardrails">
+            <div class="eyebrow">Trust</div>
+            <h2 class="section-title">The model proposes. Deterministic code disposes.</h2>
+            <p class="section-intro">What makes LocusQuant different from a chatbot pointed at a brokerage: the
+                guardrails are code, not prompts — and every decision is on the record.</p>
+
+            <div class="guard-grid">
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Deterministic code gates</h4></div>
+                    <p>Risk boundaries and house-view consistency are enforced by <strong>plain Python gates</strong>,
+                        not prompt guidance a model can talk around. A non-compliant proposal is rejected before it can
+                        execute.</p>
+                </div>
+                <div class="guard-item">
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Append-only audit trail</h4></div>
                     <p>Every agent output and gate decision streams to an <strong>append-only store</strong>, so each
                         decision is traceable back to the inputs that produced it — no silent overrides.</p>
                 </div>
                 <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">▞</span><h4>Honest-by-default UI</h4></div>
+                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Honest-by-default UI</h4></div>
                     <p>Degraded desks, missing data, and gate interventions are <strong>surfaced, not hidden</strong>.
                         The interface shows what actually happened, including when the system overrode the model.</p>
                 </div>
             </div>
         </section>
 
-        <!-- NOW -->
+        <!-- TODAY -->
         <section class="block reveal-on-scroll" id="today">
-            <div class="section-label"><span class="prompt">$</span> ./status --now</div>
+            <div class="eyebrow">Status · now</div>
             <h2 class="section-title">A working prototype, today.</h2>
-            <p class="section-intro">Not a mockup — a running multi-agent system you can watch deliberate,
-                backtest, and audit.</p>
-
-            <div class="pipe-feedback" style="margin-bottom:36px;">
-                <span class="loop-glyph">// scope:</span>
-                today it runs a <strong style="color:var(--text-main);font-weight:700;">single ticker on paper
-                    capital</strong> — no live money — with every decision recorded and auditable.
-            </div>
+            <p class="section-intro">Not a mockup — a running multi-agent system you can watch deliberate, backtest, and
+                audit. Today it runs a single ticker on paper capital — no live money — with every decision recorded.</p>
 
             <div class="today-grid">
                 <div class="status-panel">
-                    <div class="panel-caption">// operational</div>
-                    <div class="status-line"><span class="ok">✓</span> Multi-agent deliberation &mdash; the Boardroom</div>
-                    <div class="status-line"><span class="ok">✓</span> Backtesting on a 252-trading-day basis &mdash; Strategy Lab</div>
+                    <div class="panel-caption">Operational</div>
+                    <div class="status-line"><span class="ok">✓</span> Multi-agent deliberation — the Boardroom</div>
+                    <div class="status-line"><span class="ok">✓</span> Backtesting on a 252-trading-day basis — Strategy Lab</div>
                     <div class="status-line"><span class="ok">✓</span> Portfolio &amp; risk views</div>
                     <div class="status-line"><span class="ok">✓</span> Full append-only audit log</div>
                 </div>
                 <div class="stack-panel">
-                    <div class="panel-caption">// built on</div>
+                    <div class="panel-caption">Built on</div>
                     <div class="stack-badges">
                         <span class="stack-badge">LangGraph</span>
                         <span class="stack-badge">Groq-served Llama</span>
@@ -215,73 +230,61 @@
                         sentiment and grounded market &amp; macro data from SEC EDGAR and FRED.</p>
                 </div>
             </div>
-            <p class="contact-line" style="margin-top:28px;"><span
-                    style="color:var(--text-accent);font-weight:800;">$</span> we automate research → prediction →
-                deliberation → execution → monitoring — humans keep four irreducible seats: exception resolution,
-                compliance judgment, capital allocation, and legal sign-off.</p>
+            <p class="contact-line">We automate research → prediction → deliberation → execution → stewardship — humans
+                keep four irreducible seats: exception resolution, compliance judgment, capital allocation, and legal
+                sign-off.</p>
         </section>
 
-        <!-- NEXT -->
+        <!-- ROADMAP -->
         <section class="block reveal-on-scroll" id="roadmap-next">
-            <div class="section-label"><span class="prompt">$</span> ./roadmap --next</div>
-            <h2 class="section-title">What ships next.</h2>
-            <p class="section-intro">The concrete near-term releases from the pipeline — each one still paper-traded
-                and routed through the same deterministic gates.</p>
+            <div class="eyebrow">What ships next</div>
+            <h2 class="section-title">From prototype to fund-in-a-box.</h2>
+            <p class="section-intro">The near-term releases from the pipeline — each still paper-traded and routed
+                through the same deterministic gates.</p>
 
             <div class="road-panel">
-                <div class="road-tag">// next releases</div>
-                <div class="roadmap-strip">
-                    <div class="roadmap-row">
-                        <span class="stack-badge">v0.5 · in build</span>
-                        <span class="roadmap-text"><strong>Replatform</strong> — a real web platform: admin console,
-                            role-based access, kill switches, live Boardroom streaming, hash-chained audit store.</span>
-                    </div>
-                    <div class="roadmap-row">
-                        <span class="stack-badge">v0.6</span>
-                        <span class="roadmap-text"><strong>Prediction Swarm</strong> — probabilistic forecasts scored
-                            against realized data; position size shrinks automatically as uncertainty rises.</span>
-                    </div>
-                    <div class="roadmap-row">
-                        <span class="stack-badge">v0.7</span>
-                        <span class="roadmap-text"><strong>Execution &amp; Breadth</strong> — from a single ticker to a
-                            screened universe, worked by a production-grade execution engine — paper first, always
-                            through the gates.</span>
-                    </div>
-                    <div class="roadmap-row">
-                        <span class="stack-badge">v0.8</span>
-                        <span class="roadmap-text"><strong>Governance Layer</strong> — a compliance swarm audits every
-                            agent against the rulebook; humans steer agents through an instruction console.</span>
-                    </div>
-                    <div class="roadmap-row">
-                        <span class="stack-badge">v0.9</span>
-                        <span class="roadmap-text"><strong>LocusOS</strong> — an immutable OS image runs every agent in
-                            its own micro-VM under an OS-level policy kernel no agent can route around.</span>
-                    </div>
-                    <div class="roadmap-row">
-                        <span class="stack-badge">v1.0</span>
-                        <span class="roadmap-text"><strong>Fund-in-a-Box</strong> — the learning loop closes: trains on
-                            its own audit history, multi-book support. Install the image, get a hedge fund.</span>
-                    </div>
+                <div class="road-tag">Next releases</div>
+                <div class="roadmap-row">
+                    <span class="stack-badge">v0.5 · in build</span>
+                    <span class="roadmap-text"><strong>Replatform</strong> — a real web platform: admin console, RBAC,
+                        kill switches, hash-chained audit — with cost-metering taps and slot-based agent loading from
+                        day one.</span>
                 </div>
-                <p style="margin-top:22px;"><span style="color:var(--text-accent);font-weight:800;">$</span> view the
-                    full pipeline → <a href="/whats-next.html" class="terminal-link">/whats-next.html</a></p>
-            </div>
-        </section>
-
-        <!-- LATER -->
-        <section class="block reveal-on-scroll" id="road-ahead">
-            <div class="section-label"><span class="prompt">$</span> ./roadmap --later</div>
-            <div class="road-panel">
-                <div class="road-tag">// the destination</div>
-                <p>A foundational model layered over the operating system — learning from the OS's own operational
-                    history to iteratively improve its strategies over time, so the fund gets sharper the longer it
-                    runs: the v1.0 “fund-in-a-box” destination.</p>
+                <div class="roadmap-row">
+                    <span class="stack-badge">v0.6</span>
+                    <span class="roadmap-text"><strong>Prediction + Behavioral Desk</strong> — probabilistic forecasts
+                        and behavioral signals, scored against reality; bias gates v1; uncertainty-scaled sizing.</span>
+                </div>
+                <div class="roadmap-row">
+                    <span class="stack-badge">v0.7</span>
+                    <span class="roadmap-text"><strong>Execution + Stewardship</strong> — a screened universe worked by a
+                        production engine with a timing overlay, plus living theses and deterministic exit
+                        discipline.</span>
+                </div>
+                <div class="roadmap-row">
+                    <span class="stack-badge">v0.8</span>
+                    <span class="roadmap-text"><strong>Governance, Mandate &amp; Graph</strong> — a mandate console and
+                        OPA policy, the knowledge-graph and lineage planes, and the Budget Governor + Bursar.</span>
+                </div>
+                <div class="roadmap-row">
+                    <span class="stack-badge">v0.9</span>
+                    <span class="roadmap-text"><strong><span class="loqos-mark">LoQOS</span> + Foundry</strong> — an
+                        immutable OS runs every agent in its own micro-VM under a policy kernel no agent can route
+                        around, with self-improvement ratchet loops on Prediction &amp; Research.</span>
+                </div>
+                <div class="roadmap-row">
+                    <span class="stack-badge">v1.0</span>
+                    <span class="roadmap-text"><strong>Fund-in-a-Box</strong> — the Foundry across all swarms, a neural
+                        engine trained on the fund's own history, and a first slice of live capital.</span>
+                </div>
+                <p style="margin-top:24px;">View the full pipeline →
+                    <a href="/whats-next/" class="inline-link">What's Next</a></p>
             </div>
         </section>
 
         <!-- TEAM -->
         <section class="block reveal-on-scroll" id="team">
-            <div class="section-label"><span class="prompt">$</span> ./team --whoami</div>
+            <div class="eyebrow">Team</div>
             <h2 class="section-title">Who's building it.</h2>
 
             <div class="team-grid">
@@ -300,27 +303,20 @@
                     <button type="button" class="team-contact-btn" data-modal="ayush">Contact →</button>
                 </div>
             </div>
-            <p class="contact-line"><span style="color:var(--text-accent);font-weight:800;">$</span> investors and
-                partners welcome — reach the team about investment opportunities in LocusQuant through the <button
-                    type="button" class="link-inline" data-modal="both">secure contact channel</button>.</p>
+            <p class="contact-line">Investors and partners welcome — reach the team about investment opportunities
+                through the <button type="button" class="link-inline" data-modal="both">secure contact channel</button>.</p>
         </section>
 
     </main>
 
-    <div class="brand-stripe"></div>
-
+    <!-- FOOTER -->
     <footer>
-        <div class="container footer-wrapper">
-            <div class="footer-left">
-                <img src="logo.jpeg" alt="dAVb dark wordmark" class="footer-logo-dark" onerror="this.style.display='none';">
-                <img src="logo-light.jpeg" alt="dAVb light wordmark" class="footer-logo-light"
-                    onerror="this.style.display='none';">
-                <p class="footer-meta">&copy; 2026 LocusQuant.</p>
-            </div>
-            <div class="footer-right">
-                <p class="product-attribution"><span class="footer-cursive">LocusQuant</span> <span
-                        style="color:var(--text-heading-start); font-weight: 800;">OS</span> is a dAVb product.</p>
-                <p class="footer-meta">Paper-trading preview &middot; no live capital</p>
+        <div class="footer-liquid">
+            <span class="footer-wordmark"><span class="brand-full">LocusQuant</span><span class="brand-short">LQ</span></span>
+            <div class="footer-meta-row">
+                <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
+                <p class="footer-meta">Paper-trading preview · no live capital ·
+                    <a href="/loqos/">LoQOS</a></p>
             </div>
         </div>
     </footer>
@@ -332,98 +328,93 @@
             <div class="modal-heading" id="modal-heading">Request Access</div>
             <div class="modal-recipient" id="modal-recipient"></div>
             <form id="contact-form" novalidate>
-                <label class="modal-label" for="cf-name">$ name</label>
+                <label class="modal-label" for="cf-name">Name</label>
                 <input class="modal-input" id="cf-name" name="name" type="text" required
                     autocomplete="name" placeholder="your name">
 
-                <label class="modal-label" for="cf-email">$ email</label>
+                <label class="modal-label" for="cf-email">Email</label>
                 <input class="modal-input" id="cf-email" name="email" type="email" required
                     autocomplete="email" placeholder="your email address">
 
-                <label class="modal-label" for="cf-message">$ message</label>
+                <label class="modal-label" for="cf-message">Message</label>
                 <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
                     placeholder="reason for reaching out / anything you'd like to share"></textarea>
 
-                <!-- Honeypot: bots fill this; real users never see it -->
                 <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
                     aria-hidden="true">
 
-                <button type="submit" class="modal-submit" id="modal-submit">Transmit Request →</button>
+                <button type="submit" class="modal-submit" id="modal-submit">Send request →</button>
                 <div class="modal-status" id="modal-status" role="status" aria-live="polite"></div>
             </form>
         </div>
     </div>
 
-    <!-- Shared: theme-toggle persistence + contact modal -->
     <script src="app.js"></script>
 
     <script>
-        // Header scroll + hero text-wipe engine
-        const header = document.getElementById('main-header');
-        const scrollTitle = document.getElementById('scroll-title');
+        // Header background fade on scroll
+        var header = document.getElementById('main-header');
+        // Wordmark dock animation: big + centred on load → small + top on scroll.
+        // On mobile the full name collapses to the "LQ" monogram as it docks.
+        var wm = document.getElementById('brand-wm');
+        var cue = document.getElementById('scroll-cue');
+        var ticking = false;
 
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            if (scrollPos > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-            const maxScrollDistance = 260;
-            let scrollPercent = (scrollPos / maxScrollDistance) * 100;
-            if (scrollPercent > 100) scrollPercent = 100;
-            if (scrollPercent < 0) scrollPercent = 0;
-            scrollTitle.style.setProperty('--scroll-fill', `${scrollPercent}%`);
-        });
+        function easeInOut(t) {
+            return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        }
 
-        // Cinematic reveal-on-scroll (boot-sequence style section reveals)
-        const revealElements = document.querySelectorAll('.reveal-on-scroll');
-        const revealOptions = { threshold: 0.12, rootMargin: "0px 0px -50px 0px" };
-        const revealOnScroll = new IntersectionObserver(function (entries, observer) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, revealOptions);
-        revealElements.forEach(el => { revealOnScroll.observe(el); });
+        function applyScroll() {
+            var vh = window.innerHeight;
+            var vw = window.innerWidth;
+            var mobile = vw <= 680;
+            var dist = vh * 0.55;
+            var p = Math.min(Math.max(window.scrollY / dist, 0), 1);
+            var e = easeInOut(p);
 
-        // Terminal typewriter — illustrative replay of a gated deliberation
-        const terminalOutput = document.getElementById('terminal-output');
-        const logLines = [
-            "<span class='log-time'>[boot]</span> [SYS] LocusQuant OS online — initiating multi-agent deliberation...",
-            "<span class='log-time'>[research]</span> <span class='log-agent'>[RESEARCH_SWARM]</span> Desks reporting: technical, fundamental, sentiment, filings, macro.",
-            "<span class='log-time'>[debate]</span> <span class='log-agent'>[BOARDROOM]</span> House view adjudicated from bull/bear deliberation.",
-            "<span class='log-time'>[propose]</span> <span class='log-agent'>[STRATEGY_AGENT]</span> Proposal drafted for the selected equity.",
-            "<span class='log-time'>[gate]</span> [SYS] Routing proposal through deterministic risk + direction gates...",
-            "<span class='log-time'>[gate]</span> <span class='log-warn'>[DIRECTION_GATE]</span> House view inconsistent with proposed direction — intervention raised.",
-            "<span class='log-time'>[gate]</span> <span class='log-error'>[OVERRIDE]</span> Order corrected by hard-coded gate — logged as NO POSITION, not an approved trade.",
-            "<span class='log-time'>[ledger]</span> <span class='log-success'>[AUDIT_LOG]</span> Every desk output + gate decision appended to the immutable trail.",
-            "<span class='log-time'>[idle]</span> [SYS] Awaiting next environment state..."
-        ];
+            var bigPx = Math.max(Math.min(vw * 0.14, 176), 46);
+            var smallPx = mobile ? 26 : 30;
+            var topBig = vh * 0.40;
+            var topSmall = mobile ? 14 : 16;
 
-        let currentLine = 0;
-        let animationTriggered = false;
+            wm.style.fontSize = (bigPx + (smallPx - bigPx) * e).toFixed(1) + 'px';
+            wm.style.top = (topBig + (topSmall - topBig) * e).toFixed(1) + 'px';
 
-        const terminalObserver = new IntersectionObserver(function (entries) {
-            if (entries[0].isIntersecting && !animationTriggered) {
-                animationTriggered = true;
-                setTimeout(typeLine, 700);
-            }
-        });
-        terminalObserver.observe(document.querySelector('.terminal-wrapper'));
+            // Full name on load; collapse to "LQ" on mobile once docking is underway
+            var desired = (mobile && p > 0.55) ? 'LQ' : 'LocusQuant';
+            if (wm.textContent !== desired) wm.textContent = desired;
 
-        function typeLine() {
-            if (currentLine < logLines.length) {
-                terminalOutput.innerHTML = terminalOutput.innerHTML.replace('<span class="cursor"></span>', '');
-                terminalOutput.innerHTML += `<div>${logLines[currentLine]}<span class="cursor"></span></div>`;
-                currentLine++;
-                let typingDelay = Math.floor(Math.random() * 700) + 400;
-                if (currentLine === 7 || currentLine === 8) typingDelay = 200;
-                setTimeout(typeLine, typingDelay);
+            if (cue) cue.style.opacity = String(Math.max(0, 1 - p * 3));
+
+            var scrolled = window.scrollY > 40;
+            header.classList.toggle('scrolled', scrolled);
+            header.classList.toggle('nav-hidden', !scrolled);
+
+            ticking = false;
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(applyScroll);
+                ticking = true;
             }
         }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', applyScroll);
+        applyScroll();
+
+        // Gentle reveal-on-scroll
+        var revealEls = document.querySelectorAll('.reveal-on-scroll');
+        var io = new IntersectionObserver(function (entries, obs) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+        revealEls.forEach(function (el) { io.observe(el); });
     </script>
 </body>
 

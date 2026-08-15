@@ -1,28 +1,8 @@
-// Shared behaviour for every LocusQuant page: theme-toggle persistence
-// and the reusable contact modal. Page-specific effects (hero text-wipe,
-// terminal typewriter, scroll reveals) stay inline on their own page.
+// Shared behaviour for every LocusQuant page: the reusable contact modal.
+// Page-specific effects (wordmark dock, scroll reveals) stay inline on their
+// own page.
 (function () {
     'use strict';
-
-    // ── Theme toggle + persistence ──────────────────────────────
-    // The persisted theme is applied pre-paint by an inline <head> script.
-    // Here we only handle click-to-toggle and writing the choice back.
-    var THEME_KEY = 'locusquant-theme';
-    var rootElement = document.documentElement;
-    var themeBtn = document.getElementById('theme-btn');
-
-    if (themeBtn) {
-        themeBtn.addEventListener('click', function () {
-            var isLight = rootElement.getAttribute('data-theme') === 'light';
-            if (isLight) {
-                rootElement.removeAttribute('data-theme');
-                try { localStorage.setItem(THEME_KEY, 'dark'); } catch (e) { }
-            } else {
-                rootElement.setAttribute('data-theme', 'light');
-                try { localStorage.setItem(THEME_KEY, 'light'); } catch (e) { }
-            }
-        });
-    }
 
     // ── Contact modal (single reusable component, recipient-parameterized) ──
     var modal = document.getElementById('contact-modal');
