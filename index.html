@@ -46,21 +46,53 @@
         </div>
     </header>
 
-    <!-- HERO: on load, only the wordmark is shown over an empty stage -->
-    <section class="hero"></section>
-    <div class="scroll-cue" id="scroll-cue" aria-hidden="true"></div>
-
     <main>
 
-        <!-- INTRO (revealed on scroll, once the wordmark has docked) -->
-        <section class="block lead reveal-on-scroll">
-            <div class="eyebrow">AI-native hedge-fund operating system</div>
-            <h1>The operating system that runs a hedge fund — <span class="grad-word">agentically</span>.</h1>
-            <p class="subtitle">Multi-agent AI that researches, forecasts, and trades — governed by deterministic code
-                gates, fully auditable, and proven against real outcomes before a dollar is at risk.</p>
-            <div class="cta-row">
-                <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
-                <a href="/loqos/" class="btn btn-ghost">Explore LoQOS →</a>
+        <!-- CLARITY HERO (wordmark auto-docks, then this reveals) -->
+        <section class="hero-clarity" id="top">
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <h1>An AI that runs a hedge fund — end&nbsp;to&nbsp;end, and on the record.</h1>
+                    <p class="subtitle">Seven agent swarms research, forecast, execute, and steward capital —
+                        bounded by deterministic risk gates and a full audit trail.</p>
+                    <div class="cta-row">
+                        <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                        <a href="#how-it-works" class="btn btn-ghost">See it run →</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual" aria-hidden="true">
+                    <!-- Boardroom deliberation mock -->
+                    <div class="mock mock-boardroom">
+                        <div class="mock-head">
+                            <span class="mock-title">Boardroom</span>
+                            <span class="mock-live"><span class="live-dot"></span> deliberating</span>
+                        </div>
+                        <div class="mock-ticker">NVDA · 5-day horizon</div>
+                        <div class="desk"><span>Fundamental desk</span><span class="stance bull">Bullish</span></div>
+                        <div class="desk"><span>Sentiment desk</span><span class="stance bull">Bullish</span></div>
+                        <div class="desk"><span>Technical desk</span><span class="stance neutral">Neutral</span></div>
+                        <div class="desk"><span>Risk gate</span><span class="stance pass">✓ within limits</span></div>
+                        <div class="mock-verdict">House view · <strong>Long · half size</strong>
+                            <div class="conf-bar"><i></i></div>
+                        </div>
+                    </div>
+                    <!-- Audit trail mock (rows streamed by JS) -->
+                    <div class="mock mock-audit">
+                        <div class="mock-head">
+                            <span class="mock-title">Audit trail</span>
+                            <span class="mock-live"><span class="live-dot"></span> append-only</span>
+                        </div>
+                        <div class="audit-log" id="audit-log"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat"><div class="num">7</div><div class="label">coordinated swarms</div></div>
+                <div class="stat"><div class="num">252<span>d</span></div><div class="label">backtest basis</div></div>
+                <div class="stat"><div class="num">100<span>%</span></div><div class="label">decisions audited</div></div>
+                <div class="stat"><div class="num">$0</div><div class="label">live capital at risk</div></div>
             </div>
         </section>
 
@@ -88,28 +120,6 @@
             <div class="pipe-feedback">
                 <span class="loop-glyph">⟲ feedback loop</span>
                 managed positions and realized outcomes flow back into Research &amp; Selection.
-            </div>
-        </section>
-
-        <!-- STAT ROW -->
-        <section class="block reveal-on-scroll" id="metrics">
-            <div class="stat-row">
-                <div class="stat">
-                    <div class="num">7</div>
-                    <div class="label">coordinated swarms</div>
-                </div>
-                <div class="stat">
-                    <div class="num">252<span>d</span></div>
-                    <div class="label">backtest basis</div>
-                </div>
-                <div class="stat">
-                    <div class="num">100<span>%</span></div>
-                    <div class="label">decisions audited</div>
-                </div>
-                <div class="stat">
-                    <div class="num">$0</div>
-                    <div class="label">live capital at risk</div>
-                </div>
             </div>
         </section>
 
@@ -204,7 +214,7 @@
         <!-- TENTPOLE STATEMENT -->
         <section class="statement reveal-on-scroll">
             <p><span class="muted">Not AI bolted onto a hedge fund.</span> The fund itself, rebuilt as an
-                operating system.</p>
+                <span class="grad-word">operating system</span>.</p>
         </section>
 
         <!-- GUARDRAILS (inverted focal panel) -->
@@ -386,65 +396,47 @@
     <script src="app.js"></script>
 
     <script>
-        // Header background fade on scroll
         var header = document.getElementById('main-header');
-        // Wordmark dock animation: big + centred on load → small + top on scroll.
-        // On mobile the full name collapses to the "LQ" monogram as it docks.
         var wm = document.getElementById('brand-wm');
-        var cue = document.getElementById('scroll-cue');
-        var ticking = false;
+        var introDone = false;
 
-        function easeInOut(t) {
-            return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-        }
-
-        function applyScroll() {
-            var vh = window.innerHeight;
-            var vw = window.innerWidth;
-            var mobile = vw <= 680;
-            var dist = vh * 0.55;
-            var p = Math.min(Math.max(window.scrollY / dist, 0), 1);
-            var e = easeInOut(p);
-
-            var bigPx = Math.max(Math.min(vw * 0.14, 176), 46);
-            var smallPx = mobile ? 26 : 30;
-            var topBig = vh * 0.40;
-            var topSmall = mobile ? 14 : 16;
-
-            wm.style.fontSize = (bigPx + (smallPx - bigPx) * e).toFixed(1) + 'px';
-            wm.style.top = (topBig + (topSmall - topBig) * e).toFixed(1) + 'px';
-
-            // Horizontal dock: centred on desktop; on mobile it slides from centre
-            // to the left as it docks, so the LQ monogram clears the CTA button.
-            var leftPct = mobile ? (50 + (14 - 50) * e) : 50;
-            wm.style.left = leftPct + '%';
-
-            // Full name on load; collapse to "LQ" on mobile once docking is underway
-            var desired = (mobile && p > 0.55) ? 'LQ' : 'LocusQuant';
-            if (wm.textContent !== desired) wm.textContent = desired;
-
-            if (cue) cue.style.opacity = String(Math.max(0, 1 - p * 3));
-
-            var scrolled = window.scrollY > 40;
-            header.classList.toggle('scrolled', scrolled);
-            header.classList.toggle('nav-hidden', !scrolled);
-
-            ticking = false;
-        }
-
-        function onScroll() {
-            if (!ticking) {
-                window.requestAnimationFrame(applyScroll);
-                ticking = true;
+        // Place the docked wordmark: centred small on desktop, top-left "LQ" on mobile
+        function dockWordmark() {
+            var mobile = window.innerWidth <= 680;
+            if (mobile) {
+                wm.textContent = 'LQ';
+                wm.style.left = '14%';
+                wm.style.top = '14px';
+                wm.style.fontSize = '26px';
+            } else {
+                wm.textContent = 'LocusQuant';
+                wm.style.left = '50%';
+                wm.style.top = '16px';
+                wm.style.fontSize = '30px';
             }
         }
 
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', applyScroll);
-        applyScroll();
+        // The ~1.1s brand moment: hold the big wordmark, then dock it and reveal
+        function startIntro() {
+            if (introDone) return;
+            introDone = true;
+            dockWordmark();
+            header.classList.remove('nav-hidden');
+            document.body.classList.add('intro-done');
+        }
+
+        function armIntro() { setTimeout(startIntro, 1100); }
+        if (document.readyState === 'complete') armIntro();
+        else window.addEventListener('load', armIntro);
+
+        window.addEventListener('resize', function () { if (introDone) dockWordmark(); });
+
+        // Header background once you begin scrolling
+        window.addEventListener('scroll', function () {
+            header.classList.toggle('scrolled', window.scrollY > 40);
+        }, { passive: true });
 
         // Gentle reveal-on-scroll
-        var revealEls = document.querySelectorAll('.reveal-on-scroll');
         var io = new IntersectionObserver(function (entries, obs) {
             entries.forEach(function (entry) {
                 if (entry.isIntersecting) {
@@ -453,7 +445,41 @@
                 }
             });
         }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-        revealEls.forEach(function (el) { io.observe(el); });
+        document.querySelectorAll('.reveal-on-scroll').forEach(function (el) { io.observe(el); });
+
+        // Audit-trail: stream decision entries into the mock (respecting reduced motion)
+        (function () {
+            var log = document.getElementById('audit-log');
+            if (!log) return;
+            var events = [
+                ['research', 'house view logged', 'ok', '✓'],
+                ['risk', 'exposure within limits', 'ok', 'pass'],
+                ['execution', 'order ticket', 'ok', 'gate ✓'],
+                ['compliance', 'OTR ratio check', 'ok', '✓'],
+                ['prediction', 'forecast scored', 'ok', '✓'],
+                ['steward', 'thesis re-underwritten', 'ok', '✓'],
+                ['execution', 'entry outside window', 'blk', 'held'],
+                ['bias-gate', 'herding check', 'ok', '✓']
+            ];
+            var i = 0;
+            function pad(n) { return (n < 10 ? '0' : '') + n; }
+            function stamp() { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); }
+            function add(animate) {
+                var e = events[i % events.length]; i++;
+                var row = document.createElement('div');
+                row.className = 'log' + (animate ? ' log-enter' : '');
+                row.innerHTML = '<span class="t">' + stamp() + '</span>' +
+                    '<span class="ag">' + e[0] + '</span>' +
+                    '<span class="desc">' + e[1] + '</span>' +
+                    '<span class="' + e[2] + '">' + e[3] + '</span>';
+                log.insertBefore(row, log.firstChild);
+                while (log.children.length > 6) log.removeChild(log.lastChild);
+                if (animate) requestAnimationFrame(function () { row.classList.remove('log-enter'); });
+            }
+            for (var s = 0; s < 6; s++) add(false);
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (!reduce) setInterval(function () { add(true); }, 2600);
+        })();
     </script>
 </body>
 
