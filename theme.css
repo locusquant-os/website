@@ -699,6 +699,11 @@ footer {
     border-radius: 40px;
     background: var(--bg-sunken);
     overflow: hidden;
+    /* Safari/WebKit ignores overflow:hidden + border-radius for transformed/
+       blurred children; clip-path clips all descendants, so the animated blobs
+       stay inside the rounded corners on iOS/Safari too. */
+    -webkit-clip-path: inset(0 round 40px);
+    clip-path: inset(0 round 40px);
     padding: 56px 28px 34px;
     isolation: isolate;
 }
@@ -1183,6 +1188,8 @@ footer {
 
     .footer-liquid {
         border-radius: 30px;
+        -webkit-clip-path: inset(0 round 30px);
+        clip-path: inset(0 round 30px);
         padding: 40px 20px 24px;
     }
 
