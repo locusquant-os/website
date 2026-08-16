@@ -152,7 +152,7 @@
         if (!m) return;
         var prefix = m[1], target = parseInt(m[2], 10);
         if (reduce || target === 0) { num.innerHTML = prefix + target + suffix; return; }
-        var dur = 1300, start = null;
+        var dur = 1600, start = null;
         function tick(now) {
             if (!start) start = now;
             var t = Math.min((now - start) / dur, 1);
@@ -163,15 +163,31 @@
         requestAnimationFrame(tick);
     }
 
+    // The hero stat row is geometrically in view on load but the hero is held
+    // invisible for the ~1.1s brand intro — so defer the count until it reveals,
+    // otherwise the roll finishes off-screen and you only ever see the final value.
+    function startWhenReady(row) {
+        var needsIntro = document.querySelector('.hero-clarity') &&
+            !document.body.classList.contains('intro-done');
+        if (!needsIntro) { row.querySelectorAll('.num').forEach(run); return; }
+        var mo = new MutationObserver(function () {
+            if (document.body.classList.contains('intro-done')) {
+                mo.disconnect();
+                setTimeout(function () { row.querySelectorAll('.num').forEach(run); }, 150);
+            }
+        });
+        mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+
     if (!('IntersectionObserver' in window)) {
-        rows.forEach(function (r) { r.querySelectorAll('.num').forEach(run); });
+        rows.forEach(startWhenReady);
         return;
     }
     var io = new IntersectionObserver(function (entries, obs) {
         entries.forEach(function (entry) {
             if (!entry.isIntersecting) return;
-            entry.target.querySelectorAll('.num').forEach(run);
             obs.unobserve(entry.target);
+            startWhenReady(entry.target);
         });
     }, { threshold: 0.4 });
     rows.forEach(function (r) { io.observe(r); });
