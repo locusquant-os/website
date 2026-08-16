@@ -1303,24 +1303,7 @@ footer {
     background: var(--line);
 }
 
-/* an ink blob travels down the spine, tying the stages together */
-.wn-timeline::after {
-    content: '';
-    position: absolute;
-    left: 5px;
-    width: 6px;
-    height: 62px;
-    border-radius: 6px;
-    background: linear-gradient(180deg, transparent, var(--ink), transparent);
-    animation: spineFlow 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-}
-
-@keyframes spineFlow {
-    0% { top: -62px; opacity: 0; }
-    12% { opacity: 0.9; }
-    88% { opacity: 0.9; }
-    100% { top: 100%; opacity: 0; }
-}
+/* (the ink pen now travels the stages instead of a CSS spine blob) */
 
 .wn-rel {
     position: relative;

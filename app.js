@@ -240,12 +240,15 @@
     var lastMove = -1e9;
 
     window.addEventListener('mousemove', function (e) {
+        // Safari fires mousemove on scroll with the cursor stationary; ignore
+        // those (same coords) so scrolling doesn't yank the pen to the cursor.
+        if (e.clientX === mouse.x && e.clientY === mouse.y) return;
         mouse.x = e.clientX; mouse.y = e.clientY; lastMove = performance.now();
     });
 
     // Section boxes the pen will orbit when idle.
     var SEL = '.hero-visual, .pipeline, .features-grid, .guard-grid, .dark-panel, ' +
-        '.today-grid, .road-panel, .team-grid, .wn-timeline, .spec-grid, .stat-row, .ink-final';
+        '.today-grid, .road-panel, .team-grid, .wn-rel, .spec-grid, .stat-row, .ink-final';
     var targets = Array.prototype.slice.call(document.querySelectorAll(SEL));
     var finals = Array.prototype.slice.call(document.querySelectorAll('.ink-final'));
     var darkEls = Array.prototype.slice.call(document.querySelectorAll('.dark-panel, .btn-primary'));
