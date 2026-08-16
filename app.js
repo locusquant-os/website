@@ -205,7 +205,10 @@
     rows.forEach(function (r) { io.observe(r); });
 })();
 
-// ── Vintage-ink cursor trail (pointer devices only) ────────────
+// ── Autonomous ink pen (pointer devices only) ──────────────────
+// Trails the cursor while you move. When you go idle (incl. while
+// scrolling) it wanders off and orbits the section box in view; the
+// moment you move again it eases back to your cursor and trails you.
 (function () {
     if (!window.matchMedia) return;
     if (window.matchMedia('(hover: none)').matches) return;
@@ -229,28 +232,82 @@
     resize();
     window.addEventListener('resize', resize);
 
+    var mouse = { x: window.innerWidth / 2, y: window.innerHeight * 0.4 };
+    var pen = { x: mouse.x, y: mouse.y };
+    var center = { x: mouse.x, y: mouse.y };
     var pts = [];
+    var angle = Math.random() * Math.PI * 2;
+    var lastMove = -1e9;
+
     window.addEventListener('mousemove', function (e) {
-        pts.push({ x: e.clientX, y: e.clientY, life: 1 });
-        if (pts.length > 72) pts.shift();
+        mouse.x = e.clientX; mouse.y = e.clientY; lastMove = performance.now();
     });
 
-    function frame() {
+    // Section boxes the pen will orbit when idle.
+    var SEL = '.hero-visual, .pipeline, .features-grid, .guard-grid, .dark-panel, ' +
+        '.today-grid, .road-panel, .team-grid, .wn-timeline, .spec-grid, .stat-row';
+    var targets = Array.prototype.slice.call(document.querySelectorAll(SEL));
+    var homepage = !!document.querySelector('.hero-clarity');
+    function ready() { return !homepage || document.body.classList.contains('intro-done'); }
+
+    var focus = null, lastFocus = 0;
+    function pickFocus() {
+        var vc = window.innerHeight / 2, best = null, bestD = 1e9;
+        for (var i = 0; i < targets.length; i++) {
+            var r = targets[i].getBoundingClientRect();
+            if (r.bottom < 60 || r.top > window.innerHeight - 60) continue;
+            if (r.width < 40 || r.height < 20) continue;
+            var d = Math.abs((r.top + r.bottom) / 2 - vc);
+            if (d < bestD) { bestD = d; best = r; }
+        }
+        return best;
+    }
+
+    function frame(now) {
+        var active = (now - lastMove) < 1600;
+        var canAuto = ready();
+        var auto = !active && canAuto;
+
+        if (active || canAuto) {
+            var tx, ty;
+            if (active) {
+                tx = mouse.x; ty = mouse.y;
+            } else {
+                if (now - lastFocus > 180) { focus = pickFocus(); lastFocus = now; }
+                if (focus) {
+                    center.x += (focus.left + focus.width / 2 - center.x) * 0.06;
+                    center.y += (focus.top + focus.height / 2 - center.y) * 0.06;
+                    angle += 0.017;
+                    tx = center.x + Math.cos(angle) * (focus.width / 2 + 30);
+                    ty = center.y + Math.sin(angle) * (focus.height / 2 + 30);
+                } else {
+                    angle += 0.01;
+                    tx = window.innerWidth / 2 + Math.cos(angle) * 150;
+                    ty = window.innerHeight / 2 + Math.sin(angle * 1.3) * 90;
+                }
+            }
+            var ease = active ? 0.3 : 0.12;
+            pen.x += (tx - pen.x) * ease;
+            pen.y += (ty - pen.y) * ease;
+            pts.push({ x: pen.x, y: pen.y, life: 1 });
+            if (pts.length > 55) pts.shift();
+        }
+
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         var n = pts.length;
-        for (var i = 0; i < n; i++) pts[i].life -= 0.035;
+        for (var i = 0; i < n; i++) pts[i].life -= 0.04;
         while (pts.length && pts[0].life <= 0) pts.shift();
         n = pts.length;
+        var alpha = auto ? 0.72 : 1;
         if (n > 1) {
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             for (var j = 1; j < n; j++) {
                 var a = pts[j - 1], b = pts[j];
-                var frac = j / n;                       // 0 = tail, 1 = at cursor
+                var frac = j / n;                       // 0 = tail, 1 = at nib
                 var life = (a.life + b.life) / 2;
-                // Heavy near the nib, tapering hard toward the tail (frac^2).
-                ctx.lineWidth = frac * frac * 12 * life + 0.4;
-                ctx.strokeStyle = 'rgba(23,20,13,' + (0.12 + frac * 0.62 * life).toFixed(3) + ')';
+                ctx.lineWidth = (frac * frac * 12 * life + 0.4) * (auto ? 0.8 : 1);
+                ctx.strokeStyle = 'rgba(23,20,13,' + ((0.12 + frac * 0.62 * life) * alpha).toFixed(3) + ')';
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
                 var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
@@ -258,11 +315,10 @@
                 ctx.lineTo(b.x, b.y);
                 ctx.stroke();
             }
-            // Heavy ink nib at the cursor head.
             var head = pts[n - 1];
-            ctx.fillStyle = 'rgba(23,20,13,' + (0.88 * head.life).toFixed(3) + ')';
+            ctx.fillStyle = 'rgba(23,20,13,' + (0.88 * head.life * alpha).toFixed(3) + ')';
             ctx.beginPath();
-            ctx.arc(head.x, head.y, 6 * (0.55 + head.life * 0.45), 0, Math.PI * 2);
+            ctx.arc(head.x, head.y, (auto ? 4.5 : 6) * (0.55 + head.life * 0.45), 0, Math.PI * 2);
             ctx.fill();
         }
         requestAnimationFrame(frame);
