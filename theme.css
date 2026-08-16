@@ -84,6 +84,8 @@ header {
     width: 100%;
     z-index: 1000;
     padding: 20px 0;
+    /* clear the iOS status bar / notch so the nav never tucks under it */
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
     transition: background 0.4s var(--ease), padding 0.4s var(--ease),
         border-color 0.4s var(--ease), box-shadow 0.4s var(--ease),
         opacity 0.45s var(--ease), transform 0.45s var(--ease);
@@ -98,11 +100,12 @@ header.nav-hidden {
 }
 
 header.scrolled {
-    background: rgba(245, 242, 234, 0.72);
+    background: rgba(245, 242, 234, 0.88);
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     border-bottom: 1px solid var(--line-soft);
     padding: 12px 0;
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
 }
 
 .nav-wrapper {
