@@ -605,6 +605,8 @@ section.block {
     border: 1px solid var(--line-soft);
     border-radius: var(--radius);
     padding: 20px 18px;
+    position: relative;
+    overflow: hidden;
     transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 
@@ -1615,7 +1617,7 @@ footer {
 .reveal-on-scroll .roadmap-row,
 .reveal-on-scroll .status-line {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(38px) scale(0.96);
 }
 
 .reveal-on-scroll.is-visible .features-grid > *,
@@ -1628,6 +1630,101 @@ footer {
 .reveal-on-scroll.is-visible .status-line {
     opacity: 1;
     transform: none;
+}
+
+/* --- Pipeline: a signal flows through the six stages, looping --- */
+.pipe-node::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--ink);
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: nodeFlow 5s ease-in-out infinite;
+}
+
+.pipe-node::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(23, 20, 13, 0);
+    pointer-events: none;
+    animation: nodeTint 5s ease-in-out infinite;
+}
+
+@keyframes nodeFlow {
+    0% { transform: scaleX(0); opacity: 0; }
+    4% { opacity: 1; }
+    11% { transform: scaleX(1); opacity: 1; }
+    20% { transform: scaleX(1); opacity: 0; }
+    100% { transform: scaleX(0); opacity: 0; }
+}
+
+@keyframes nodeTint {
+    0%, 100% { background: rgba(23, 20, 13, 0); box-shadow: inset 0 0 0 1px rgba(23, 20, 13, 0); }
+    8% { background: rgba(23, 20, 13, 0.035); box-shadow: inset 0 0 0 1.5px rgba(23, 20, 13, 0.5); }
+    22% { background: rgba(23, 20, 13, 0); box-shadow: inset 0 0 0 1px rgba(23, 20, 13, 0); }
+}
+
+.pipeline .pipe-node:nth-child(1)::after,
+.pipeline .pipe-node:nth-child(1)::before { animation-delay: 0s; }
+.pipeline .pipe-node:nth-child(3)::after,
+.pipeline .pipe-node:nth-child(3)::before { animation-delay: 0.5s; }
+.pipeline .pipe-node:nth-child(5)::after,
+.pipeline .pipe-node:nth-child(5)::before { animation-delay: 1s; }
+.pipeline .pipe-node:nth-child(7)::after,
+.pipeline .pipe-node:nth-child(7)::before { animation-delay: 1.5s; }
+.pipeline .pipe-node:nth-child(9)::after,
+.pipeline .pipe-node:nth-child(9)::before { animation-delay: 2s; }
+.pipeline .pipe-node:nth-child(11)::after,
+.pipeline .pipe-node:nth-child(11)::before { animation-delay: 2.5s; }
+
+.pipe-arrow {
+    animation: arrowFlow 5s ease-in-out infinite;
+}
+
+@keyframes arrowFlow {
+    0%, 100% { opacity: 0.3; }
+    6%, 12% { opacity: 1; }
+    24% { opacity: 0.3; }
+}
+
+.pipeline .pipe-arrow:nth-child(2) { animation-delay: 0.28s; }
+.pipeline .pipe-arrow:nth-child(4) { animation-delay: 0.78s; }
+.pipeline .pipe-arrow:nth-child(6) { animation-delay: 1.28s; }
+.pipeline .pipe-arrow:nth-child(8) { animation-delay: 1.78s; }
+.pipeline .pipe-arrow:nth-child(10) { animation-delay: 2.28s; }
+
+/* feedback loop: the glyph orbits, an ink pulse runs the base */
+.pipe-feedback {
+    position: relative;
+    overflow: hidden;
+}
+
+.pipe-feedback .loop-glyph {
+    display: inline-block;
+    animation: loopSpin 5s linear infinite;
+}
+
+@keyframes loopSpin { to { transform: rotate(-360deg); } }
+
+.pipe-feedback::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 38%;
+    background: linear-gradient(90deg, transparent, var(--ink), transparent);
+    animation: feedFlow 3s linear infinite;
+}
+
+@keyframes feedFlow {
+    0% { transform: translateX(-110%); }
+    100% { transform: translateX(320%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

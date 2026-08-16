@@ -225,17 +225,20 @@
 
     function frame() {
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        for (var i = 0; i < pts.length; i++) pts[i].life -= 0.05;
+        var n = pts.length;
+        for (var i = 0; i < n; i++) pts[i].life -= 0.035;
         while (pts.length && pts[0].life <= 0) pts.shift();
-        if (pts.length > 1) {
+        n = pts.length;
+        if (n > 1) {
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            for (var j = 1; j < pts.length; j++) {
+            for (var j = 1; j < n; j++) {
                 var a = pts[j - 1], b = pts[j];
+                var frac = j / n;                       // 0 = tail, 1 = at cursor
                 var life = (a.life + b.life) / 2;
-                if (life <= 0) continue;
-                ctx.strokeStyle = 'rgba(23,20,13,' + (life * 0.5).toFixed(3) + ')';
-                ctx.lineWidth = life * 4 + 0.4;
+                // Heavy near the nib, tapering hard toward the tail (frac^2).
+                ctx.lineWidth = frac * frac * 12 * life + 0.4;
+                ctx.strokeStyle = 'rgba(23,20,13,' + (0.12 + frac * 0.62 * life).toFixed(3) + ')';
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
                 var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
@@ -243,6 +246,12 @@
                 ctx.lineTo(b.x, b.y);
                 ctx.stroke();
             }
+            // Heavy ink nib at the cursor head.
+            var head = pts[n - 1];
+            ctx.fillStyle = 'rgba(23,20,13,' + (0.88 * head.life).toFixed(3) + ')';
+            ctx.beginPath();
+            ctx.arc(head.x, head.y, 6 * (0.55 + head.life * 0.45), 0, Math.PI * 2);
+            ctx.fill();
         }
         requestAnimationFrame(frame);
     }

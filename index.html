@@ -469,6 +469,26 @@
             var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (!reduce) setInterval(function () { add(true); }, 2600);
         })();
+
+        // Subtle 3D tilt on the hero product panel as the cursor moves
+        (function () {
+            if (!window.matchMedia) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if (window.matchMedia('(pointer: coarse)').matches) return;
+            var hv = document.querySelector('.hero-visual');
+            var grid = document.querySelector('.hero-grid');
+            if (!hv || !grid) return;
+            grid.style.perspective = '1200px';
+            hv.style.transformStyle = 'preserve-3d';
+            hv.style.transition = 'transform 0.25s cubic-bezier(0.22,1,0.36,1)';
+            grid.addEventListener('mousemove', function (e) {
+                var r = hv.getBoundingClientRect();
+                var dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+                var dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+                hv.style.transform = 'rotateY(' + (dx * 6).toFixed(2) + 'deg) rotateX(' + (-dy * 6).toFixed(2) + 'deg)';
+            });
+            grid.addEventListener('mouseleave', function () { hv.style.transform = ''; });
+        })();
     </script>
 </body>
 
