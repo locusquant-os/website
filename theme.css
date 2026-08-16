@@ -115,13 +115,40 @@ header.scrolled {
     gap: 18px;
 }
 
-/* Static small wordmark used in the header on sub-pages */
+/* Header wordmark on sub-pages — full name collapses to "LQ" on scroll */
 .nav-brand {
     font-family: var(--font-frak);
     font-size: 1.7rem;
     color: var(--ink);
     text-decoration: none;
     line-height: 1;
+    position: relative;
+    display: inline-block;
+}
+
+.nav-brand .nb-full,
+.nav-brand .nb-mono {
+    display: inline-block;
+    transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+
+.nav-brand .nb-mono {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    transform: translateX(-8px);
+    pointer-events: none;
+}
+
+header.brand-collapsed .nav-brand .nb-full {
+    opacity: 0;
+    transform: translateX(-8px);
+}
+
+header.brand-collapsed .nav-brand .nb-mono {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .nav-links {
@@ -1510,6 +1537,17 @@ footer {
 
     .brand-short {
         display: inline;
+    }
+
+    /* Sub-page header wordmark stays collapsed to LQ on mobile */
+    .nav-brand .nb-full {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    .nav-brand .nb-mono {
+        opacity: 1;
+        transform: none;
     }
 
     .nav-links .nav-link {

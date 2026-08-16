@@ -108,6 +108,18 @@
     });
 })();
 
+// ── Sub-page header wordmark: collapse LocusQuant → LQ on scroll ──
+(function () {
+    var header = document.querySelector('header');
+    var brand = document.querySelector('.nav-brand');
+    if (!header || !brand) return; // homepage uses the animated wordmark instead
+    function onScroll() {
+        header.classList.toggle('brand-collapsed', window.scrollY > 80);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+})();
+
 // ── Staggered scroll reveals (runs on every page) ──────────────
 (function () {
     var sections = document.querySelectorAll('.reveal-on-scroll');
