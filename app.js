@@ -287,7 +287,7 @@
     }
 
     function frame(now) {
-        var active = (now - lastMove) < 1600;
+        var active = (now - lastMove) < 3200;
         var canAuto = ready();
         var auto = !active && canAuto;
 
@@ -303,7 +303,7 @@
                 if (focus) {
                     center.x += (focus.left + focus.width / 2 - center.x) * 0.06;
                     center.y += (focus.top + focus.height / 2 - center.y) * 0.06;
-                    angle += 0.017;
+                    angle += 0.011;
                     tx = center.x + Math.cos(angle) * (focus.width / 2 + 30);
                     ty = center.y + Math.sin(angle) * (focus.height / 2 + 30);
                 } else {
@@ -329,7 +329,7 @@
         for (var i = 0; i < n; i++) pts[i].life -= 0.04;
         while (pts.length && pts[0].life <= 0) pts.shift();
         n = pts.length;
-        var alpha = auto ? 0.72 : 1;
+        var alpha = auto ? 0.58 : 1;
         if (n > 1) {
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
@@ -337,7 +337,7 @@
                 var a = pts[j - 1], b = pts[j];
                 var frac = j / n;                       // 0 = tail, 1 = at nib
                 var life = (a.life + b.life) / 2;
-                ctx.lineWidth = (frac * frac * 12 * life + 0.4) * (auto ? 0.8 : 1);
+                ctx.lineWidth = (frac * frac * 12 * life + 0.4) * (auto ? 0.7 : 1);
                 ctx.strokeStyle = 'rgba(' + ink + ((0.12 + frac * 0.62 * life) * alpha).toFixed(3) + ')';
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
@@ -349,7 +349,7 @@
             var head = pts[n - 1];
             ctx.fillStyle = 'rgba(' + ink + (0.88 * head.life * alpha).toFixed(3) + ')';
             ctx.beginPath();
-            ctx.arc(head.x, head.y, (auto ? 4.5 : 6) * (0.55 + head.life * 0.45), 0, Math.PI * 2);
+            ctx.arc(head.x, head.y, (auto ? 4 : 6) * (0.55 + head.life * 0.45), 0, Math.PI * 2);
             ctx.fill();
         }
         requestAnimationFrame(frame);
