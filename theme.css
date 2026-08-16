@@ -588,17 +588,8 @@ section.block {
     color: rgba(245, 242, 234, 0.85);
 }
 
-/* Reveal-on-scroll — gentle Apple-style fade/rise */
-.reveal-on-scroll {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
-}
-
-.reveal-on-scroll.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
+/* Reveal-on-scroll base states are defined in the INTERACTIONS section below
+   (section fades + unblurs; its children stagger in). */
 
 /* Pipeline */
 .pipeline {
@@ -1520,11 +1511,152 @@ footer {
     }
 }
 
+/* =========================================================
+   AWWWARDS-STYLE INTERACTIONS
+   Blackletter brand mark · tile hover-invert · staggered reveals
+   ========================================================= */
+
+/* Uniform blackletter "LoQOS" wherever the brand name appears */
+.loqos-mark {
+    font-family: var(--font-frak);
+    font-weight: 700;
+    font-size: 1.12em;
+    letter-spacing: 0.01em;
+    color: inherit;
+}
+
+/* --- Tiles invert to black on hover --- */
+.feature-card,
+.guard-item,
+.spec-card,
+.team-card,
+.pipe-node {
+    transition: opacity 0.6s var(--ease), transform 0.5s var(--ease),
+        background 0.35s var(--ease), border-color 0.35s var(--ease),
+        color 0.35s var(--ease), box-shadow 0.45s var(--ease);
+}
+
+.feature-card:hover,
+.guard-item:hover,
+.spec-card:hover,
+.team-card:hover,
+.pipe-node:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    transform: translateY(-6px);
+    box-shadow: 0 26px 55px rgba(23, 20, 13, 0.22);
+}
+
+.feature-card:hover h3,
+.guard-item:hover h4,
+.spec-card:hover h4,
+.team-card:hover .team-name,
+.pipe-node:hover .pipe-name { color: #fbf9f3; }
+
+.feature-card:hover p,
+.feature-card:hover .card-tag,
+.guard-item:hover p,
+.spec-card:hover p,
+.team-card:hover p,
+.team-card:hover .team-role,
+.pipe-node:hover .pipe-step { color: rgba(245, 242, 234, 0.74); }
+
+.feature-card:hover strong,
+.guard-item:hover strong,
+.spec-card:hover strong { color: #ffffff; }
+
+.feature-card:hover .loqos-mark,
+.guard-item:hover .loqos-mark,
+.spec-card:hover .loqos-mark { color: #fbf9f3; }
+
+.guard-item:hover .guard-glyph { color: rgba(245, 242, 234, 0.92); }
+
+.feature-card:hover .badge-new { background: #fbf9f3; color: var(--ink); }
+
+.team-card:hover .team-contact-btn {
+    border-color: rgba(245, 242, 234, 0.4);
+    color: #fbf9f3;
+}
+
+/* Dark-panel tiles lighten instead of going black-on-black */
+.dark-panel .guard-item:hover {
+    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: none;
+}
+.dark-panel .guard-item:hover h4 { color: #ffffff; }
+.dark-panel .guard-item:hover p { color: rgba(245, 242, 234, 0.82); }
+.dark-panel .guard-item:hover .guard-glyph { color: #ffffff; }
+
+/* --- Staggered scroll reveals: section unblurs, children rise --- */
+.reveal-on-scroll {
+    opacity: 0;
+    filter: blur(6px);
+    transition: opacity 0.8s var(--ease), filter 0.8s var(--ease);
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    filter: none;
+}
+
+.wn-rel,
+.roadmap-row,
+.status-line {
+    transition: opacity 0.6s var(--ease), transform 0.5s var(--ease);
+}
+
+.reveal-on-scroll .features-grid > *,
+.reveal-on-scroll .guard-grid > *,
+.reveal-on-scroll .team-grid > *,
+.reveal-on-scroll .spec-grid > *,
+.reveal-on-scroll .pipeline > *,
+.reveal-on-scroll .wn-timeline > *,
+.reveal-on-scroll .roadmap-row,
+.reveal-on-scroll .status-line {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.reveal-on-scroll.is-visible .features-grid > *,
+.reveal-on-scroll.is-visible .guard-grid > *,
+.reveal-on-scroll.is-visible .team-grid > *,
+.reveal-on-scroll.is-visible .spec-grid > *,
+.reveal-on-scroll.is-visible .pipeline > *,
+.reveal-on-scroll.is-visible .wn-timeline > *,
+.reveal-on-scroll.is-visible .roadmap-row,
+.reveal-on-scroll.is-visible .status-line {
+    opacity: 1;
+    transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.001ms !important;
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
+    }
+
+    .reveal-on-scroll,
+    .reveal-on-scroll * {
+        transition: none !important;
+    }
+
+    .reveal-on-scroll {
+        opacity: 1 !important;
+        filter: none !important;
+    }
+
+    .reveal-on-scroll .features-grid > *,
+    .reveal-on-scroll .guard-grid > *,
+    .reveal-on-scroll .team-grid > *,
+    .reveal-on-scroll .spec-grid > *,
+    .reveal-on-scroll .pipeline > *,
+    .reveal-on-scroll .wn-timeline > *,
+    .reveal-on-scroll .roadmap-row,
+    .reveal-on-scroll .status-line {
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     /* Respect the preference: the gradient keeps its colours but stops moving;

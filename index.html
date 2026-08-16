@@ -39,7 +39,7 @@
     <header id="main-header" class="nav-hidden">
         <div class="nav-wrapper">
             <nav class="nav-links">
-                <a href="/loqos/" class="nav-link">LoQOS</a>
+                <a href="/loqos/" class="nav-link"><span class="loqos-mark">LoQOS</span></a>
                 <a href="/whats-next/" class="nav-link">What's Next</a>
                 <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
             </nav>
@@ -361,7 +361,7 @@
         <div class="footer-meta-row">
             <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
             <p class="footer-meta">Paper-trading preview · no live capital ·
-                <a href="/loqos/">LoQOS</a></p>
+                <a href="/loqos/"><span class="loqos-mark">LoQOS</span></a></p>
         </div>
     </footer>
 
@@ -435,17 +435,6 @@
         window.addEventListener('scroll', function () {
             header.classList.toggle('scrolled', window.scrollY > 40);
         }, { passive: true });
-
-        // Gentle reveal-on-scroll
-        var io = new IntersectionObserver(function (entries, obs) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    obs.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-        document.querySelectorAll('.reveal-on-scroll').forEach(function (el) { io.observe(el); });
 
         // Audit-trail: stream decision entries into the mock (respecting reduced motion)
         (function () {
