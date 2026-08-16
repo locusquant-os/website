@@ -245,13 +245,33 @@
 
     // Section boxes the pen will orbit when idle.
     var SEL = '.hero-visual, .pipeline, .features-grid, .guard-grid, .dark-panel, ' +
-        '.today-grid, .road-panel, .team-grid, .wn-timeline, .spec-grid, .stat-row';
+        '.today-grid, .road-panel, .team-grid, .wn-timeline, .spec-grid, .stat-row, .ink-final';
     var targets = Array.prototype.slice.call(document.querySelectorAll(SEL));
+    var finals = Array.prototype.slice.call(document.querySelectorAll('.ink-final'));
+    var darkEls = Array.prototype.slice.call(document.querySelectorAll('.dark-panel, .btn-primary'));
     var homepage = !!document.querySelector('.hero-clarity');
     function ready() { return !homepage || document.body.classList.contains('intro-done'); }
 
+    // Ink turns cream over dark backgrounds (the Trust panel, primary buttons).
+    function overDark(x, y) {
+        for (var i = 0; i < darkEls.length; i++) {
+            var r = darkEls[i].getBoundingClientRect();
+            if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return true;
+        }
+        return false;
+    }
+    var inkMix = 0; // 0 = dark ink, 1 = cream ink
+
     var focus = null, lastFocus = 0;
     function pickFocus() {
+        // At the very bottom, frame the final call-to-action so it invites a click.
+        var atBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 130);
+        if (atBottom) {
+            for (var f = 0; f < finals.length; f++) {
+                var fr = finals[f].getBoundingClientRect();
+                if (fr.bottom > 40 && fr.top < window.innerHeight - 20) return fr;
+            }
+        }
         var vc = window.innerHeight / 2, best = null, bestD = 1e9;
         for (var i = 0; i < targets.length; i++) {
             var r = targets[i].getBoundingClientRect();
@@ -269,9 +289,12 @@
         var auto = !active && canAuto;
 
         if (active || canAuto) {
-            var tx, ty;
+            var tx, ty, ease;
             if (active) {
                 tx = mouse.x; ty = mouse.y;
+                // Smooth glide back when far (returning from an orbit); snappier up close.
+                var dx = mouse.x - pen.x, dy = mouse.y - pen.y;
+                ease = Math.sqrt(dx * dx + dy * dy) > 150 ? 0.08 : 0.26;
             } else {
                 if (now - lastFocus > 180) { focus = pickFocus(); lastFocus = now; }
                 if (focus) {
@@ -285,13 +308,18 @@
                     tx = window.innerWidth / 2 + Math.cos(angle) * 150;
                     ty = window.innerHeight / 2 + Math.sin(angle * 1.3) * 90;
                 }
+                ease = 0.12;
             }
-            var ease = active ? 0.3 : 0.12;
             pen.x += (tx - pen.x) * ease;
             pen.y += (ty - pen.y) * ease;
             pts.push({ x: pen.x, y: pen.y, life: 1 });
             if (pts.length > 55) pts.shift();
         }
+
+        // Blend the ink colour toward cream while over a dark background.
+        inkMix += ((overDark(pen.x, pen.y) ? 1 : 0) - inkMix) * 0.2;
+        var ink = Math.round(23 + 222 * inkMix) + ',' +
+            Math.round(20 + 222 * inkMix) + ',' + Math.round(13 + 221 * inkMix) + ',';
 
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         var n = pts.length;
@@ -307,7 +335,7 @@
                 var frac = j / n;                       // 0 = tail, 1 = at nib
                 var life = (a.life + b.life) / 2;
                 ctx.lineWidth = (frac * frac * 12 * life + 0.4) * (auto ? 0.8 : 1);
-                ctx.strokeStyle = 'rgba(23,20,13,' + ((0.12 + frac * 0.62 * life) * alpha).toFixed(3) + ')';
+                ctx.strokeStyle = 'rgba(' + ink + ((0.12 + frac * 0.62 * life) * alpha).toFixed(3) + ')';
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
                 var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
@@ -316,7 +344,7 @@
                 ctx.stroke();
             }
             var head = pts[n - 1];
-            ctx.fillStyle = 'rgba(23,20,13,' + (0.88 * head.life * alpha).toFixed(3) + ')';
+            ctx.fillStyle = 'rgba(' + ink + (0.88 * head.life * alpha).toFixed(3) + ')';
             ctx.beginPath();
             ctx.arc(head.x, head.y, (auto ? 4.5 : 6) * (0.55 + head.life * 0.45), 0, Math.PI * 2);
             ctx.fill();
