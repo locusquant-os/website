@@ -1257,45 +1257,73 @@ footer {
     color: var(--ink);
 }
 
-/* Timeline (whats-next) */
+/* Timeline (whats-next) — releases as cards on a flowing ink spine */
 .wn-timeline {
     position: relative;
-    margin-left: 6px;
+    padding-left: 44px;
 }
 
 .wn-timeline::before {
     content: '';
     position: absolute;
-    left: 6px;
-    top: 4px;
-    bottom: 4px;
+    left: 7px;
+    top: 12px;
+    bottom: 12px;
     width: 2px;
     background: var(--line);
 }
 
-.wn-rel {
-    position: relative;
-    padding: 0 0 44px 40px;
+/* an ink blob travels down the spine, tying the stages together */
+.wn-timeline::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    width: 6px;
+    height: 62px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, transparent, var(--ink), transparent);
+    animation: spineFlow 4.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-.wn-rel:last-child {
-    padding-bottom: 0;
+@keyframes spineFlow {
+    0% { top: -62px; opacity: 0; }
+    12% { opacity: 0.9; }
+    88% { opacity: 0.9; }
+    100% { top: 100%; opacity: 0; }
 }
+
+.wn-rel {
+    position: relative;
+    margin-bottom: 18px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    padding: 24px 28px;
+}
+
+.wn-rel:last-child { margin-bottom: 0; }
 
 .wn-dot {
     position: absolute;
-    left: 0;
-    top: 6px;
+    left: -43px;
+    top: 27px;
     width: 14px;
     height: 14px;
     border-radius: 50%;
     background: var(--bg);
     border: 3px solid var(--ink-mute);
+    z-index: 1;
 }
 
 .wn-rel.now .wn-dot {
     border-color: var(--ink);
-    box-shadow: 0 0 0 5px rgba(23, 20, 13, 0.08);
+    animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+    0% { box-shadow: 0 0 0 0 rgba(23, 20, 13, 0.30); }
+    70% { box-shadow: 0 0 0 12px rgba(23, 20, 13, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(23, 20, 13, 0); }
 }
 
 .wn-ver {
@@ -1532,7 +1560,8 @@ footer {
 .guard-item,
 .spec-card,
 .team-card,
-.pipe-node {
+.pipe-node,
+.wn-rel {
     transition: opacity 0.6s var(--ease), transform 0.5s var(--ease),
         background 0.35s var(--ease), border-color 0.35s var(--ease),
         color 0.35s var(--ease), box-shadow 0.45s var(--ease);
@@ -1542,12 +1571,23 @@ footer {
 .guard-item:hover,
 .spec-card:hover,
 .team-card:hover,
-.pipe-node:hover {
+.pipe-node:hover,
+.wn-rel:hover {
     background: var(--ink);
     border-color: var(--ink);
     transform: translateY(-6px);
     box-shadow: 0 26px 55px rgba(23, 20, 13, 0.22);
 }
+
+.wn-rel:hover h3 { color: #fbf9f3; }
+.wn-rel:hover p,
+.wn-rel:hover .wn-ver { color: rgba(245, 242, 234, 0.74); }
+.wn-rel:hover .stack-badge {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(245, 242, 234, 0.82);
+}
+.wn-rel.now:hover .wn-dot { border-color: #fbf9f3; }
 
 .feature-card:hover h3,
 .guard-item:hover h4,
@@ -1602,7 +1642,6 @@ footer {
     filter: none;
 }
 
-.wn-rel,
 .roadmap-row,
 .status-line {
     transition: opacity 0.6s var(--ease), transform 0.5s var(--ease);
@@ -1706,10 +1745,13 @@ footer {
 
 .pipe-feedback .loop-glyph {
     display: inline-block;
-    animation: loopSpin 5s linear infinite;
+    animation: loopPulse 2.6s ease-in-out infinite;
 }
 
-@keyframes loopSpin { to { transform: rotate(-360deg); } }
+@keyframes loopPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.14); }
+}
 
 .pipe-feedback::after {
     content: '';
