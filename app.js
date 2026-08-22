@@ -6,7 +6,7 @@
 
     // ── Contact modal (single reusable component, recipient-parameterized) ──
     var modal = document.getElementById('contact-modal');
-    if (!modal) return; // page without the modal markup — nothing more to wire
+    if (!modal) return; // page without the modal markup, nothing more to wire
 
     var WEB3FORMS_KEY = "a91d092d-9247-49a5-98f2-77c461eee51d";
     var RECIPIENTS = {
@@ -176,7 +176,7 @@
     }
 
     // The hero stat row is geometrically in view on load but the hero is held
-    // invisible for the ~1.1s brand intro — so defer the count until it reveals,
+    // invisible for the ~1.1s brand intro, so defer the count until it reveals,
     // otherwise the roll finishes off-screen and you only ever see the final value.
     function startWhenReady(row) {
         var needsIntro = document.querySelector('.hero-clarity') &&
