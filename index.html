@@ -386,13 +386,15 @@
             if (mobile) {
                 wm.textContent = 'LQ';
                 wm.style.left = '14%';
-                wm.style.top = '14px';
                 wm.style.fontSize = '26px';
+                wm.classList.add('docked-mobile');
+                wm.classList.remove('docked-desktop');
             } else {
                 wm.textContent = 'LocusQuant';
                 wm.style.left = '50%';
-                wm.style.top = '16px';
                 wm.style.fontSize = '30px';
+                wm.classList.add('docked-desktop');
+                wm.classList.remove('docked-mobile');
             }
         }
 
@@ -411,9 +413,13 @@
 
         window.addEventListener('resize', function () { if (introDone) dockWordmark(); });
 
-        // Header background once you begin scrolling
+        // Header background once you begin scrolling. The docked wordmark's
+        // vertical position tracks the same scrolled/unscrolled state (via
+        // body.header-scrolled in CSS) so it never drifts from the nav button.
         window.addEventListener('scroll', function () {
-            header.classList.toggle('scrolled', window.scrollY > 40);
+            var scrolled = window.scrollY > 40;
+            header.classList.toggle('scrolled', scrolled);
+            document.body.classList.toggle('header-scrolled', scrolled);
         }, { passive: true });
 
         // Decision record: stream entries into the mock (respecting reduced motion)

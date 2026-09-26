@@ -238,6 +238,28 @@ header.scrolled {
     -webkit-font-smoothing: antialiased;
 }
 
+/* Docked position must clear the same iOS safe-area inset the header's own
+   padding uses, or the logo and nav row drift apart on notch/Dynamic Island
+   devices — the header shifts down for the inset, a hardcoded px value doesn't.
+   It also has to track the header's unscrolled (20px) vs scrolled (12px)
+   padding, or the logo sits a few px higher than the nav button right after
+   the intro, before the page has been scrolled. */
+.brand-wordmark.docked-mobile {
+    top: calc(25px + env(safe-area-inset-top, 0px));
+}
+
+.brand-wordmark.docked-desktop {
+    top: calc(24px + env(safe-area-inset-top, 0px));
+}
+
+body.header-scrolled .brand-wordmark.docked-mobile {
+    top: calc(17px + env(safe-area-inset-top, 0px));
+}
+
+body.header-scrolled .brand-wordmark.docked-desktop {
+    top: calc(16px + env(safe-area-inset-top, 0px));
+}
+
 /* ---------------------------------------------------------------
    CLARITY HERO — the wordmark auto-docks (~1.1s), then the value
    proposition, CTAs and a live product panel reveal.
