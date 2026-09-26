@@ -1,90 +1,52 @@
-// Shared behaviour for every LocusQuant page: the reusable contact modal.
+// Shared behaviour for every LocusQuant page: the inline early-access form.
 // Page-specific effects (wordmark dock, scroll reveals) stay inline on their
 // own page.
 (function () {
     'use strict';
 
-    // ── Contact modal (single reusable component, recipient-parameterized) ──
-    var modal = document.getElementById('contact-modal');
-    if (!modal) return; // page without the modal markup, nothing more to wire
-
+    // ── Early access form (inline, submits via Web3Forms) ──
     var WEB3FORMS_KEY = "a91d092d-9247-49a5-98f2-77c461eee51d";
-    var RECIPIENTS = {
-        both: { intended_for: "Both founders", tag: "[ACCESS REQUEST]", heading: "Request Access" },
-        divyanshu: { intended_for: "Divyanshu", tag: "[FOR: DIVYANSHU]", heading: "Contact Divyanshu" },
-        ayush: { intended_for: "Ayush", tag: "[FOR: AYUSH]", heading: "Contact Ayush" }
-    };
+    var form = document.getElementById('access-form');
+    if (!form) return; // page without the form markup, nothing more to wire
 
-    var modalHeading = document.getElementById('modal-heading');
-    var modalRecipient = document.getElementById('modal-recipient');
-    var contactForm = document.getElementById('contact-form');
-    var modalStatus = document.getElementById('modal-status');
-    var modalSubmit = document.getElementById('modal-submit');
-    var firstField = document.getElementById('cf-name');
-    var currentRecipient = RECIPIENTS.both;
+    var status = document.getElementById('access-status');
+    var submitBtn = document.getElementById('access-submit');
 
-    function openModal(key) {
-        currentRecipient = RECIPIENTS[key] || RECIPIENTS.both;
-        modalHeading.textContent = currentRecipient.heading;
-        modalRecipient.textContent = "// intended_for: " + currentRecipient.intended_for;
-        contactForm.reset();
-        contactForm.style.display = '';
-        modalStatus.textContent = '';
-        modalStatus.className = 'modal-status';
-        modalSubmit.disabled = false;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        // Focus the first field once the modal is painted.
-        if (firstField) {
-            setTimeout(function () { firstField.focus(); }, 50);
-        }
-    }
-
-    function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('[data-modal]').forEach(function (el) {
-        el.addEventListener('click', function () { openModal(el.getAttribute('data-modal')); });
-    });
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-    });
-
-    contactForm.addEventListener('submit', async function (e) {
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
-        var fd = new FormData(contactForm);
+        var fd = new FormData(form);
         // Honeypot: if the hidden checkbox is set, silently drop (treat as bot).
         if (fd.get('botcheck')) return;
 
         var name = (fd.get('name') || '').toString().trim();
         var email = (fd.get('email') || '').toString().trim();
-        var message = (fd.get('message') || '').toString().trim();
-        if (!name || !email || !message) {
-            modalStatus.className = 'modal-status failure';
-            modalStatus.innerHTML = '$ missing_fields ✕<span class="modal-status-sub">Name, email and message are all required.</span>';
+        var firm = (fd.get('firm') || '').toString().trim();
+        var role = (fd.get('role') || '').toString().trim();
+        var firmType = (fd.get('firm_type') || '').toString().trim();
+        var useCase = (fd.get('use_case') || '').toString().trim();
+
+        if (!name || !email || !firm || !role || !firmType) {
+            status.className = 'modal-status failure';
+            status.innerHTML = 'Please fill in every required field.<span class="modal-status-sub">Name, work email, firm, role and type of firm are all required.</span>';
             return;
         }
 
         var payload = {
             access_key: WEB3FORMS_KEY,
-            subject: "LocusQuant " + currentRecipient.tag + " from " + (name || "anonymous"),
+            subject: "LocusQuant early access request from " + name + " (" + firm + ")",
             name: name,
             email: email,
-            message: message,
-            intended_for: currentRecipient.intended_for,
+            firm: firm,
+            role: role,
+            firm_type: firmType,
+            use_case: useCase || "(not provided)",
             from_url: window.location.href,
             botcheck: false
         };
 
-        modalSubmit.disabled = true;
-        modalStatus.className = 'modal-status pending';
-        modalStatus.textContent = '$ transmitting...';
+        submitBtn.disabled = true;
+        status.className = 'modal-status pending';
+        status.textContent = 'Sending your request…';
 
         try {
             var res = await fetch('https://api.web3forms.com/submit', {
@@ -94,30 +56,18 @@
             });
             var data = await res.json().catch(function () { return {}; });
             if (res.ok && data.success) {
-                contactForm.style.display = 'none';
-                modalStatus.className = 'modal-status success';
-                modalStatus.innerHTML = '$ request_transmitted ✓<span class="modal-status-sub">We\'ll be in touch. You can close this window.</span>';
+                form.style.display = 'none';
+                status.className = 'modal-status success';
+                status.textContent = "Thanks. We'll be in touch within a few days.";
             } else {
                 throw new Error((data && data.message) || 'submit failed');
             }
         } catch (err) {
-            modalSubmit.disabled = false;
-            modalStatus.className = 'modal-status failure';
-            modalStatus.innerHTML = '$ transmission_failed ✕<span class="modal-status-sub">Please try again in a moment.</span>';
+            submitBtn.disabled = false;
+            status.className = 'modal-status failure';
+            status.innerHTML = 'Something went wrong.<span class="modal-status-sub">Please try again in a moment.</span>';
         }
     });
-})();
-
-// ── Sub-page header wordmark: collapse LocusQuant → LQ on scroll ──
-(function () {
-    var header = document.querySelector('header');
-    var brand = document.querySelector('.nav-brand');
-    if (!header || !brand) return; // homepage uses the animated wordmark instead
-    function onScroll() {
-        header.classList.toggle('brand-collapsed', window.scrollY > 80);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
 })();
 
 // ── Staggered scroll reveals (runs on every page) ──────────────
@@ -127,8 +77,8 @@
 
     function stagger(section) {
         var kids = section.querySelectorAll(
-            '.features-grid > *, .guard-grid > *, .team-grid > *, .spec-grid > *, ' +
-            '.pipeline > *, .wn-timeline > *, .roadmap-row, .status-line');
+            '.features-grid > *, .who-grid > *, .problem-list > *, ' +
+            '.scene-list > *, .faq-list > *, .status-line');
         kids.forEach(function (k, i) { k.style.transitionDelay = (0.05 + i * 0.06).toFixed(2) + 's'; });
         // Clear the delays after the entrance so hover stays snappy.
         setTimeout(function () {
@@ -149,60 +99,6 @@
         });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     sections.forEach(function (s) { io.observe(s); });
-})();
-
-// ── Count-up stat numbers when the stat row scrolls into view ──
-(function () {
-    var rows = document.querySelectorAll('.stat-row');
-    if (!rows.length) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function run(num) {
-        var span = num.querySelector('span');
-        var suffix = span ? span.outerHTML : '';
-        var m = num.textContent.match(/(\$?)(\d+)/);
-        if (!m) return;
-        var prefix = m[1], target = parseInt(m[2], 10);
-        if (reduce || target === 0) { num.innerHTML = prefix + target + suffix; return; }
-        var dur = 1600, start = null;
-        function tick(now) {
-            if (!start) start = now;
-            var t = Math.min((now - start) / dur, 1);
-            var eased = 1 - Math.pow(1 - t, 3);
-            num.innerHTML = prefix + Math.round(eased * target) + suffix;
-            if (t < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-    }
-
-    // The hero stat row is geometrically in view on load but the hero is held
-    // invisible for the ~1.1s brand intro, so defer the count until it reveals,
-    // otherwise the roll finishes off-screen and you only ever see the final value.
-    function startWhenReady(row) {
-        var needsIntro = document.querySelector('.hero-clarity') &&
-            !document.body.classList.contains('intro-done');
-        if (!needsIntro) { row.querySelectorAll('.num').forEach(run); return; }
-        var mo = new MutationObserver(function () {
-            if (document.body.classList.contains('intro-done')) {
-                mo.disconnect();
-                setTimeout(function () { row.querySelectorAll('.num').forEach(run); }, 150);
-            }
-        });
-        mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    }
-
-    if (!('IntersectionObserver' in window)) {
-        rows.forEach(startWhenReady);
-        return;
-    }
-    var io = new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            obs.unobserve(entry.target);
-            startWhenReady(entry.target);
-        });
-    }, { threshold: 0.4 });
-    rows.forEach(function (r) { io.observe(r); });
 })();
 
 // ── Autonomous ink pen (pointer devices only) ──────────────────
@@ -247,15 +143,15 @@
     });
 
     // Section boxes the pen will orbit when idle.
-    var SEL = '.hero-visual, .pipeline, .features-grid, .guard-grid, .dark-panel, ' +
-        '.today-grid, .road-panel, .team-grid, .wn-rel, .spec-grid, .stat-row, .ink-final';
+    var SEL = '.hero-visual, .signal-band, .features-grid, .who-grid, .problem-list, ' +
+        '.scene-list, .status-panel, .access-panel, .faq-list, .close-cta, .ink-final';
     var targets = Array.prototype.slice.call(document.querySelectorAll(SEL));
     var finals = Array.prototype.slice.call(document.querySelectorAll('.ink-final'));
-    var darkEls = Array.prototype.slice.call(document.querySelectorAll('.dark-panel, .btn-primary'));
+    var darkEls = Array.prototype.slice.call(document.querySelectorAll('.signal-band, .band-dark, .site-footer, .btn-primary'));
     var homepage = !!document.querySelector('.hero-clarity');
     function ready() { return !homepage || document.body.classList.contains('intro-done'); }
 
-    // Ink turns cream over dark backgrounds (the Trust panel, primary buttons).
+    // Ink turns cream over dark backgrounds (the full-bleed dark bands, primary buttons).
     function overDark(x, y) {
         for (var i = 0; i < darkEls.length; i++) {
             var r = darkEls[i].getBoundingClientRect();
@@ -264,6 +160,15 @@
         return false;
     }
     var inkMix = 0; // 0 = dark ink, 1 = cream ink
+
+    // The fiber-grass field has its own cursor interaction (blades bend away);
+    // the ink trail steps aside there so the two effects don't fight.
+    var fiberEl = document.querySelector('.fiber-stage');
+    function overFiber(x, y) {
+        if (!fiberEl) return false;
+        var r = fiberEl.getBoundingClientRect();
+        return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    }
 
     var focus = null, lastFocus = 0;
     function pickFocus() {
@@ -287,8 +192,9 @@
     }
 
     function frame(now) {
-        var active = (now - lastMove) < 3200;
-        var canAuto = ready();
+        var inGrass = overFiber(mouse.x, mouse.y);
+        var active = (now - lastMove) < 3200 && !inGrass;
+        var canAuto = ready() && !inGrass;
         var auto = !active && canAuto;
 
         if (active || canAuto) {
