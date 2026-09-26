@@ -743,11 +743,24 @@
                 return;
             }
 
+            // Pause the render loop while the field is scrolled out of view —
+            // otherwise it keeps redrawing 220 blades every frame even at the
+            // bottom of the page, competing with the ink trail for main-thread
+            // time and making the cursor trail feel laggy/stuck.
+            var visible = true;
+            var rafId = null;
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (entries) {
+                    visible = entries[0].isIntersecting;
+                    if (visible && rafId === null) rafId = requestAnimationFrame(frame);
+                }, { rootMargin: '200px 0px' }).observe(stage);
+            }
+
             function frame(now) {
                 drawFrame(now / 1000, true);
-                requestAnimationFrame(frame);
+                rafId = visible ? requestAnimationFrame(frame) : null;
             }
-            requestAnimationFrame(frame);
+            rafId = requestAnimationFrame(frame);
         })();
 
         // Subtle 3D tilt on the hero product panel as the cursor moves

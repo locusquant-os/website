@@ -1238,7 +1238,6 @@ section.block {
     -webkit-text-fill-color: transparent;
     color: transparent;
     animation: gradWord 18s ease-in-out infinite alternate;
-    filter: drop-shadow(0 0 34px rgba(150, 128, 204, 0.22)) drop-shadow(0 0 70px rgba(110, 178, 200, 0.14));
 }
 
 .footer-bottom {
