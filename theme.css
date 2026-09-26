@@ -5,9 +5,9 @@
    ============================================================ */
 
 :root {
-    --bg: #f5f2ea;
-    --bg-elevated: #fbf9f3;
-    --bg-sunken: #ece6d9;
+    --bg: #efe6d1;
+    --bg-elevated: #f7f0e0;
+    --bg-sunken: #e2d5b6;
     --ink: #17140d;
     --ink-soft: #4c4840;
     /* WCAG AA: ~5.2:1 on the cream bg for small muted text (eyebrows, labels) */
@@ -50,18 +50,32 @@ body {
     overflow-x: hidden;
 }
 
-/* Subtle paper grain over the whole surface — tactile, "expensive" texture.
-   Very low opacity so it never affects text contrast. Non-interactive. */
+/* Rough, coarse paper texture over the whole surface — two layers for a
+   vintage, uneven-stock feel: fine fiber grain, plus large soft "foxing"
+   blotches like aged paper. Kept subtle enough to never affect text
+   contrast; both layers are non-interactive. */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='600'%20height='600'%3E%3Cfilter%20id='f'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.008'%20numOctaves='3'%20seed='7'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0%200%200%200%200.35%200%200%200%200%200.28%200%200%200%200%200.14%200%200%200%201%200'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23f)'/%3E%3C/svg%3E");
+    background-size: 600px 600px;
+}
+
 body::after {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 9998;
     pointer-events: none;
-    opacity: 0.05;
+    opacity: 0.12;
     mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 140px 140px;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.75'%20numOctaves='4'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='matrix'%20values='0%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%200%201.3%200'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 130px 130px;
 }
 
 .container {
