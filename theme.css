@@ -39,6 +39,7 @@ html {
 }
 
 body {
+    position: relative;
     font-family: var(--font-sans);
     background: var(--bg);
     color: var(--ink);
@@ -53,10 +54,15 @@ body {
 /* Rough, coarse paper texture over the whole surface — two layers for a
    vintage, uneven-stock feel: fine fiber grain, plus large soft "foxing"
    blotches like aged paper. Kept subtle enough to never affect text
-   contrast; both layers are non-interactive. */
+   contrast; both layers are non-interactive.
+   `position: absolute` (not fixed) so the texture scrolls WITH the page
+   and gets composited once, instead of being re-blended against newly
+   revealed content on every scroll frame — a fixed + mix-blend-mode
+   overlay across the full viewport is expensive enough during scroll
+   to visibly starve the ink-trail canvas of main-thread time. */
 body::before {
     content: '';
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: 9997;
     pointer-events: none;
@@ -68,7 +74,7 @@ body::before {
 
 body::after {
     content: '';
-    position: fixed;
+    position: absolute;
     inset: 0;
     z-index: 9998;
     pointer-events: none;
