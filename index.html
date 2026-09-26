@@ -380,18 +380,18 @@
         var wm = document.getElementById('brand-wm');
         var introDone = false;
 
-        // Place the docked wordmark: centred small on desktop, top-left "LQ" on mobile
+        // Place the docked wordmark: centred small on desktop, top-left "LQ" on mobile.
+        // Position itself is CSS-driven (transform only, see theme.css) so it stays
+        // correctly pinned as position:fixed on iOS Safari during scroll.
         function dockWordmark() {
             var mobile = window.innerWidth <= 680;
             if (mobile) {
                 wm.textContent = 'LQ';
-                wm.style.left = '14%';
                 wm.style.fontSize = '26px';
                 wm.classList.add('docked-mobile');
                 wm.classList.remove('docked-desktop');
             } else {
                 wm.textContent = 'LocusQuant';
-                wm.style.left = '50%';
                 wm.style.fontSize = '30px';
                 wm.classList.add('docked-desktop');
                 wm.classList.remove('docked-mobile');

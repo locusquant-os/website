@@ -219,14 +219,16 @@ header.scrolled {
 
 /* ------------------------------------------------------------
    HERO WORDMARK — big on load, docks to top-centre on scroll.
-   Fixed element; font-size + top driven by JS (--wm-size/--wm-top).
-   Black only, no gradient.
+   Fixed element positioned purely via `transform` (never top/left).
+   iOS Safari can detach a `position:fixed` element from the viewport
+   mid-scroll when its position is driven by top/left transitions —
+   it starts drawing at its in-flow document position instead. Using
+   only translate3d keeps it on the compositor and pinned correctly.
    ------------------------------------------------------------ */
 .brand-wordmark {
     position: fixed;
-    left: 50%;
-    top: 40vh;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
     font-family: var(--font-frak);
     font-size: clamp(3.4rem, 14vw, 11rem);
     line-height: 0.9;
@@ -234,8 +236,12 @@ header.scrolled {
     text-decoration: none;
     white-space: nowrap;
     z-index: 1001;
-    transition: top 0.9s var(--ease), left 0.9s var(--ease), font-size 0.9s var(--ease);
+    transform: translate3d(50vw, 40vh, 0) translateX(-50%);
+    transition: transform 0.9s var(--ease), font-size 0.9s var(--ease);
     -webkit-font-smoothing: antialiased;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* Docked position must clear the same iOS safe-area inset the header's own
@@ -245,19 +251,19 @@ header.scrolled {
    padding, or the logo sits a few px higher than the nav button right after
    the intro, before the page has been scrolled. */
 .brand-wordmark.docked-mobile {
-    top: calc(25px + env(safe-area-inset-top, 0px));
+    transform: translate3d(14vw, calc(25px + env(safe-area-inset-top, 0px)), 0) translateX(-50%);
 }
 
 .brand-wordmark.docked-desktop {
-    top: calc(24px + env(safe-area-inset-top, 0px));
+    transform: translate3d(50vw, calc(24px + env(safe-area-inset-top, 0px)), 0) translateX(-50%);
 }
 
 body.header-scrolled .brand-wordmark.docked-mobile {
-    top: calc(17px + env(safe-area-inset-top, 0px));
+    transform: translate3d(14vw, calc(17px + env(safe-area-inset-top, 0px)), 0) translateX(-50%);
 }
 
 body.header-scrolled .brand-wordmark.docked-desktop {
-    top: calc(16px + env(safe-area-inset-top, 0px));
+    transform: translate3d(50vw, calc(16px + env(safe-area-inset-top, 0px)), 0) translateX(-50%);
 }
 
 /* ---------------------------------------------------------------
