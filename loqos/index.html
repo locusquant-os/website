@@ -22,7 +22,7 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <link rel="stylesheet" href="/theme.css?v=6">
+    <link rel="stylesheet" href="/theme.css?v=7">
 </head>
 
 <body>
@@ -30,9 +30,10 @@
     <header id="main-header" class="scrolled">
         <div class="nav-wrapper">
             <a href="/" class="nav-brand" aria-label="LocusQuant home"><span class="nb-full">LocusQuant</span><span class="nb-mono" aria-hidden="true">LQ</span></a>
-            <nav class="nav-links">
+            <nav class="nav-links" aria-label="Primary">
                 <a href="/loqos/" class="nav-link"><span class="loqos-mark">LoQOS</span></a>
                 <a href="/whats-next/" class="nav-link">What's Next</a>
+                <a href="/maths/" class="nav-link">The maths</a>
                 <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
             </nav>
         </div>
@@ -151,15 +152,17 @@
 
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-liquid">
+    <!-- FOOTER: full-bleed black, huge animated-gradient wordmark -->
+    <footer class="site-footer">
+        <div class="footer-wordmark-band">
             <span class="footer-wordmark" aria-hidden="true"><span class="brand-full">LocusQuant</span><span class="brand-short">LQ</span></span>
         </div>
-        <div class="footer-meta-row">
-            <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
-            <p class="footer-meta">Paper-trading preview · no live capital ·
-                <a href="/whats-next/">What's Next</a></p>
+        <div class="footer-bottom">
+            <div class="footer-meta-row">
+                <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
+                <p class="footer-meta">Paper-trading preview · no live capital ·
+                    <a href="/whats-next/">What's Next</a></p>
+            </div>
         </div>
     </footer>
 
@@ -191,7 +194,7 @@
         </div>
     </div>
 
-    <script src="/app.js?v=6"></script>
+    <script src="/app.js?v=7"></script>
 </body>
 
 </html>

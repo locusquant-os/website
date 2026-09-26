@@ -74,6 +74,36 @@ a {
     color: inherit;
 }
 
+/* Visible keyboard focus everywhere (WCAG) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+}
+
+.skip-link {
+    position: fixed;
+    top: -60px;
+    left: 12px;
+    z-index: 3000;
+    background: var(--ink);
+    color: var(--bg-elevated);
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: top 0.2s var(--ease);
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
 /* ------------------------------------------------------------
    HEADER / NAV
    ------------------------------------------------------------ */
@@ -438,6 +468,54 @@ body.intro-done .hero-clarity {
 .log .ok { color: #1f7a48; font-weight: 700; font-size: 0.76rem; white-space: nowrap; }
 .log .blk { color: #b02a1e; font-weight: 700; font-size: 0.76rem; white-space: nowrap; }
 .log.log-enter { opacity: 0; transform: translateY(-7px); }
+
+/* --- Signal band: full-bleed dark, ink/cream only (no foreign colour).
+   The headline sits clean on flat ink; the fiber field is its own
+   visual zone below it, so the two never overlap or fight for legibility. --- */
+.signal-band {
+    position: relative;
+    background: var(--ink);
+    padding: 108px 28px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signal-inner {
+    max-width: 780px;
+    text-align: center;
+    margin-bottom: 64px;
+}
+
+.signal-line {
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.12;
+    color: #f7f4ee;
+}
+
+.signal-line .muted {
+    color: rgba(245, 242, 234, 0.5);
+}
+
+.fiber-stage {
+    position: relative;
+    width: 100%;
+    height: 46vh;
+    min-height: 320px;
+    max-height: 480px;
+    overflow: hidden;
+    background: radial-gradient(120% 80% at 50% 112%, rgba(245, 242, 234, 0.14), transparent 62%);
+}
+
+.fiber-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
 
 /* Brand text swap: full wordmark on desktop, "LQ" monogram on mobile */
 .brand-short {
@@ -982,9 +1060,122 @@ section.block {
     border-color: var(--ink);
 }
 
+/* --- "Why this matters" lines: visually lighter than body copy --- */
+.why-matters {
+    margin-top: 22px;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--ink-mute);
+    max-width: 640px;
+}
+
+.why-matters-dark {
+    color: rgba(245, 242, 234, 0.6);
+}
+
+/* --- "What this means for you" line inside a maths/feature card --- */
+.what-this-means {
+    margin-top: 10px;
+    font-size: 0.88rem;
+    color: var(--ink-mute);
+    border-top: 1px solid var(--line-soft);
+    padding-top: 10px;
+}
+
+/* --- FAQ: accessible <details> accordion --- */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 760px;
+}
+
+.faq-item {
+    border-top: 1px solid var(--line);
+    padding: 20px 0;
+}
+
+.faq-item:last-child {
+    border-bottom: 1px solid var(--line);
+}
+
+.faq-item summary {
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary::after {
+    content: '+';
+    flex: 0 0 auto;
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--ink-mute);
+}
+
+.faq-item[open] summary::after {
+    content: '\2212';
+}
+
+.faq-item p {
+    margin-top: 12px;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    max-width: 640px;
+}
+
+/* --- Form additions: dropdowns, checkbox group, optional-field tag --- */
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2020%2020'%3E%3Cpath%20fill='%23666052'%20d='M5.5%207.5l4.5%205%204.5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+}
+
+.form-select:invalid {
+    color: var(--ink-mute);
+}
+
+.field-optional {
+    color: var(--ink-mute);
+    font-weight: 400;
+}
+
+.modal-fieldset {
+    border: none;
+    margin: 16px 0 0;
+    padding: 0;
+}
+
+.modal-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    padding: 6px 0;
+    cursor: pointer;
+}
+
+.modal-check input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--ink);
+}
+
 /* ------------------------------------------------------------
-   FOOTER — soft animated "liquid" gradient box with a large
-   faded-black blackletter wordmark. No images.
+   FOOTER — full-bleed black band with a huge animated wordmark.
    ------------------------------------------------------------ */
 /* Closing conversion band */
 .close-cta {
@@ -1021,106 +1212,75 @@ section.block {
     color: var(--ink-mute);
 }
 
-footer {
-    padding: 40px 28px 48px;
-    max-width: var(--maxw);
-    margin: 0 auto;
-}
-
-.footer-liquid {
-    position: relative;
-    border-radius: 40px;
-    background: var(--bg-sunken);
+/* Full-bleed black band. A huge wordmark spans the width edge to edge,
+   filled with the brand's animated gradient (same sweep used for
+   "defensible" in the signal band), glowing softly on black. */
+.site-footer {
+    background: var(--ink);
     overflow: hidden;
-    /* Safari/WebKit ignores overflow:hidden + border-radius for transformed/
-       blurred children; clip-path clips all descendants, so the animated blobs
-       stay inside the rounded corners on iOS/Safari too. */
-    -webkit-clip-path: inset(0 round 40px);
-    clip-path: inset(0 round 40px);
-    padding: 56px 28px 34px;
-    isolation: isolate;
 }
 
-/* Two counter-drifting blob layers = a living "lava-lamp" flow (colours preserved) */
-.footer-liquid::before,
-.footer-liquid::after {
-    content: '';
-    position: absolute;
-    inset: -35%;
-    z-index: 0;
-    filter: blur(40px);
-    will-change: transform;
-}
-
-.footer-liquid::before {
-    background:
-        radial-gradient(circle at 22% 32%, rgba(168, 150, 214, 0.62), transparent 38%),
-        radial-gradient(circle at 78% 22%, rgba(140, 196, 214, 0.58), transparent 38%),
-        radial-gradient(circle at 66% 78%, rgba(230, 178, 150, 0.62), transparent 40%),
-        radial-gradient(circle at 30% 72%, rgba(180, 214, 168, 0.56), transparent 40%);
-    animation: liquidA 12s ease-in-out infinite alternate;
-}
-
-.footer-liquid::after {
-    background:
-        radial-gradient(circle at 40% 20%, rgba(224, 170, 200, 0.55), transparent 38%),
-        radial-gradient(circle at 85% 65%, rgba(150, 210, 200, 0.52), transparent 40%),
-        radial-gradient(circle at 15% 60%, rgba(210, 200, 150, 0.52), transparent 40%);
-    animation: liquidB 9s ease-in-out infinite alternate;
-    mix-blend-mode: multiply;
-}
-
-@keyframes liquidA {
-    0%   { transform: translate3d(-14%, -10%, 0) rotate(-14deg) scale(1.05); }
-    50%  { transform: translate3d(16%, 12%, 0) rotate(16deg) scale(1.35); }
-    100% { transform: translate3d(-8%, 14%, 0) rotate(-6deg) scale(1.15); }
-}
-
-@keyframes liquidB {
-    0%   { transform: translate3d(14%, 12%, 0) rotate(10deg) scale(1.2); }
-    50%  { transform: translate3d(-18%, -12%, 0) rotate(-18deg) scale(1.05); }
-    100% { transform: translate3d(12%, -10%, 0) rotate(14deg) scale(1.3); }
+.footer-wordmark-band {
+    width: 100%;
+    padding: 56px 0 8px;
+    overflow: hidden;
 }
 
 .footer-wordmark {
-    position: relative;
-    z-index: 1;
     display: block;
+    width: 100%;
+    text-align: center;
     font-family: var(--font-frak);
     font-weight: 700;
-    text-align: center;
     white-space: nowrap;
-    line-height: 0.9;
-    letter-spacing: -0.01em;
-    font-size: clamp(3rem, 15vw, 13rem);
-    color: rgba(23, 20, 13, 0.18);
+    line-height: 0.86;
+    letter-spacing: -0.015em;
+    font-size: clamp(4.4rem, 15.5vw, 15rem);
     user-select: none;
+
+    background: linear-gradient(100deg,
+            rgb(150, 128, 204) 0%,
+            rgb(110, 178, 200) 22%,
+            rgb(150, 196, 132) 44%,
+            rgb(220, 156, 120) 66%,
+            rgb(212, 142, 184) 84%,
+            rgb(150, 128, 204) 100%);
+    background-size: 260% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: gradWord 18s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 34px rgba(150, 128, 204, 0.22)) drop-shadow(0 0 70px rgba(110, 178, 200, 0.14));
 }
 
-/* Meta row lives OUTSIDE the gradient box (on solid cream) so its text always
-   meets contrast — no small text sits on the animated gradient. */
+.footer-bottom {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 8px 28px 48px;
+}
+
 .footer-meta-row {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 22px;
     padding: 0 6px;
 }
 
 .footer-meta {
     font-size: 0.85rem;
-    color: var(--ink-soft);
+    color: rgba(245, 242, 234, 0.68);
 }
 
 .footer-meta a {
-    color: var(--ink);
+    color: #f5f2ea;
     text-decoration: underline;
     text-underline-offset: 2px;
 }
 
 .footer-meta a:hover {
-    color: var(--ink-soft);
+    color: rgba(245, 242, 234, 0.75);
 }
 
 /* ------------------------------------------------------------
@@ -1322,6 +1482,199 @@ footer {
     color: var(--ink);
 }
 
+/* ------------------------------------------------------------
+   MATHS PAGE (/maths/) — explainer cards, formulas, sliders
+   ------------------------------------------------------------ */
+.maths-item {
+    background: var(--bg-elevated);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px;
+    margin-bottom: 24px;
+}
+
+.maths-item:last-child {
+    margin-bottom: 0;
+}
+
+.maths-item .card-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+}
+
+.maths-item h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 12px;
+}
+
+.maths-item > p {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.65;
+    max-width: 680px;
+}
+
+.formula-box {
+    background: var(--bg-sunken);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    margin: 18px 0;
+    overflow-x: auto;
+    text-align: center;
+}
+
+.formula-note {
+    font-size: 0.85rem;
+    color: var(--ink-mute);
+    margin-top: 10px;
+    text-align: left;
+}
+
+.slider-row {
+    margin: 20px 0 6px;
+}
+
+.slider-row label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+}
+
+.slider-row input[type="range"] {
+    width: 100%;
+    accent-color: var(--ink);
+}
+
+.slider-output {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin: 18px 0;
+}
+
+.slider-stat .num {
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1;
+}
+
+.slider-stat .label {
+    margin-top: 4px;
+    font-size: 0.8rem;
+    color: var(--ink-mute);
+}
+
+.slider-bars {
+    margin: 16px 0;
+}
+
+.slider-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    color: var(--ink-mute);
+}
+
+.slider-bar-track {
+    flex: 1;
+    height: 10px;
+    border-radius: 99px;
+    background: var(--bg-sunken);
+    overflow: hidden;
+}
+
+.slider-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--ink);
+    transition: width 0.1s linear;
+}
+
+.slider-bar-fill.faint {
+    background: var(--line);
+}
+
+.worked-example {
+    background: var(--bg-sunken);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 18px 0;
+}
+
+.worked-example strong {
+    color: var(--ink);
+}
+
+.quote-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+}
+
+.quote-card {
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.quote-card .tag {
+    display: block;
+    font-weight: 700;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+}
+
+.quote-card.accepted {
+    background: rgba(31, 122, 72, 0.08);
+    border: 1px solid rgba(31, 122, 72, 0.25);
+}
+
+.quote-card.accepted .tag {
+    color: #1f7a48;
+}
+
+.quote-card.rejected {
+    background: rgba(176, 42, 30, 0.08);
+    border: 1px solid rgba(176, 42, 30, 0.25);
+}
+
+.quote-card.rejected .tag {
+    color: #b02a1e;
+}
+
+.maths-item .what-this-means {
+    max-width: 680px;
+}
+
+@media (max-width: 680px) {
+    .quote-pair {
+        grid-template-columns: 1fr;
+    }
+
+    .maths-item {
+        padding: 26px 22px;
+    }
+}
+
 /* Timeline (whats-next) — releases as cards on a flowing ink spine */
 .wn-timeline {
     position: relative;
@@ -1500,6 +1853,19 @@ footer {
         padding: 116px 24px 40px;
     }
 
+    .signal-band {
+        padding: 72px 22px 0;
+    }
+
+    .signal-inner {
+        margin-bottom: 40px;
+    }
+
+    .fiber-stage {
+        height: 38vh;
+        min-height: 260px;
+    }
+
     .hero-grid {
         grid-template-columns: 1fr;
         gap: 30px;
@@ -1583,28 +1949,24 @@ footer {
         display: none;
     }
 
-    /* Smaller, tighter footer box that fits the LQ monogram */
-    footer {
-        padding: 24px 16px 32px;
-    }
-
-    .footer-liquid {
-        border-radius: 30px;
-        -webkit-clip-path: inset(0 round 30px);
-        clip-path: inset(0 round 30px);
-        padding: 40px 20px 24px;
+    /* Smaller, tighter footer that fits the LQ monogram */
+    .footer-wordmark-band {
+        padding: 36px 0 4px;
     }
 
     .footer-wordmark {
-        font-size: clamp(4.5rem, 30vw, 9rem);
-        letter-spacing: 0.02em;
+        font-size: clamp(4.5rem, 28vw, 9rem);
+        letter-spacing: 0.01em;
+    }
+
+    .footer-bottom {
+        padding: 8px 16px 32px;
     }
 
     .footer-meta-row {
         flex-direction: column;
         gap: 6px;
         text-align: center;
-        margin-top: 20px;
     }
 }
 
@@ -1719,6 +2081,7 @@ footer {
 .reveal-on-scroll .team-grid > *,
 .reveal-on-scroll .spec-grid > *,
 .reveal-on-scroll .pipeline > *,
+.reveal-on-scroll .faq-list > *,
 .reveal-on-scroll .wn-timeline > *,
 .reveal-on-scroll .roadmap-row,
 .reveal-on-scroll .status-line {
@@ -1731,6 +2094,7 @@ footer {
 .reveal-on-scroll.is-visible .team-grid > *,
 .reveal-on-scroll.is-visible .spec-grid > *,
 .reveal-on-scroll.is-visible .pipeline > *,
+.reveal-on-scroll.is-visible .faq-list > *,
 .reveal-on-scroll.is-visible .wn-timeline > *,
 .reveal-on-scroll.is-visible .roadmap-row,
 .reveal-on-scroll.is-visible .status-line {
@@ -1866,11 +2230,10 @@ footer {
     }
 
     /* Respect the preference: the gradient keeps its colours but stops moving;
-       the eye-catch word holds a static slice of its gradient. */
+       the eye-catch word and the footer wordmark hold a static slice of it. */
     .scroll-cue::before,
-    .footer-liquid::before,
-    .footer-liquid::after,
-    .grad-word {
+    .grad-word,
+    .footer-wordmark {
         animation: none !important;
     }
 }

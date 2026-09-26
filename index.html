@@ -28,25 +28,28 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <link rel="stylesheet" href="theme.css?v=6">
+    <link rel="stylesheet" href="theme.css?v=7">
 </head>
 
 <body>
+
+    <a class="skip-link" href="#main">Skip to content</a>
 
     <!-- Animated wordmark: large on load, docks to top-centre on scroll (JS-driven) -->
     <a href="/" class="brand-wordmark" id="brand-wm" aria-label="LocusQuant home">LocusQuant</a>
 
     <header id="main-header" class="nav-hidden">
         <div class="nav-wrapper">
-            <nav class="nav-links">
+            <nav class="nav-links" aria-label="Primary">
                 <a href="/loqos/" class="nav-link"><span class="loqos-mark">LoQOS</span></a>
                 <a href="/whats-next/" class="nav-link">What's Next</a>
+                <a href="/maths/" class="nav-link">The maths</a>
                 <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
             </nav>
         </div>
     </header>
 
-    <main>
+    <main id="main">
 
         <!-- CLARITY HERO (wordmark auto-docks, then this reveals) -->
         <section class="hero-clarity" id="top">
@@ -94,6 +97,18 @@
                 <div class="stat"><div class="num">252<span>d</span></div><div class="label">backtest basis</div></div>
                 <div class="stat"><div class="num">100<span>%</span></div><div class="label">decisions audited</div></div>
                 <div class="stat"><div class="num">$0</div><div class="label">live capital at risk</div></div>
+            </div>
+        </section>
+
+        <!-- SIGNAL BAND: full-bleed dark. Headline sits clean on its own;
+             the fiber field is its own visual zone below, not underneath the text. -->
+        <section class="signal-band reveal-on-scroll" id="signal" aria-label="Our position">
+            <div class="signal-inner">
+                <p class="signal-line"><span class="muted">Others are racing to remove the human;</span> we make
+                    every AI decision <span class="grad-word">defensible</span>.</p>
+            </div>
+            <div class="fiber-stage" aria-hidden="true">
+                <canvas class="fiber-canvas" id="fiber-canvas"></canvas>
             </div>
         </section>
 
@@ -182,6 +197,8 @@
                         budget envelopes, so autonomy always runs net-of-cost and inside a budget.</p>
                 </div>
             </div>
+            <p class="why-matters">Why this matters: each part of the fund has one job and can be checked on its
+                own, so a failure in one place does not become a failure everywhere.</p>
         </section>
 
         <!-- GOVERNED AUTONOMY -->
@@ -211,6 +228,8 @@
                         as net-of-cost P&amp;L, with budget envelopes enforced and safety spend always exempt.</p>
                 </div>
             </div>
+            <p class="why-matters">Why this matters: you set the limits once, and the system cannot talk its way
+                past them.</p>
         </section>
 
         <!-- TENTPOLE STATEMENT -->
@@ -245,7 +264,48 @@
                         The interface shows what actually happened, including when the system overrode the model.</p>
                 </div>
             </div>
+            <p class="why-matters why-matters-dark">Why this matters: when an investor or auditor asks why a
+                decision was made, you can show them, not reconstruct it.</p>
           </div>
+        </section>
+
+        <!-- THE MATHS BEHIND THE GUARDRAILS (home summary; full version at /maths/) -->
+        <section class="block reveal-on-scroll" id="maths">
+            <div class="eyebrow">The maths behind the guardrails</div>
+            <h2 class="section-title">Most AI systems ask you to trust them. We'd rather show you the arithmetic.</h2>
+            <p class="section-intro">Six of the ideas the system is built on, with toy numbers so you can check them
+                yourself. The production versions combine several of these and use parameters we don't publish.
+                Three below, all six at <a href="/maths/" class="inline-link">/maths/</a>.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-tag">Uncertainty &amp; sizing</div>
+                    <h3>Doubt costs more than it seems</h3>
+                    <p>Position size falls with the <em>square</em> of confidence, not in proportion to it. At 42%
+                        uncertainty, a straight line would still commit 58% of the maximum; the square only commits
+                        34%.</p>
+                    <p class="what-this-means">What this means for you: when the system is unsure, you're
+                        automatically less exposed, without anyone having to notice.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Correlated agreement</div>
+                    <h3>Five analysts agreeing isn't five opinions</h3>
+                    <p>If analysts read the same news, their agreement is worth less than it looks. Five analysts
+                        whose errors correlate at 0.6 are worth 1.47 independent opinions, not five.</p>
+                    <p class="what-this-means">What this means for you: a room full of AI agents agreeing does not
+                        fool the system into betting bigger.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Human oversight</div>
+                    <h3>Measuring whether the human is really reviewing</h3>
+                    <p>"A human approves every decision" means nothing if the human has stopped reading. We
+                        occasionally plant a known flaw in a proposal and score how well reviewers catch it, using
+                        signal-detection maths that can't be gamed by just rejecting everything.</p>
+                    <p class="what-this-means">What this means for you: human oversight becomes a number you can
+                        track, not a sentence in a brochure.</p>
+                </div>
+            </div>
+            <a href="/maths/" class="btn btn-ghost">See all six, with the formulas →</a>
         </section>
 
         <!-- TODAY -->
@@ -279,6 +339,8 @@
             <p class="contact-line">The system is designed to automate research → prediction → deliberation → execution
                 → stewardship, while humans keep four irreducible seats: exception resolution, compliance judgment,
                 capital allocation, and legal sign-off.</p>
+            <p class="why-matters">Why this matters: what's live today already runs under the same rules the full
+                platform will use tomorrow.</p>
         </section>
 
         <!-- ROADMAP -->
@@ -328,6 +390,35 @@
             </div>
         </section>
 
+        <!-- WORK WITH US -->
+        <section class="block reveal-on-scroll" id="work-with-us">
+            <div class="eyebrow">Design partners</div>
+            <h2 class="section-title">Build it with us.</h2>
+            <p class="section-intro">We're working with a small number of investment firms as early design
+                partners. Partners get early access to the platform, direct input into what we build next, and a
+                system shaped around their own process and constraints. We're looking for firms that want to use AI
+                in their investment process and need to be able to explain every decision it makes.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="card-tag">Emerging managers</div>
+                    <h3>Small funds</h3>
+                    <p>Bring AI into your process without losing the ability to explain it to your investors.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Family offices</div>
+                    <h3>Disciplined by design</h3>
+                    <p>Systematic decisions you can review and audit, without building a quant team.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="card-tag">Firms with their own models</div>
+                    <h3>Governance layer</h3>
+                    <p>A governance, audit and oversight layer around what you already have.</p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" data-modal="partner">Talk to us about a partnership</button>
+        </section>
+
         <!-- TEAM -->
         <section class="block reveal-on-scroll" id="team">
             <div class="eyebrow">Team</div>
@@ -368,17 +459,55 @@
             </div>
         </section>
 
+        <!-- FAQ -->
+        <section class="block reveal-on-scroll" id="faq">
+            <div class="eyebrow">FAQ</div>
+            <h2 class="section-title">Questions worth asking up front.</h2>
+
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>Is this a fund I can invest in?</summary>
+                    <p>No. LocusQuant builds software. We are not offering any investment product.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Is it live?</summary>
+                    <p>The prototype runs in paper trading only, with no capital at risk. We're building the full
+                        platform with a small group of design partners.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Does the AI trade on its own?</summary>
+                    <p>It proposes. Rules you set decide what is allowed, and a person approves those rules.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I see the maths?</summary>
+                    <p>Some of it is on <a href="/maths/" class="inline-link">this page</a>. Partners get more.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can it work with our own models and data?</summary>
+                    <p>That's one of the things design partners help us shape.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Where are you based and who do you work with?</summary>
+                    <p>Two founders: Divyanshu Bhardwaj, from a data science background across credit-bureau and
+                        fintech systems, and Ayush Vaishnav, from an enterprise integration background. Reach either
+                        one through the secure contact channel above.</p>
+                </details>
+            </div>
+        </section>
+
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-liquid">
+    <!-- FOOTER: full-bleed black, huge animated-gradient wordmark -->
+    <footer class="site-footer">
+        <div class="footer-wordmark-band">
             <span class="footer-wordmark" aria-hidden="true"><span class="brand-full">LocusQuant</span><span class="brand-short">LQ</span></span>
         </div>
-        <div class="footer-meta-row">
-            <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
-            <p class="footer-meta">Paper-trading preview · no live capital ·
-                <a href="/loqos/"><span class="loqos-mark">LoQOS</span></a></p>
+        <div class="footer-bottom">
+            <div class="footer-meta-row">
+                <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
+                <p class="footer-meta">Paper-trading preview · no live capital ·
+                    <a href="/loqos/"><span class="loqos-mark">LoQOS</span></a></p>
+            </div>
         </div>
     </footer>
 
@@ -393,13 +522,64 @@
                 <input class="modal-input" id="cf-name" name="name" type="text" required
                     autocomplete="name" placeholder="your name">
 
-                <label class="modal-label" for="cf-email">Email</label>
+                <label class="modal-label" for="cf-email">Work email</label>
                 <input class="modal-input" id="cf-email" name="email" type="email" required
-                    autocomplete="email" placeholder="your email address">
+                    autocomplete="email" placeholder="you@firm.com">
 
-                <label class="modal-label" for="cf-message">Message</label>
-                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
-                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
+                <label class="modal-label" for="cf-firm">Firm</label>
+                <input class="modal-input" id="cf-firm" name="firm" type="text" required
+                    autocomplete="organization" placeholder="your firm's name">
+
+                <label class="modal-label" for="cf-role">Role</label>
+                <input class="modal-input" id="cf-role" name="role" type="text" required
+                    autocomplete="organization-title" placeholder="your role">
+
+                <label class="modal-label" for="cf-firm-type">Firm type</label>
+                <select class="modal-input form-select" id="cf-firm-type" name="firm_type" required>
+                    <option value="" disabled selected>Select one</option>
+                    <option value="Emerging manager or small fund">Emerging manager or small fund</option>
+                    <option value="Family office">Family office</option>
+                    <option value="Fund with its own models">Fund with its own models</option>
+                    <option value="Allocator or due diligence">Allocator or due diligence</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label class="modal-label" for="cf-aum">Approximate assets under management</label>
+                <select class="modal-input form-select" id="cf-aum" name="aum">
+                    <option value="" disabled selected>Select one</option>
+                    <option value="Under A$10m">Under A$10m</option>
+                    <option value="A$10m-100m">A$10m&ndash;100m</option>
+                    <option value="A$100m-1bn">A$100m&ndash;1bn</option>
+                    <option value="Over A$1bn">Over A$1bn</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+
+                <label class="modal-label" for="cf-region">Region</label>
+                <select class="modal-input form-select" id="cf-region" name="region">
+                    <option value="" disabled selected>Select one</option>
+                    <option value="Australia and New Zealand">Australia and New Zealand</option>
+                    <option value="Asia">Asia</option>
+                    <option value="North America">North America</option>
+                    <option value="Europe">Europe</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <fieldset class="modal-fieldset">
+                    <legend class="modal-label">Interest</legend>
+                    <label class="modal-check"><input type="checkbox" name="interest" value="See a demo"> See a
+                        demo</label>
+                    <label class="modal-check"><input type="checkbox" name="interest" id="cf-interest-partner"
+                            value="Design partnership"> Design partnership</label>
+                    <label class="modal-check"><input type="checkbox" name="interest" value="Research collaboration">
+                        Research collaboration</label>
+                    <label class="modal-check"><input type="checkbox" name="interest" value="Just following along">
+                        Just following along</label>
+                </fieldset>
+
+                <label class="modal-label" for="cf-message">What would you use this for? <span
+                        class="field-optional">(optional)</span></label>
+                <textarea class="modal-input modal-textarea" id="cf-message" name="message"
+                    placeholder="tell us a bit about what you're looking to do"></textarea>
 
                 <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
                     aria-hidden="true">
@@ -410,7 +590,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=7"></script>
 
     <script>
         var header = document.getElementById('main-header');
@@ -485,6 +665,126 @@
             for (var s = 0; s < 6; s++) add(false);
             var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (!reduce) setInterval(function () { add(true); }, 2600);
+        })();
+
+        // Fiber-optic "grass" field: idle sway, bends away from the cursor
+        // like blades of grass, springs back when you move away.
+        (function () {
+            var canvas = document.getElementById('fiber-canvas');
+            var stage = document.querySelector('.fiber-stage');
+            if (!canvas || !stage || !canvas.getContext) return;
+            var ctx = canvas.getContext('2d');
+            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var canInteract = window.matchMedia && !window.matchMedia('(pointer: coarse)').matches;
+            var dpr = Math.min(window.devicePixelRatio || 1, 2);
+            var W = 0, H = 0, originX = 0, originY = 0;
+            var blades = [];
+            var COUNT = 220;
+
+            function build() {
+                blades = [];
+                for (var i = 0; i < COUNT; i++) {
+                    var spread = (Math.random() * 2 - 1) * (Math.PI * 0.58); // ~ ±104°
+                    var baseAngle = -Math.PI / 2 + spread;
+                    var lenT = Math.pow(Math.random(), 1.4);
+                    var length = 26 + lenT * (H * 0.66);
+                    blades.push({
+                        baseAngle: baseAngle,
+                        length: length,
+                        phase: Math.random() * Math.PI * 2,
+                        swaySpeed: 0.4 + Math.random() * 0.3,
+                        swayAmp: 0.018 + Math.random() * 0.02,
+                        tint: Math.random() < 0.22,
+                        curX: 0, curY: 0, inited: false
+                    });
+                }
+            }
+
+            function resize() {
+                var r = stage.getBoundingClientRect();
+                W = r.width; H = r.height;
+                canvas.width = W * dpr;
+                canvas.height = H * dpr;
+                canvas.style.width = W + 'px';
+                canvas.style.height = H + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                originX = W * 0.5;
+                originY = H * 1.02;
+                build();
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            var mouse = { x: -9999, y: -9999, active: false };
+            if (canInteract) {
+                stage.addEventListener('mousemove', function (e) {
+                    var r = stage.getBoundingClientRect();
+                    mouse.x = e.clientX - r.left;
+                    mouse.y = e.clientY - r.top;
+                    mouse.active = true;
+                });
+                stage.addEventListener('mouseleave', function () { mouse.active = false; });
+            }
+
+            var RADIUS = 130, MAX_PUSH = 42;
+
+            function drawFrame(t, animate) {
+                ctx.clearRect(0, 0, W, H);
+                for (var i = 0; i < blades.length; i++) {
+                    var b = blades[i];
+                    var angle = animate ? b.baseAngle + Math.sin(t * b.swaySpeed + b.phase) * b.swayAmp : b.baseAngle;
+                    var restX = originX + Math.cos(angle) * b.length;
+                    var restY = originY + Math.sin(angle) * b.length;
+
+                    var targetX = restX, targetY = restY;
+                    if (animate && mouse.active) {
+                        var dx = restX - mouse.x, dy = restY - mouse.y;
+                        var dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < RADIUS && dist > 0.001) {
+                            var force = 1 - dist / RADIUS;
+                            force *= force;
+                            targetX = restX + (dx / dist) * force * MAX_PUSH;
+                            targetY = restY + (dy / dist) * force * MAX_PUSH;
+                        }
+                    }
+
+                    if (!b.inited) { b.curX = targetX; b.curY = targetY; b.inited = true; }
+                    else if (animate) {
+                        b.curX += (targetX - b.curX) * 0.14;
+                        b.curY += (targetY - b.curY) * 0.14;
+                    } else { b.curX = targetX; b.curY = targetY; }
+
+                    var lenFrac = b.length / (H * 0.66 + 26);
+                    var alpha = 0.16 + lenFrac * 0.5;
+                    var mx = originX + (b.curX - originX) * 0.5;
+                    var my = originY + (b.curY - originY) * 0.5;
+
+                    ctx.beginPath();
+                    ctx.moveTo(originX, originY);
+                    ctx.quadraticCurveTo(mx, my, b.curX, b.curY);
+                    ctx.lineWidth = 0.6 + lenFrac * 0.9;
+                    ctx.strokeStyle = b.tint
+                        ? 'rgba(245, 242, 234,' + alpha.toFixed(3) + ')'
+                        : 'rgba(255, 255, 255,' + alpha.toFixed(3) + ')';
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(b.curX, b.curY, 1.1 + lenFrac * 1.1, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255,' + Math.min(alpha + 0.28, 0.95).toFixed(3) + ')';
+                    ctx.fill();
+                }
+            }
+
+            if (reduce) {
+                drawFrame(0, false);
+                return;
+            }
+
+            function frame(now) {
+                drawFrame(now / 1000, true);
+                requestAnimationFrame(frame);
+            }
+            requestAnimationFrame(frame);
         })();
 
         // Subtle 3D tilt on the hero product panel as the cursor moves
