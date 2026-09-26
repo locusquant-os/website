@@ -1213,6 +1213,51 @@ section.block {
     overflow: hidden;
 }
 
+/* FAQ, now living inside the footer's black band: same section rhythm
+   as everywhere else, just re-tinted cream-on-ink instead of ink-on-cream. */
+.footer-faq {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 72px 28px 8px;
+}
+
+.footer-faq .eyebrow {
+    color: rgba(245, 242, 234, 0.55);
+}
+
+.footer-faq .section-title {
+    color: #f7f4ee;
+}
+
+.footer-faq .faq-item {
+    border-top-color: rgba(245, 242, 234, 0.16);
+}
+
+.footer-faq .faq-item:last-child {
+    border-bottom-color: rgba(245, 242, 234, 0.16);
+}
+
+.footer-faq .faq-item summary {
+    color: #f7f4ee;
+}
+
+.footer-faq .faq-item summary::after {
+    color: rgba(245, 242, 234, 0.5);
+}
+
+.footer-faq .faq-item p {
+    color: rgba(245, 242, 234, 0.72);
+}
+
+.footer-faq .inline-link {
+    color: #f7f4ee;
+    border-color: rgba(245, 242, 234, 0.35);
+}
+
+.footer-faq .inline-link:hover {
+    border-color: #f7f4ee;
+}
+
 .footer-wordmark-band {
     width: 100%;
     padding: 56px 0 8px;
