@@ -1219,6 +1219,7 @@ section.block {
     max-width: var(--maxw);
     margin: 0 auto;
     padding: 72px 28px 8px;
+    color: #f5f2ea;
 }
 
 .footer-faq .eyebrow {
