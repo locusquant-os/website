@@ -184,6 +184,12 @@ header.brand-collapsed .nav-brand .nb-mono {
     transform: translateX(0);
 }
 
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -246,6 +252,13 @@ header.brand-collapsed .nav-brand .nb-mono {
 .nav-cta {
     padding: 9px 18px;
     font-size: 0.85rem;
+}
+
+/* A standalone CTA button directly under a section's content (not in a
+   .cta-row) needs its own breathing room, or it sits flush against
+   whatever's above it. */
+.btn-section-cta {
+    margin-top: 28px;
 }
 
 /* ------------------------------------------------------------
@@ -1134,46 +1147,6 @@ section.block {
     max-width: 640px;
 }
 
-/* --- Form additions: dropdowns, checkbox group, optional-field tag --- */
-.form-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2020%2020'%3E%3Cpath%20fill='%23666052'%20d='M5.5%207.5l4.5%205%204.5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 40px;
-}
-
-.form-select:invalid {
-    color: var(--ink-mute);
-}
-
-.field-optional {
-    color: var(--ink-mute);
-    font-weight: 400;
-}
-
-.modal-fieldset {
-    border: none;
-    margin: 16px 0 0;
-    padding: 0;
-}
-
-.modal-check {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.88rem;
-    color: var(--ink-soft);
-    padding: 6px 0;
-    cursor: pointer;
-}
-
-.modal-check input {
-    width: 16px;
-    height: 16px;
-    accent-color: var(--ink);
-}
-
 /* ------------------------------------------------------------
    FOOTER — full-bleed black band with a huge animated wordmark.
    ------------------------------------------------------------ */
@@ -1946,6 +1919,12 @@ section.block {
     }
 
     .nav-links .nav-link {
+        display: none;
+    }
+
+    /* Same tight-mobile treatment for the left-hand LoQOS link: only the
+       CTA button and the brand mark stay visible on small screens. */
+    .nav-left .nav-link {
         display: none;
     }
 

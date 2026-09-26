@@ -24,8 +24,6 @@
     var firstField = document.getElementById('cf-name');
     var currentRecipient = RECIPIENTS.both;
 
-    var partnerCheck = document.getElementById('cf-interest-partner');
-
     function openModal(key) {
         currentRecipient = RECIPIENTS[key] || RECIPIENTS.both;
         modalHeading.textContent = currentRecipient.heading;
@@ -35,8 +33,6 @@
         modalStatus.textContent = '';
         modalStatus.className = 'modal-status';
         modalSubmit.disabled = false;
-        // Arriving via the partnership CTA pre-selects that interest checkbox.
-        if (key === 'partner' && partnerCheck) partnerCheck.checked = true;
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
@@ -69,31 +65,19 @@
 
         var name = (fd.get('name') || '').toString().trim();
         var email = (fd.get('email') || '').toString().trim();
-        var firm = (fd.get('firm') || '').toString().trim();
-        var role = (fd.get('role') || '').toString().trim();
-        var firmType = (fd.get('firm_type') || '').toString().trim();
-        var aum = (fd.get('aum') || '').toString().trim();
-        var region = (fd.get('region') || '').toString().trim();
-        var interest = fd.getAll('interest').join(', ');
         var message = (fd.get('message') || '').toString().trim();
-        if (!name || !email || !firm || !role || !firmType) {
+        if (!name || !email || !message) {
             modalStatus.className = 'modal-status failure';
-            modalStatus.innerHTML = '$ missing_fields ✕<span class="modal-status-sub">Name, work email, firm, role and firm type are all required.</span>';
+            modalStatus.innerHTML = '$ missing_fields ✕<span class="modal-status-sub">Name, email and message are all required.</span>';
             return;
         }
 
         var payload = {
             access_key: WEB3FORMS_KEY,
-            subject: "LocusQuant " + currentRecipient.tag + " from " + name + " (" + firm + ")",
+            subject: "LocusQuant " + currentRecipient.tag + " from " + (name || "anonymous"),
             name: name,
             email: email,
-            firm: firm,
-            role: role,
-            firm_type: firmType,
-            aum: aum || "(not provided)",
-            region: region || "(not provided)",
-            interest: interest || "(not selected)",
-            message: message || "(not provided)",
+            message: message,
             intended_for: currentRecipient.intended_for,
             from_url: window.location.href,
             botcheck: false
@@ -113,7 +97,7 @@
             if (res.ok && data.success) {
                 contactForm.style.display = 'none';
                 modalStatus.className = 'modal-status success';
-                modalStatus.innerHTML = '$ request_transmitted ✓<span class="modal-status-sub">Thanks. One of the founders will reply personally within two working days.</span>';
+                modalStatus.innerHTML = '$ request_transmitted ✓<span class="modal-status-sub">We\'ll be in touch. You can close this window.</span>';
             } else {
                 throw new Error((data && data.message) || 'submit failed');
             }

@@ -32,10 +32,12 @@
 
     <header id="main-header" class="scrolled">
         <div class="nav-wrapper">
-            <a href="/" class="nav-brand" aria-label="LocusQuant home"><span class="nb-full">LocusQuant</span><span
-                    class="nb-mono" aria-hidden="true">LQ</span></a>
-            <nav class="nav-links" aria-label="Primary">
+            <div class="nav-left">
+                <a href="/" class="nav-brand" aria-label="LocusQuant home"><span class="nb-full">LocusQuant</span><span
+                        class="nb-mono" aria-hidden="true">LQ</span></a>
                 <a href="/loqos/" class="nav-link"><span class="loqos-mark">LoQOS</span></a>
+            </div>
+            <nav class="nav-links" aria-label="Primary">
                 <a href="/whats-next/" class="nav-link">What's Next</a>
                 <a href="/maths/" class="nav-link">The maths</a>
                 <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
@@ -293,8 +295,8 @@
                 <p>The production versions combine several of these ideas and use parameters we don't publish
                     here.</p>
                 <div class="cta-row">
-                    <button type="button" class="btn btn-primary ink-final" data-modal="partner">Talk to us about a
-                        partnership</button>
+                    <button type="button" class="btn btn-primary ink-final" data-modal="partner">Request
+                        Access</button>
                     <a href="/#maths" class="btn btn-ghost">Back to the main page →</a>
                 </div>
             </div>
@@ -328,64 +330,13 @@
                 <input class="modal-input" id="cf-name" name="name" type="text" required
                     autocomplete="name" placeholder="your name">
 
-                <label class="modal-label" for="cf-email">Work email</label>
+                <label class="modal-label" for="cf-email">Email</label>
                 <input class="modal-input" id="cf-email" name="email" type="email" required
-                    autocomplete="email" placeholder="you@firm.com">
+                    autocomplete="email" placeholder="your email address">
 
-                <label class="modal-label" for="cf-firm">Firm</label>
-                <input class="modal-input" id="cf-firm" name="firm" type="text" required
-                    autocomplete="organization" placeholder="your firm's name">
-
-                <label class="modal-label" for="cf-role">Role</label>
-                <input class="modal-input" id="cf-role" name="role" type="text" required
-                    autocomplete="organization-title" placeholder="your role">
-
-                <label class="modal-label" for="cf-firm-type">Firm type</label>
-                <select class="modal-input form-select" id="cf-firm-type" name="firm_type" required>
-                    <option value="" disabled selected>Select one</option>
-                    <option value="Emerging manager or small fund">Emerging manager or small fund</option>
-                    <option value="Family office">Family office</option>
-                    <option value="Fund with its own models">Fund with its own models</option>
-                    <option value="Allocator or due diligence">Allocator or due diligence</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                <label class="modal-label" for="cf-aum">Approximate assets under management</label>
-                <select class="modal-input form-select" id="cf-aum" name="aum">
-                    <option value="" disabled selected>Select one</option>
-                    <option value="Under A$10m">Under A$10m</option>
-                    <option value="A$10m-100m">A$10m&ndash;100m</option>
-                    <option value="A$100m-1bn">A$100m&ndash;1bn</option>
-                    <option value="Over A$1bn">Over A$1bn</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
-                </select>
-
-                <label class="modal-label" for="cf-region">Region</label>
-                <select class="modal-input form-select" id="cf-region" name="region">
-                    <option value="" disabled selected>Select one</option>
-                    <option value="Australia and New Zealand">Australia and New Zealand</option>
-                    <option value="Asia">Asia</option>
-                    <option value="North America">North America</option>
-                    <option value="Europe">Europe</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                <fieldset class="modal-fieldset">
-                    <legend class="modal-label">Interest</legend>
-                    <label class="modal-check"><input type="checkbox" name="interest" value="See a demo"> See a
-                        demo</label>
-                    <label class="modal-check"><input type="checkbox" name="interest" id="cf-interest-partner"
-                            value="Design partnership"> Design partnership</label>
-                    <label class="modal-check"><input type="checkbox" name="interest" value="Research collaboration">
-                        Research collaboration</label>
-                    <label class="modal-check"><input type="checkbox" name="interest" value="Just following along">
-                        Just following along</label>
-                </fieldset>
-
-                <label class="modal-label" for="cf-message">What would you use this for? <span
-                        class="field-optional">(optional)</span></label>
-                <textarea class="modal-input modal-textarea" id="cf-message" name="message"
-                    placeholder="tell us a bit about what you're looking to do"></textarea>
+                <label class="modal-label" for="cf-message">Message</label>
+                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
+                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
 
                 <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
                     aria-hidden="true">

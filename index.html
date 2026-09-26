@@ -40,8 +40,10 @@
 
     <header id="main-header" class="nav-hidden">
         <div class="nav-wrapper">
-            <nav class="nav-links" aria-label="Primary">
+            <div class="nav-left">
                 <a href="/loqos/" class="nav-link"><span class="loqos-mark">LoQOS</span></a>
+            </div>
+            <nav class="nav-links" aria-label="Primary">
                 <a href="/whats-next/" class="nav-link">What's Next</a>
                 <a href="/maths/" class="nav-link">The maths</a>
                 <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
@@ -401,8 +403,8 @@
 
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="card-tag">Emerging managers</div>
-                    <h3>Small funds</h3>
+                    <div class="card-tag">Fund managers</div>
+                    <h3>Funds</h3>
                     <p>Bring AI into your process without losing the ability to explain it to your investors.</p>
                 </div>
                 <div class="feature-card">
@@ -416,7 +418,7 @@
                     <p>A governance, audit and oversight layer around what you already have.</p>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" data-modal="partner">Talk to us about a partnership</button>
+            <button type="button" class="btn btn-primary btn-section-cta" data-modal="partner">Request Access</button>
         </section>
 
         <!-- TEAM -->
@@ -466,15 +468,6 @@
 
             <div class="faq-list">
                 <details class="faq-item">
-                    <summary>Is this a fund I can invest in?</summary>
-                    <p>No. LocusQuant builds software. We are not offering any investment product.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Is it live?</summary>
-                    <p>The prototype runs in paper trading only, with no capital at risk. We're building the full
-                        platform with a small group of design partners.</p>
-                </details>
-                <details class="faq-item">
                     <summary>Does the AI trade on its own?</summary>
                     <p>It proposes. Rules you set decide what is allowed, and a person approves those rules.</p>
                 </details>
@@ -522,64 +515,13 @@
                 <input class="modal-input" id="cf-name" name="name" type="text" required
                     autocomplete="name" placeholder="your name">
 
-                <label class="modal-label" for="cf-email">Work email</label>
+                <label class="modal-label" for="cf-email">Email</label>
                 <input class="modal-input" id="cf-email" name="email" type="email" required
-                    autocomplete="email" placeholder="you@firm.com">
+                    autocomplete="email" placeholder="your email address">
 
-                <label class="modal-label" for="cf-firm">Firm</label>
-                <input class="modal-input" id="cf-firm" name="firm" type="text" required
-                    autocomplete="organization" placeholder="your firm's name">
-
-                <label class="modal-label" for="cf-role">Role</label>
-                <input class="modal-input" id="cf-role" name="role" type="text" required
-                    autocomplete="organization-title" placeholder="your role">
-
-                <label class="modal-label" for="cf-firm-type">Firm type</label>
-                <select class="modal-input form-select" id="cf-firm-type" name="firm_type" required>
-                    <option value="" disabled selected>Select one</option>
-                    <option value="Emerging manager or small fund">Emerging manager or small fund</option>
-                    <option value="Family office">Family office</option>
-                    <option value="Fund with its own models">Fund with its own models</option>
-                    <option value="Allocator or due diligence">Allocator or due diligence</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                <label class="modal-label" for="cf-aum">Approximate assets under management</label>
-                <select class="modal-input form-select" id="cf-aum" name="aum">
-                    <option value="" disabled selected>Select one</option>
-                    <option value="Under A$10m">Under A$10m</option>
-                    <option value="A$10m-100m">A$10m&ndash;100m</option>
-                    <option value="A$100m-1bn">A$100m&ndash;1bn</option>
-                    <option value="Over A$1bn">Over A$1bn</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
-                </select>
-
-                <label class="modal-label" for="cf-region">Region</label>
-                <select class="modal-input form-select" id="cf-region" name="region">
-                    <option value="" disabled selected>Select one</option>
-                    <option value="Australia and New Zealand">Australia and New Zealand</option>
-                    <option value="Asia">Asia</option>
-                    <option value="North America">North America</option>
-                    <option value="Europe">Europe</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                <fieldset class="modal-fieldset">
-                    <legend class="modal-label">Interest</legend>
-                    <label class="modal-check"><input type="checkbox" name="interest" value="See a demo"> See a
-                        demo</label>
-                    <label class="modal-check"><input type="checkbox" name="interest" id="cf-interest-partner"
-                            value="Design partnership"> Design partnership</label>
-                    <label class="modal-check"><input type="checkbox" name="interest" value="Research collaboration">
-                        Research collaboration</label>
-                    <label class="modal-check"><input type="checkbox" name="interest" value="Just following along">
-                        Just following along</label>
-                </fieldset>
-
-                <label class="modal-label" for="cf-message">What would you use this for? <span
-                        class="field-optional">(optional)</span></label>
-                <textarea class="modal-input modal-textarea" id="cf-message" name="message"
-                    placeholder="tell us a bit about what you're looking to do"></textarea>
+                <label class="modal-label" for="cf-message">Message</label>
+                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
+                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
 
                 <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
                     aria-hidden="true">
@@ -681,6 +623,25 @@
             var blades = [];
             var COUNT = 220;
 
+            // Same multi-hue sweep as the brand gradient (the "defensible"
+            // word, the footer wordmark) — the grass shimmers through it too.
+            var GRAD_STOPS = [
+                [150, 128, 204], [110, 178, 200], [150, 196, 132],
+                [220, 156, 120], [212, 142, 184], [150, 128, 204]
+            ];
+            var GRAD_CYCLE = 18; // seconds, matches the CSS gradWord sweep
+            function gradColor(t) {
+                var pos = ((t % 1) + 1) % 1 * (GRAD_STOPS.length - 1);
+                var i = Math.min(Math.floor(pos), GRAD_STOPS.length - 2);
+                var frac = pos - i;
+                var a = GRAD_STOPS[i], b = GRAD_STOPS[i + 1];
+                return [
+                    Math.round(a[0] + (b[0] - a[0]) * frac),
+                    Math.round(a[1] + (b[1] - a[1]) * frac),
+                    Math.round(a[2] + (b[2] - a[2]) * frac)
+                ];
+            }
+
             function build() {
                 blades = [];
                 for (var i = 0; i < COUNT; i++) {
@@ -694,7 +655,7 @@
                         phase: Math.random() * Math.PI * 2,
                         swaySpeed: 0.4 + Math.random() * 0.3,
                         swayAmp: 0.018 + Math.random() * 0.02,
-                        tint: Math.random() < 0.22,
+                        colorOffset: Math.random() * 0.5,
                         curX: 0, curY: 0, inited: false
                     });
                 }
@@ -730,6 +691,7 @@
 
             function drawFrame(t, animate) {
                 ctx.clearRect(0, 0, W, H);
+                var cyclePos = t / GRAD_CYCLE;
                 for (var i = 0; i < blades.length; i++) {
                     var b = blades[i];
                     var angle = animate ? b.baseAngle + Math.sin(t * b.swaySpeed + b.phase) * b.swayAmp : b.baseAngle;
@@ -759,18 +721,19 @@
                     var mx = originX + (b.curX - originX) * 0.5;
                     var my = originY + (b.curY - originY) * 0.5;
 
+                    var col = gradColor(cyclePos + b.colorOffset);
+                    var colStr = col[0] + ', ' + col[1] + ', ' + col[2];
+
                     ctx.beginPath();
                     ctx.moveTo(originX, originY);
                     ctx.quadraticCurveTo(mx, my, b.curX, b.curY);
                     ctx.lineWidth = 0.6 + lenFrac * 0.9;
-                    ctx.strokeStyle = b.tint
-                        ? 'rgba(245, 242, 234,' + alpha.toFixed(3) + ')'
-                        : 'rgba(255, 255, 255,' + alpha.toFixed(3) + ')';
+                    ctx.strokeStyle = 'rgba(' + colStr + ', ' + alpha.toFixed(3) + ')';
                     ctx.stroke();
 
                     ctx.beginPath();
                     ctx.arc(b.curX, b.curY, 1.1 + lenFrac * 1.1, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(255, 255, 255,' + Math.min(alpha + 0.28, 0.95).toFixed(3) + ')';
+                    ctx.fillStyle = 'rgba(' + colStr + ', ' + Math.min(alpha + 0.28, 0.95).toFixed(3) + ')';
                     ctx.fill();
                 }
             }
