@@ -22,7 +22,7 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <link rel="stylesheet" href="/theme.css?v=8">
+    <link rel="stylesheet" href="/theme.css?v=9">
 
     <!-- KaTeX, for rendering the formulas properly (CDN, per the brief) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -72,14 +72,18 @@
                 </div>
                 <div class="slider-bars">
                     <div class="slider-bar-row">
-                        <span style="width:120px;">Straight line</span>
+                        <div class="slider-bar-top">
+                            <span>Straight line</span>
+                            <span id="u-lin-out">58%</span>
+                        </div>
                         <div class="slider-bar-track"><div class="slider-bar-fill faint" id="u-lin-bar"></div></div>
-                        <span id="u-lin-out">58%</span>
                     </div>
                     <div class="slider-bar-row">
-                        <span style="width:120px;">Square (actual)</span>
+                        <div class="slider-bar-top">
+                            <span>Square (actual)</span>
+                            <span id="u-sq-out">34%</span>
+                        </div>
                         <div class="slider-bar-track"><div class="slider-bar-fill" id="u-sq-bar"></div></div>
-                        <span id="u-sq-out">34%</span>
                     </div>
                 </div>
                 <p class="formula-note">All numbers here are illustrative, not the system's actual position limits.</p>
@@ -179,32 +183,34 @@
                 <div class="worked-example">
                     <p style="margin-bottom:10px;"><strong>Worked example:</strong> two forecasts both centred on
                         +1%, one narrow (spread 1%) and one wide (spread 3%).</p>
-                    <table class="wn-table">
-                        <tr>
-                            <th>What happened</th>
-                            <th>Narrow forecast</th>
-                            <th>Wide forecast</th>
-                            <th>Which scored better</th>
-                        </tr>
-                        <tr>
-                            <td>+1.2%</td>
-                            <td>0.250</td>
-                            <td>0.706</td>
-                            <td>Narrow — it was right and said so</td>
-                        </tr>
-                        <tr>
-                            <td>+4.0%</td>
-                            <td>2.437</td>
-                            <td>1.807</td>
-                            <td>Wide — it admitted it might be wrong</td>
-                        </tr>
-                        <tr>
-                            <td>&minus;3.0%</td>
-                            <td>3.436</td>
-                            <td>2.562</td>
-                            <td>Wide</td>
-                        </tr>
-                    </table>
+                    <div class="table-scroll">
+                        <table class="wn-table">
+                            <tr>
+                                <th>What happened</th>
+                                <th>Narrow forecast</th>
+                                <th>Wide forecast</th>
+                                <th>Which scored better</th>
+                            </tr>
+                            <tr>
+                                <td>+1.2%</td>
+                                <td>0.250</td>
+                                <td>0.706</td>
+                                <td>Narrow — it was right and said so</td>
+                            </tr>
+                            <tr>
+                                <td>+4.0%</td>
+                                <td>2.437</td>
+                                <td>1.807</td>
+                                <td>Wide — it admitted it might be wrong</td>
+                            </tr>
+                            <tr>
+                                <td>&minus;3.0%</td>
+                                <td>3.436</td>
+                                <td>2.562</td>
+                                <td>Wide</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
 
                 <p class="what-this-means">What this means for you: the system is scored for being honest, not
@@ -345,7 +351,7 @@
         </div>
     </div>
 
-    <script src="/app.js?v=8"></script>
+    <script src="/app.js?v=9"></script>
 
     <!-- KaTeX auto-render (loaded after app.js so the page's own JS isn't blocked) -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
