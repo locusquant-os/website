@@ -7,7 +7,7 @@
 
     <title>LocusQuant: The maths behind the guardrails</title>
     <meta name="description"
-        content="Six of the ideas LocusQuant's guardrails are built on, with toy numbers and formulas you can check yourself: uncertainty-scaled sizing, correlated agreement, calibration, honest scoring, sourced evidence, and measured human oversight.">
+        content="Five of the ideas LocusQuant's guardrails are built on, with toy numbers and formulas you can check yourself: uncertainty-scaled sizing, correlated agreement, calibration, honest scoring, and sourced evidence.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://locusquant.com/maths/">
@@ -22,7 +22,7 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <link rel="stylesheet" href="/theme.css?v=9">
+    <link rel="stylesheet" href="/theme.css?v=10">
 
     <!-- KaTeX, for rendering the formulas properly (CDN, per the brief) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -46,7 +46,7 @@
     <section class="subpage-hero">
         <div class="eyebrow">The maths behind the guardrails</div>
         <h1>Most AI systems ask you to trust them. <em>We'd rather show you the arithmetic.</em></h1>
-        <p class="subpage-sub">Here are six of the ideas the system is built on, with toy numbers so you can check
+        <p class="subpage-sub">Here are five of the ideas the system is built on, with toy numbers so you can check
             them yourself. The production versions combine several of these and use parameters we don't publish.</p>
         <a href="/#maths" class="back-link">← Back to the main page</a>
     </section>
@@ -56,40 +56,12 @@
         <section class="block reveal-on-scroll">
             <div class="maths-item">
                 <div class="card-tag">01 · Uncertainty &amp; sizing</div>
-                <h3>Doubt costs more than it seems</h3>
-                <p>When the system is less certain, it commits less, and it cuts faster than a straight line would.
-                    Position size falls with the <em>square</em> of confidence, not in proportion to it.</p>
-
-                <div class="formula-box">
-                    $$\text{size} = \text{size}_{\max} \times (1 - u)^2$$
-                </div>
-                <p class="formula-note">where <em>u</em> is uncertainty, between 0 and 1. It combines several
-                    independent measures of how much the system doesn't know.</p>
-
-                <div class="slider-row">
-                    <label for="u-slider"><span>Uncertainty (u)</span><span id="u-val">0.42</span></label>
-                    <input type="range" id="u-slider" min="0" max="1" step="0.01" value="0.42">
-                </div>
-                <div class="slider-bars">
-                    <div class="slider-bar-row">
-                        <div class="slider-bar-top">
-                            <span>Straight line</span>
-                            <span id="u-lin-out">58%</span>
-                        </div>
-                        <div class="slider-bar-track"><div class="slider-bar-fill faint" id="u-lin-bar"></div></div>
-                    </div>
-                    <div class="slider-bar-row">
-                        <div class="slider-bar-top">
-                            <span>Square (actual)</span>
-                            <span id="u-sq-out">34%</span>
-                        </div>
-                        <div class="slider-bar-track"><div class="slider-bar-fill" id="u-sq-bar"></div></div>
-                    </div>
-                </div>
-                <p class="formula-note">All numbers here are illustrative, not the system's actual position limits.</p>
+                <h3>When the system is less sure, it commits less</h3>
+                <p>The size of every position is tied to how certain the system is. When uncertainty rises, exposure
+                    falls automatically, without anyone having to notice.</p>
 
                 <p class="what-this-means">What this means for you: when the system is unsure, you are
-                    automatically less exposed, without anyone having to notice.</p>
+                    automatically less exposed.</p>
             </div>
         </section>
 
@@ -253,34 +225,18 @@
         <section class="block reveal-on-scroll">
             <div class="maths-item">
                 <div class="card-tag">06 · Human oversight</div>
-                <h3>Measuring whether the human is really reviewing</h3>
-                <p>"A human approves every decision" means nothing if the human has stopped reading. So the system
-                    occasionally shows reviewers a proposal with a known flaw planted in it, and measures how well
-                    they tell good proposals from bad ones. A raw catch rate is misleading, because someone who
-                    rejects everything catches every flaw. Signal detection theory separates real skill from
-                    caution:</p>
+                <h3>Human oversight you can measure</h3>
+                <p>"A human approves every decision" means nothing if the human has stopped reading. So we measure
+                    whether human review is actually working, and treat any decline as a problem to fix.</p>
 
-                <div class="formula-box">
-                    $$d' = \Phi^{-1}(H) - \Phi^{-1}(F)$$
-                </div>
-                <p class="formula-note">where <em>H</em> is the share of flawed proposals caught, <em>F</em> is the
-                    share of good proposals wrongly rejected, and Φ⁻¹ converts a rate to a standard score.</p>
-
-                <div class="worked-example">
-                    <p><strong>Worked example:</strong> two reviewers both catch 90% of flawed proposals. One also
-                        wrongly rejects 30% of good ones, the other only 5%. Their scores are <strong>1.81</strong>
-                        and <strong>2.93</strong>: the second is genuinely better at seeing flaws, even though
-                        their catch rates are identical.</p>
-                </div>
-
-                <p class="what-this-means">What this means for you: human oversight becomes a number you can
-                    track, not a sentence in a brochure.</p>
+                <p class="what-this-means">What this means for you: human oversight becomes something you can
+                    check, not a sentence in a brochure.</p>
             </div>
         </section>
 
         <section class="block reveal-on-scroll">
             <div class="maths-item">
-                <div class="card-tag">07 · Optional</div>
+                <div class="card-tag">07 · Honest uncertainty</div>
                 <h3>Knowing when to say "I don't know"</h3>
                 <p>Every automated check in the system reports two numbers, not one: how often it declines to
                     decide, and how often it is wrong when it does. For example: "declines on 12% of cases, and is
@@ -351,7 +307,7 @@
         </div>
     </div>
 
-    <script src="/app.js?v=9"></script>
+    <script src="/app.js?v=10"></script>
 
     <!-- KaTeX auto-render (loaded after app.js so the page's own JS isn't blocked) -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -360,30 +316,7 @@
 
     <script>
         // Sub-page wordmark collapse is wired by app.js. Below: page-specific
-        // interactivity for the two sliders in sections 01 and 02.
-
-        // 01 — uncertainty-scaled sizing
-        (function () {
-            var u = document.getElementById('u-slider');
-            if (!u) return;
-            var uVal = document.getElementById('u-val');
-            var sqOut = document.getElementById('u-sq-out');
-            var linOut = document.getElementById('u-lin-out');
-            var sqBar = document.getElementById('u-sq-bar');
-            var linBar = document.getElementById('u-lin-bar');
-            function update() {
-                var val = parseFloat(u.value);
-                var sq = Math.pow(1 - val, 2) * 100;
-                var lin = (1 - val) * 100;
-                uVal.textContent = val.toFixed(2);
-                sqOut.textContent = sq.toFixed(0) + '%';
-                linOut.textContent = lin.toFixed(0) + '%';
-                sqBar.style.width = sq + '%';
-                linBar.style.width = lin + '%';
-            }
-            u.addEventListener('input', update);
-            update();
-        })();
+        // interactivity for the slider in section 02.
 
         // 02 — correlated agreement
         (function () {

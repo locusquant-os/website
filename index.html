@@ -28,7 +28,7 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-    <link rel="stylesheet" href="theme.css?v=9">
+    <link rel="stylesheet" href="theme.css?v=10">
 </head>
 
 <body>
@@ -275,19 +275,18 @@
         <section class="block reveal-on-scroll" id="maths">
             <div class="eyebrow">The maths behind the guardrails</div>
             <h2 class="section-title">Most AI systems ask you to trust them. We'd rather show you the arithmetic.</h2>
-            <p class="section-intro">Six of the ideas the system is built on, with toy numbers so you can check them
+            <p class="section-intro">Five of the ideas the system is built on, with toy numbers so you can check them
                 yourself. The production versions combine several of these and use parameters we don't publish.
-                Three below, all six at <a href="/maths/" class="inline-link">/maths/</a>.</p>
+                Three below, all five at <a href="/maths/" class="inline-link">/maths/</a>.</p>
 
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="card-tag">Uncertainty &amp; sizing</div>
-                    <h3>Doubt costs more than it seems</h3>
-                    <p>Position size falls with the <em>square</em> of confidence, not in proportion to it. At 42%
-                        uncertainty, a straight line would still commit 58% of the maximum; the square only commits
-                        34%.</p>
-                    <p class="what-this-means">What this means for you: when the system is unsure, you're
-                        automatically less exposed, without anyone having to notice.</p>
+                    <h3>When the system is less sure, it commits less</h3>
+                    <p>The size of every position is tied to how certain the system is. When uncertainty rises,
+                        exposure falls automatically, without anyone having to notice.</p>
+                    <p class="what-this-means">What this means for you: when the system is unsure, you are
+                        automatically less exposed.</p>
                 </div>
                 <div class="feature-card">
                     <div class="card-tag">Correlated agreement</div>
@@ -299,15 +298,15 @@
                 </div>
                 <div class="feature-card">
                     <div class="card-tag">Human oversight</div>
-                    <h3>Measuring whether the human is really reviewing</h3>
-                    <p>"A human approves every decision" means nothing if the human has stopped reading. We
-                        occasionally plant a known flaw in a proposal and score how well reviewers catch it, using
-                        signal-detection maths that can't be gamed by just rejecting everything.</p>
-                    <p class="what-this-means">What this means for you: human oversight becomes a number you can
-                        track, not a sentence in a brochure.</p>
+                    <h3>Human oversight you can measure</h3>
+                    <p>"A human approves every decision" means nothing if the human has stopped reading. So we
+                        measure whether human review is actually working, and treat any decline as a problem to
+                        fix.</p>
+                    <p class="what-this-means">What this means for you: human oversight becomes something you can
+                        check, not a sentence in a brochure.</p>
                 </div>
             </div>
-            <a href="/maths/" class="btn btn-ghost">See all six, with the formulas →</a>
+            <a href="/maths/" class="btn btn-ghost">See all five, with the formulas →</a>
         </section>
 
         <!-- TODAY -->
@@ -531,7 +530,7 @@
         </div>
     </div>
 
-    <script src="app.js?v=9"></script>
+    <script src="app.js?v=10"></script>
 
     <script>
         var header = document.getElementById('main-header');
