@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /BRAND_KIT.md
+Allow: /
