@@ -5,782 +5,426 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <title>LocusQuant: The operating system that runs a hedge fund, agentically</title>
+    <title>LocusQuant: every AI decision in your fund, provable</title>
     <meta name="description"
-        content="LocusQuant is an AI-native hedge fund operating system: multi-agent AI that researches, allocates, executes, and stewards a fund end-to-end, with deterministic risk guardrails and a full audit trail.">
+        content="LocusQuant builds the operating system for AI-run investing, and sells the parts that make any fund's AI provable: Assay, Tare and Scribe. Proven first on our own fund.">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://locusquant.com/">
-    <meta property="og:title" content="LocusQuant: The operating system that runs a hedge fund, agentically">
+    <meta property="og:title" content="LocusQuant: every AI decision in your fund, provable">
     <meta property="og:description"
-        content="Multi-agent AI that researches, allocates, executes, and stewards a fund end-to-end, with deterministic risk guardrails and a full audit trail.">
+        content="We verify what your AI reads, govern what it does and record every decision, so you can show an allocator or an examiner exactly why.">
     <meta property="og:site_name" content="LocusQuant">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="LocusQuant: an AI-native hedge fund operating system">
-    <meta name="twitter:description"
-        content="Multi-agent AI that researches, allocates, executes, and stewards a fund end-to-end.">
 
-    <!-- Blackletter wordmark font (UnifrakturCook), used only for the LocusQuant mark -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
-
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
-    <link rel="stylesheet" href="theme.css?v=10">
+    <link rel="stylesheet" href="/theme.css?v=20">
 </head>
 
 <body>
-
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Animated wordmark: large on load, docks to top-centre on scroll (JS-driven) -->
-    <a href="/" class="brand-wordmark" id="brand-wm" aria-label="LocusQuant home">LocusQuant</a>
-
-    <header id="main-header" class="nav-hidden">
-        <div class="nav-wrapper">
-            <div class="nav-left">
-                <a href="/loqos/" class="nav-link"><span class="loqos-mark">LoQOS</span></a>
-            </div>
-            <nav class="nav-links" aria-label="Primary">
-                <a href="/whats-next/" class="nav-link">What's Next</a>
-                <a href="/maths/" class="nav-link">The maths</a>
-                <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
+    <header class="site-header">
+        <div class="wrap nav">
+            <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
+            <nav class="nav-links" id="nav-links" aria-label="Primary">
+                <a href="/instruments/" class="nav-link" data-sub="Assay, Tare, Scribe, and a look at what is in build">Instruments</a>
+                <a href="/loqos/" class="nav-link" data-sub="The operating system beneath them"><span class="loqos-mark">LoQOS</span></a>
+                <a href="/maths/" class="nav-link" data-sub="The arithmetic, with toy numbers">The maths</a>
+                <a href="/research/" class="nav-link" data-sub="Short, dated notes">Research</a>
+                <a href="/roadmap/" class="nav-link" data-sub="What is built, and what is next">Roadmap</a>
+                <button type="button" class="btn btn-primary btn-sm nav-cta" data-modal="both">Request Access</button>
+                <p class="nav-note">A founder replies within one business day.</p>
             </nav>
         </div>
     </header>
 
     <main id="main">
 
-        <!-- CLARITY HERO (wordmark auto-docks, then this reveals) -->
-        <section class="hero-clarity" id="top">
-            <div class="hero-grid">
-                <div class="hero-copy">
-                    <h1>An AI that runs a hedge fund, end&nbsp;to&nbsp;end, and on the record.</h1>
-                    <p class="subtitle">A working multi-agent prototype today. Watch it deliberate, backtest, and
-                        audit a position, one ticker, on paper. The plan: coordinated swarms that run the whole fund,
-                        end to end.</p>
-                    <div class="cta-row">
-                        <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
-                        <a href="#how-it-works" class="btn btn-ghost">See it run →</a>
-                    </div>
-                </div>
-
-                <div class="hero-visual" aria-hidden="true">
-                    <!-- Boardroom deliberation mock -->
-                    <div class="mock mock-boardroom">
-                        <div class="mock-head">
-                            <span class="mock-title">Boardroom</span>
-                            <span class="mock-live"><span class="live-dot"></span> deliberating</span>
-                        </div>
-                        <div class="mock-ticker">NVDA · 5-day horizon</div>
-                        <div class="desk"><span>Fundamental desk</span><span class="stance bull">Bullish</span></div>
-                        <div class="desk"><span>Sentiment desk</span><span class="stance bull">Bullish</span></div>
-                        <div class="desk"><span>Technical desk</span><span class="stance neutral">Neutral</span></div>
-                        <div class="desk"><span>Risk gate</span><span class="stance pass">✓ within limits</span></div>
-                        <div class="mock-verdict">House view · <strong>Long · half size</strong>
-                            <div class="conf-bar"><i></i></div>
-                        </div>
-                    </div>
-                    <!-- Audit trail mock (rows streamed by JS) -->
-                    <div class="mock mock-audit">
-                        <div class="mock-head">
-                            <span class="mock-title">Audit trail</span>
-                            <span class="mock-live"><span class="live-dot"></span> append-only</span>
-                        </div>
-                        <div class="audit-log" id="audit-log"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stat-row">
-                <div class="stat"><div class="num">5</div><div class="label">agent desks live</div></div>
-                <div class="stat"><div class="num">252<span>d</span></div><div class="label">backtest basis</div></div>
-                <div class="stat"><div class="num">100<span>%</span></div><div class="label">decisions audited</div></div>
-                <div class="stat"><div class="num">$0</div><div class="label">live capital at risk</div></div>
-            </div>
-        </section>
-
-        <!-- SIGNAL BAND: full-bleed dark. Headline sits clean on its own;
-             the fiber field is its own visual zone below, not underneath the text. -->
-        <section class="signal-band reveal-on-scroll" id="signal" aria-label="Our position">
-            <div class="signal-inner">
-                <p class="signal-line"><span class="muted">Others are racing to remove the human;</span> we make
-                    every AI decision <span class="grad-word">defensible</span>.</p>
-            </div>
-            <div class="fiber-stage" aria-hidden="true">
-                <canvas class="fiber-canvas" id="fiber-canvas"></canvas>
-            </div>
-        </section>
-
-        <!-- HOW IT WORKS -->
-        <section class="block reveal-on-scroll" id="how-it-works">
-            <div class="eyebrow">How it will work</div>
-            <h2 class="section-title">One continuous loop, from market feed to managed capital.</h2>
-            <p class="section-intro">The target design: every stage running as coordinated agents under a central
-                orchestrator, outputs flowing forward through deterministic gates, and positions feeding back into
-                research. Today the research &amp; selection stage, the Boardroom, is live; the rest is the roadmap.</p>
-
-            <div class="pipeline">
-                <div class="pipe-node"><div class="pipe-step">01</div><div class="pipe-name">Live Market Feed</div></div>
-                <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">02</div><div class="pipe-name">Thematic Segregation</div></div>
-                <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">03</div><div class="pipe-name">Research &amp; Selection</div></div>
-                <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">04</div><div class="pipe-name">Risk &amp; Direction Gates</div></div>
-                <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">05</div><div class="pipe-name">Execution &amp; Allocation</div></div>
-                <div class="pipe-arrow">→</div>
-                <div class="pipe-node"><div class="pipe-step">06</div><div class="pipe-name">Continuous Stewardship</div></div>
-            </div>
-            <div class="pipe-feedback">
-                <span class="loop-glyph">⟲ feedback loop</span>
-                managed positions and realized outcomes flow back into Research &amp; Selection.
-            </div>
-        </section>
-
-        <!-- SEVEN SWARMS -->
-        <section class="block reveal-on-scroll" id="swarms">
-            <div class="eyebrow">The architecture we're building</div>
-            <h2 class="section-title">Seven coordinated swarms, one meta layer.</h2>
-            <p class="section-intro">The target architecture: specialized agent groups, each owning a stage of the
-                fund's operation. Today one of them runs: the research Boardroom. The rest are the roadmap. Every swarm is
-                a framework of typed capability slots, so governance stays permanent and the agents inside are
-                swappable.</p>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="card-tag">Swarm 01</div>
-                    <h3>Ingestion</h3>
-                    <p>Agent-supervised data pipelines that file incidents instead of failing silently, feeding
-                        search-interest, options-chain and futures-basis data for behavioral and timing signals.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Swarm 02</div>
-                    <h3>Prediction</h3>
-                    <p>A probability-weighted market model plus a time-series foundation-model ensemble, and a
-                        <strong>Behavioral Desk</strong> scoring attention, prospect-theory and extrapolation signals on
-                        the same reality-checked discipline.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Swarm 03</div>
-                    <h3>Research</h3>
-                    <p>Desks debate into an adjudicated house view, grounded in a shared <strong>knowledge graph</strong>
-                        and policed by deterministic <strong>bias gates</strong> that catch herding and overconfidence in
-                        our own agents.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Swarm 04</div>
-                    <h3>Execution</h3>
-                    <p>Deliberately not an LLM: a deterministic engine with a <strong>timing overlay</strong> covering trading
-                        windows, calendar-risk days, participation caps and order-to-trade hygiene enforced as policy.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Swarm 05 <span class="badge-new">New</span></div>
-                    <h3>Stewardship</h3>
-                    <p>The post-purchase layer: <strong>living theses</strong> re-underwritten on cadence, deterministic
-                        exit discipline through the same gates as entries, a hedging module and a drawdown governor.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Swarm 06</div>
-                    <h3>Compliance</h3>
-                    <p>OPA rules plus LLM auditors running <strong>manipulation-pattern detectors</strong> on our own
-                        order flow as examiner-ready proof of what we don't do.</p>
-                </div>
-                <div class="feature-card featured">
+        <!-- 1 · HERO -->
+        <section class="hero" data-quill>
+            <div class="wrap">
+                <div class="hero-grid">
                     <div>
-                        <div class="card-tag">Meta layer <span class="badge-new">New</span></div>
-                        <h3>Neural Engine, Foundry &amp; Bursar</h3>
+                        <p class="eyebrow">The operating system for AI-run investing</p>
+                        <h1 class="display">Every AI decision in your fund, provable.</h1>
+                        <p class="lede">LocusQuant verifies what your AI reads, governs what it does and records every
+                            decision, so you can show an allocator or an examiner exactly why. We are proving it first
+                            on our own fund.</p>
+                        <div class="cta-row">
+                            <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                            <a href="#fund" class="btn btn-ghost">See it run &rarr;</a>
+                        </div>
+                        <p class="reply-note">A founder replies within one business day.</p>
                     </div>
-                    <p>Meta-research and analytics agents, plus <strong>The Foundry</strong> (governed self-improvement)
-                        and <strong>the Bursar</strong>, which meters every dollar into net-of-cost P&amp;L under hard
-                        budget envelopes, so autonomy always runs net-of-cost and inside a budget.</p>
-                </div>
-            </div>
-            <p class="why-matters">Why this matters: each part of the fund has one job and can be checked on its
-                own, so a failure in one place does not become a failure everywhere.</p>
-        </section>
 
-        <!-- GOVERNED AUTONOMY -->
-        <section class="block reveal-on-scroll" id="governance">
-            <div class="eyebrow">Governed autonomy · on the roadmap</div>
-            <h2 class="section-title">Full autonomy, inside an envelope the OS makes impossible to leave.</h2>
-            <p class="section-intro">The governance model we're building (ships v0.8 to v0.9): humans approve a
-                <strong>Mandate</strong> once, covering its objective, the exact files an agent may touch, its budget, its legal
-                scope. Inside that envelope the agent is fully autonomous; outside it, actions aren't just forbidden,
-                they're impossible, because the mandate compiles to policy in <span class="loqos-mark">LoQOS</span>.</p>
-
-            <div class="guard-grid">
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>The Foundry</h4></div>
-                    <p>Governed self-improvement: ratchet loops run experiments on allowlisted surfaces only, each a
-                        commit in a per-swarm lineage graph. Everything is reversible; a deterministic scorer, independent
-                        of the proposer, decides what's kept.</p>
-                </div>
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Shared knowledge graph</h4></div>
-                    <p>One memory across every swarm: entities, claims, forecasts, theses and their provenance. Agents
-                        get bounded subgraphs with citations instead of replaying transcripts.</p>
-                </div>
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>The Bursar</h4></div>
-                    <p>Every token and compute dollar is metered and attributed to an agent, swarm and decision, then reported
-                        as net-of-cost P&amp;L, with budget envelopes enforced and safety spend always exempt.</p>
-                </div>
-            </div>
-            <p class="why-matters">Why this matters: you set the limits once, and the system cannot talk its way
-                past them.</p>
-        </section>
-
-        <!-- TENTPOLE STATEMENT -->
-        <section class="statement reveal-on-scroll">
-            <p><span class="muted">Not AI bolted onto a hedge fund.</span> The fund itself, rebuilt as an
-                <span class="grad-word">operating system</span>.</p>
-        </section>
-
-        <!-- GUARDRAILS (inverted focal panel) -->
-        <section class="block reveal-on-scroll" id="guardrails">
-          <div class="dark-panel">
-            <div class="eyebrow">Trust</div>
-            <h2 class="section-title">The model proposes. Deterministic code disposes.</h2>
-            <p class="section-intro">What makes LocusQuant different from a chatbot pointed at a brokerage: the
-                guardrails are code, not prompts, and every decision is on the record.</p>
-
-            <div class="guard-grid">
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Deterministic code gates</h4></div>
-                    <p>Risk boundaries and house-view consistency are enforced by <strong>plain Python gates</strong>,
-                        not prompt guidance a model can talk around. A non-compliant proposal is rejected before it can
-                        execute.</p>
-                </div>
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Append-only audit trail</h4></div>
-                    <p>Every agent output and gate decision streams to an <strong>append-only store</strong>, so each
-                        decision is traceable back to the inputs that produced it, with no silent overrides.</p>
-                </div>
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Honest-by-default UI</h4></div>
-                    <p>Degraded desks, missing data, and gate interventions are <strong>surfaced, not hidden</strong>.
-                        The interface shows what actually happened, including when the system overrode the model.</p>
-                </div>
-            </div>
-            <p class="why-matters why-matters-dark">Why this matters: when an investor or auditor asks why a
-                decision was made, you can show them, not reconstruct it.</p>
-          </div>
-        </section>
-
-        <!-- THE MATHS BEHIND THE GUARDRAILS (home summary; full version at /maths/) -->
-        <section class="block reveal-on-scroll" id="maths">
-            <div class="eyebrow">The maths behind the guardrails</div>
-            <h2 class="section-title">Most AI systems ask you to trust them. We'd rather show you the arithmetic.</h2>
-            <p class="section-intro">Five of the ideas the system is built on, with toy numbers so you can check them
-                yourself. The production versions combine several of these and use parameters we don't publish.
-                Three below, all five at <a href="/maths/" class="inline-link">/maths/</a>.</p>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="card-tag">Uncertainty &amp; sizing</div>
-                    <h3>When the system is less sure, it commits less</h3>
-                    <p>The size of every position is tied to how certain the system is. When uncertainty rises,
-                        exposure falls automatically, without anyone having to notice.</p>
-                    <p class="what-this-means">What this means for you: when the system is unsure, you are
-                        automatically less exposed.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Correlated agreement</div>
-                    <h3>Five analysts agreeing isn't five opinions</h3>
-                    <p>If analysts read the same news, their agreement is worth less than it looks. Five analysts
-                        whose errors correlate at 0.6 are worth 1.47 independent opinions, not five.</p>
-                    <p class="what-this-means">What this means for you: a room full of AI agents agreeing does not
-                        fool the system into betting bigger.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Human oversight</div>
-                    <h3>Human oversight you can measure</h3>
-                    <p>"A human approves every decision" means nothing if the human has stopped reading. So we
-                        measure whether human review is actually working, and treat any decline as a problem to
-                        fix.</p>
-                    <p class="what-this-means">What this means for you: human oversight becomes something you can
-                        check, not a sentence in a brochure.</p>
-                </div>
-            </div>
-            <a href="/maths/" class="btn btn-ghost">See all five, with the formulas →</a>
-        </section>
-
-        <!-- TODAY -->
-        <section class="block reveal-on-scroll" id="today">
-            <div class="eyebrow">Status · now</div>
-            <h2 class="section-title">A working prototype, today.</h2>
-            <p class="section-intro">Not a mockup. A running multi-agent system you can watch deliberate, backtest, and
-                audit. Today it runs a single ticker on paper capital, no live money, with every decision recorded.</p>
-
-            <div class="today-grid">
-                <div class="status-panel">
-                    <div class="panel-caption">Operational</div>
-                    <div class="status-line"><span class="ok">✓</span> Multi-agent deliberation: the Boardroom</div>
-                    <div class="status-line"><span class="ok">✓</span> Backtesting on a 252-trading-day basis: Strategy Lab</div>
-                    <div class="status-line"><span class="ok">✓</span> Portfolio &amp; risk views</div>
-                    <div class="status-line"><span class="ok">✓</span> Full append-only audit log</div>
-                </div>
-                <div class="stack-panel">
-                    <div class="panel-caption">Built on</div>
-                    <div class="stack-badges">
-                        <span class="stack-badge">LangGraph</span>
-                        <span class="stack-badge">Groq-served Llama</span>
-                        <span class="stack-badge">FinBERT</span>
-                        <span class="stack-badge">SEC EDGAR</span>
-                        <span class="stack-badge">FRED</span>
+                    <div class="panel" aria-label="Illustration of a live audit trail">
+                        <div class="panel-head">
+                            <span class="panel-title">Audit trail</span>
+                            <span class="live"><span class="live-dot"></span>append-only</span>
+                        </div>
+                        <div class="audit-log" id="audit-log" aria-hidden="true"></div>
+                        <div class="panel-foot">
+                            <span>every row signed and kept</span>
+                            <span>paper book</span>
+                        </div>
                     </div>
-                    <p class="stack-note">Orchestrated multi-agent graphs over Groq-served Llama models, with FinBERT
-                        sentiment and grounded market &amp; macro data from SEC EDGAR and FRED.</p>
                 </div>
-            </div>
-            <p class="contact-line">The system is designed to automate research → prediction → deliberation → execution
-                → stewardship, while humans keep four irreducible seats: exception resolution, compliance judgment,
-                capital allocation, and legal sign-off.</p>
-            <p class="why-matters">Why this matters: what's live today already runs under the same rules the full
-                platform will use tomorrow.</p>
-        </section>
 
-        <!-- ROADMAP -->
-        <section class="block reveal-on-scroll" id="roadmap-next">
-            <div class="eyebrow">What ships next</div>
-            <h2 class="section-title">From prototype to fund-in-a-box.</h2>
-            <p class="section-intro">The near-term releases from the pipeline, each still paper-traded and routed
-                through the same deterministic gates.</p>
-
-            <div class="road-panel">
-                <div class="road-tag">Next releases</div>
-                <div class="roadmap-row">
-                    <span class="stack-badge">v0.5 · in build</span>
-                    <span class="roadmap-text"><strong>Replatform</strong>: a real web platform with admin console, RBAC,
-                        kill switches and hash-chained audit, plus cost-metering taps and slot-based agent loading from
-                        day one.</span>
+                <!-- 2 · THE LEDGER STRIP -->
+                <hr class="ledger" data-reveal style="margin-top:80px">
+                <div class="stats" style="margin-top:0">
+                    <div class="stat"><div class="num">5</div><div class="label">agent desks live</div></div>
+                    <div class="stat"><div class="num">100<small>%</small></div><div class="label">of decisions audited</div></div>
+                    <div class="stat"><div class="num">All</div><div class="label">guardrails tested by breaking them</div></div>
+                    <div class="stat"><div class="num">$0</div><div class="label">live capital at risk</div></div>
                 </div>
-                <div class="roadmap-row">
-                    <span class="stack-badge">v0.6</span>
-                    <span class="roadmap-text"><strong>Prediction + Behavioral Desk</strong>: probabilistic forecasts
-                        and behavioral signals, scored against reality; bias gates v1; uncertainty-scaled sizing.</span>
-                </div>
-                <div class="roadmap-row">
-                    <span class="stack-badge">v0.7</span>
-                    <span class="roadmap-text"><strong>Execution + Stewardship</strong>: a screened universe worked by a
-                        production engine with a timing overlay, plus living theses and deterministic exit
-                        discipline.</span>
-                </div>
-                <div class="roadmap-row">
-                    <span class="stack-badge">v0.8</span>
-                    <span class="roadmap-text"><strong>Governance, Mandate &amp; Graph</strong>: a mandate console and
-                        OPA policy, the knowledge-graph and lineage planes, and the Budget Governor + Bursar.</span>
-                </div>
-                <div class="roadmap-row">
-                    <span class="stack-badge">v0.9</span>
-                    <span class="roadmap-text"><strong><span class="loqos-mark">LoQOS</span> + Foundry</strong>: an
-                        immutable OS runs every agent in its own micro-VM under a policy kernel no agent can route
-                        around, with self-improvement ratchet loops on Prediction &amp; Research.</span>
-                </div>
-                <div class="roadmap-row">
-                    <span class="stack-badge">v1.0</span>
-                    <span class="roadmap-text"><strong>Fund-in-a-Box</strong>: the Foundry across all swarms, a neural
-                        engine trained on the fund's own history, and a first slice of live capital.</span>
-                </div>
-                <p style="margin-top:24px;">View the full pipeline →
-                    <a href="/whats-next/" class="inline-link">What's Next</a></p>
             </div>
         </section>
 
-        <!-- WORK WITH US -->
-        <section class="block reveal-on-scroll" id="work-with-us">
-            <div class="eyebrow">Design partners</div>
-            <h2 class="section-title">Build it with us.</h2>
-            <p class="section-intro">We're working with a small number of investment firms as early design
-                partners. Partners get early access to the platform, direct input into what we build next, and a
-                system shaped around their own process and constraints. We're looking for firms that want to use AI
-                in their investment process and need to be able to explain every decision it makes.</p>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="card-tag">Fund managers</div>
-                    <h3>Funds</h3>
-                    <p>Bring AI into your process without losing the ability to explain it to your investors.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Family offices</div>
-                    <h3>Disciplined by design</h3>
-                    <p>Systematic decisions you can review and audit, without building a quant team.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="card-tag">Firms with their own models</div>
-                    <h3>Governance layer</h3>
-                    <p>A governance, audit and oversight layer around what you already have.</p>
+        <!-- 3 · THE PROBLEM -->
+        <section class="sec" aria-labelledby="problem-h">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">03</span><span class="eyebrow">The problem</span></div>
+                    <div class="problem" data-reveal>
+                        <h2 class="sr-only" id="problem-h">The problem</h2>
+                        <p><strong>Funds are adding AI to research and trading.</strong> Allocators now ask how it is
+                            validated, and regulators ask how it is supervised. Most firms answer with a policy
+                            document.</p>
+                        <p class="answer">We answer with a record.</p>
+                    </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary btn-section-cta" data-modal="partner">Request Access</button>
         </section>
 
-        <!-- TEAM -->
-        <section class="block reveal-on-scroll" id="team">
-            <div class="eyebrow">Team</div>
-            <h2 class="section-title">Who's building it.</h2>
+        <!-- 4 · AVAILABLE NOW -->
+        <section class="sec" id="instruments" aria-labelledby="inst-h" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">04</span><span class="eyebrow">Available now</span></div>
+                    <div>
+                        <div class="sec-head">
+                            <h2 class="h2" id="inst-h">Three instruments a fund can use this month.</h2>
+                            <p class="body">Each one names a problem, hands back a result you can forward, and starts
+                                with a short conversation. No prices on the site; every engagement starts with
+                                Request Access.</p>
+                        </div>
 
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-name">Divyanshu Bhardwaj</div>
-                    <div class="team-role">Data Science</div>
-                    <p>Data science background across credit-bureau and fintech systems, forming the quantitative and modeling
-                        core of LocusQuant.</p>
-                    <button type="button" class="team-contact-btn" data-modal="divyanshu">Contact →</button>
-                </div>
-                <div class="team-card">
-                    <div class="team-name">Ayush Vaishnav</div>
-                    <div class="team-role">Enterprise Integration</div>
-                    <p>Enterprise integration background, wiring the operating system into robust, production-grade
-                        infrastructure.</p>
-                    <button type="button" class="team-contact-btn" data-modal="ayush">Contact →</button>
+                        <div class="inst-grid" data-reveal>
+                            <a href="/instruments/assay/" class="inst inst-lead">
+                                <div class="inst-top">
+                                    <span class="status status-available">Available</span>
+                                    <span class="inst-for">For CIOs, quant PMs, allocators</span>
+                                </div>
+                                <div class="inst-name">Assay<sub>by LocusQuant</sub></div>
+                                <p class="inst-line">Find out how much of your Sharpe ratio is luck, before an allocator
+                                    does.</p>
+                                <div class="mini" aria-hidden="true">
+                                    <div class="mini-row"><span>Variations tried</span><b>400</b></div>
+                                    <div class="mini-row"><span>Sharpe, as reported</span><b>1.84</b></div>
+                                    <div class="mini-row"><span>Sharpe, after the trials behind it</span><b>0.52</b></div>
+                                </div>
+                                <p class="mini-cap">Illustrative figures.</p>
+                                <div class="inst-foot"><span>Read about Assay</span><span class="arrow">&rarr;</span></div>
+                            </a>
+
+                            <a href="/instruments/tare/" class="inst">
+                                <div class="inst-top">
+                                    <span class="status status-available">Available</span>
+                                    <span class="inst-for">For heads of data</span>
+                                </div>
+                                <div class="inst-name">Tare</div>
+                                <p class="inst-line">Weigh what each data subscription is really worth to your
+                                    decisions.</p>
+                                <div class="inst-foot"><span>Read about Tare</span><span class="arrow">&rarr;</span></div>
+                            </a>
+
+                            <a href="/instruments/scribe/" class="inst">
+                                <div class="inst-top">
+                                    <span class="status status-pilot">Pilot</span>
+                                    <span class="inst-for">For research heads</span>
+                                </div>
+                                <div class="inst-name">Scribe</div>
+                                <p class="inst-line">Every claim your AI pulls from a filing, checked against the
+                                    sentence it came from.</p>
+                                <div class="inst-foot"><span>Read about Scribe</span><span class="arrow">&rarr;</span></div>
+                            </a>
+                        </div>
+
+                        <div class="peek-strip" data-reveal>
+                            <span class="status status-build">In build</span>
+                            <ul aria-label="Instruments in build"><li>Folio</li><li>Charter</li><li>Keystone</li><li>Hourglass</li><li>Notary</li><li>Quorum</li><li>Bursar</li></ul>
+                            <a href="/instruments/#in-build" class="text-link">Take a sneak peek &rarr;</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <p class="contact-line">Reach a founder directly through the <button type="button" class="link-inline"
-                    data-modal="both">secure contact channel</button>.</p>
         </section>
 
-        <!-- CLOSING CTA -->
-        <section class="block reveal-on-scroll" id="access">
-            <div class="close-cta">
-                <div class="eyebrow">Get access</div>
-                <h2>See the fund run, on the record.</h2>
-                <p>Request access to the live prototype and watch the agents research, deliberate, backtest, and
-                    audit a position, one ticker, on paper, every decision recorded.</p>
-                <div class="cta-row">
-                    <button type="button" class="btn btn-primary ink-final" data-modal="both">Request Access</button>
-                    <a href="/loqos/" class="btn btn-ghost">Explore <span class="loqos-mark">LoQOS</span> →</a>
+        <!-- 5 · THE PLATFORM UNDERNEATH -->
+        <section class="sec" aria-labelledby="platform-h" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">05</span><span class="eyebrow">Underneath</span></div>
+                    <div>
+                        <div class="sec-head">
+                            <h2 class="h2" id="platform-h">One <span class="seal-word">operating system</span>
+                                beneath every instrument.</h2>
+                        </div>
+                        <div class="stack-drawing" data-reveal role="img"
+                            aria-label="Assay, Tare and Scribe sit on the LoQOS band, beside an outline for more instruments in build">
+                            <div class="stack-row">
+                                <div class="stack-block"><span class="k">Assay</span><span class="v">available</span></div>
+                                <div class="stack-block"><span class="k">Tare</span><span class="v">available</span></div>
+                                <div class="stack-block"><span class="k">Scribe</span><span class="v">pilot</span></div>
+                                <a href="/instruments/#in-build" class="stack-block ghost" style="text-decoration:none;color:inherit"><span class="k">Seven more in build</span><span class="v">sneak peek &rarr;</span></a>
+                            </div>
+                            <div class="stack-base"><span class="loqos-mark">LoQOS</span><span>limits set by people, enforced below every agent</span></div>
+                        </div>
+                        <p class="body stack-caption">Start with one. Each runs on <a href="/loqos/" class="text-link"><span class="loqos-mark">LoQOS</span></a>,
+                            so each one you add reuses what the last one built.</p>
+                    </div>
                 </div>
-                <p class="close-note">Investors &amp; partners welcome · no live capital at risk today</p>
+            </div>
+        </section>
+
+        <!-- 6 · PROOF IN INK -->
+        <section class="sec" id="proof" aria-labelledby="proof-h" style="padding-top:0">
+            <div class="wrap">
+                <div class="ink" data-reveal>
+                    <p class="eyebrow">06 &middot; Evidence</p>
+                    <h2 class="h2" id="proof-h" style="margin-top:16px;max-width:20ch">Most AI asks for trust. We
+                        would rather show the arithmetic.</h2>
+
+                    <div class="evidence">
+                        <div class="ev">
+                            <p class="ev-label">From an Assay report</p>
+                            <div class="report" aria-label="Specimen page of an Assay report">
+                                <div class="report-head"><span class="wordmark">Assay</span><span>Specimen &middot; public strategy</span></div>
+                                <h4>Momentum, top decile, monthly rebalance</h4>
+                                <p class="sub">Backtest supplied with 400 recorded variations</p>
+                                <table>
+                                    <tr><td>Sharpe, as reported</td><td>1.84</td></tr>
+                                    <tr><td>Sharpe, after the trials behind it</td><td>0.52</td></tr>
+                                    <tr><td>Share of the result explained by selection</td><td>71%</td></tr>
+                                    <tr><td>Holds out of sample</td><td class="st st-held">partly</td></tr>
+                                </table>
+                                <p class="verdict">Most of the headline result comes from choosing the best of many
+                                    tries. A smaller, real effect remains.</p>
+                            </div>
+                            <p class="specimen-note">Layout specimen. Figures are illustrative, not a client
+                                result.</p>
+                            <p class="ev-foot"><a href="/instruments/assay/sample/" class="text-link">Read the full specimen report &rarr;</a></p>
+                        </div>
+
+                        <div class="ev">
+                            <p class="ev-label">Effective panel size</p>
+                            <div class="ev-big num">1.47<small>opinions</small></div>
+                            <div class="dots" aria-hidden="true">
+                                <i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i>
+                                <span class="eq">&rarr;</span>
+                                <i class="f"></i><i class="p"></i>
+                            </div>
+                            <p class="body">Five analysts who read the same news, with errors correlated at 0.6, are
+                                worth 1.47 independent opinions, not five. A room of agreeing agents does not get to bet
+                                bigger.</p>
+                            <p class="ev-foot"><a href="/research/effective-panel-size/" class="text-link">Try it with your own numbers &rarr;</a></p>
+                        </div>
+
+                        <div class="ev-quote">
+                            <p>The model proposes. <span class="muted">Deterministic code disposes.</span></p>
+                            <a href="/maths/" class="btn btn-ghost">Read the maths &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7 · OUR OWN FUND -->
+        <section class="sec" id="fund" aria-labelledby="fund-h" style="padding-top:24px">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">07</span><span class="eyebrow">Our own fund</span></div>
+                    <div>
+                        <div class="sec-head">
+                            <h2 class="h2" id="fund-h">On the record, on ourselves first.</h2>
+                            <p class="body">We run our own fund on the same system. Today it is in paper trading, and
+                                every decision is recorded.</p>
+                        </div>
+                        <div class="fund-grid">
+                            <div class="panel" data-reveal aria-label="Illustration of the Boardroom deliberating">
+                                <div class="panel-head">
+                                    <span class="panel-title">Boardroom</span>
+                                    <span class="live"><span class="live-dot"></span>deliberating</span>
+                                </div>
+                                <div class="mock-ticker">NVDA &middot; 5-day horizon &middot; paper</div>
+                                <div class="desk"><span>Fundamental desk</span><span class="st st-pass">bullish</span></div>
+                                <div class="desk"><span>Sentiment desk</span><span class="st st-pass">bullish</span></div>
+                                <div class="desk"><span>Technical desk</span><span class="st st-neutral">neutral</span></div>
+                                <div class="desk"><span>Risk gate</span><span class="st st-pass">within limits</span></div>
+                                <div class="verdict-line">House view &middot; <strong>long, half size</strong>
+                                    <div class="conf"><i></i></div>
+                                </div>
+                            </div>
+                            <div data-reveal>
+                                <ol class="stages">
+                                    <li>Live market feed<span class="tag">roadmap</span></li>
+                                    <li>Thematic segregation<span class="tag">roadmap</span></li>
+                                    <li>Research and selection<span class="tag on">live</span></li>
+                                    <li>Risk and direction gates<span class="tag">roadmap</span></li>
+                                    <li>Execution and allocation<span class="tag">roadmap</span></li>
+                                    <li>Continuous stewardship<span class="tag">roadmap</span></li>
+                                </ol>
+                                <p class="small stages-note">Outcomes flow back into research. Fills, not code, set the
+                                    date for live capital. <a href="/roadmap/" class="text-link">See the roadmap</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8 · WHO WE WORK WITH -->
+        <section class="sec" id="who" aria-labelledby="who-h" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">08</span><span class="eyebrow">Who we work with</span></div>
+                    <div>
+                        <div class="sec-head">
+                            <h2 class="h2" id="who-h">For firms that have to explain their AI to someone else.</h2>
+                        </div>
+                        <div class="rows" data-reveal>
+                            <div class="row">
+                                <h3 class="h3">Emerging managers</h3>
+                                <p>Due-diligence ready from day one.</p>
+                            </div>
+                            <div class="row">
+                                <h3 class="h3">Quant teams</h3>
+                                <p>Validation before promotion, not after the drawdown.</p>
+                            </div>
+                            <div class="row">
+                                <h3 class="h3">Data vendors</h3>
+                                <p>Independent proof that your data predicts.</p>
+                            </div>
+                            <div class="row">
+                                <h3 class="h3">Platforms and wealth apps</h3>
+                                <p>Governance for the AI features you ship to clients.</p>
+                            </div>
+                        </div>
+
+                        <div class="founders" data-reveal>
+                            <div class="founder">
+                                <div class="name">Divyanshu Bhardwaj</div>
+                                <div class="role">Co-founder &middot; data science</div>
+                                <p>Data science across credit-bureau and fintech systems. Builds the quantitative and
+                                    modelling core of LocusQuant.</p>
+                                <button type="button" class="btn btn-ghost btn-sm" data-modal="divyanshu">Write to Divyanshu</button>
+                            </div>
+                            <div class="founder">
+                                <div class="name">Ayush Vaishnav</div>
+                                <div class="role">Co-founder &middot; enterprise integration</div>
+                                <p>Enterprise integration background. Wires the operating system into production-grade
+                                    infrastructure.</p>
+                                <button type="button" class="btn btn-ghost btn-sm" data-modal="ayush">Write to Ayush</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9 · CLOSE + FAQ -->
+        <section class="sec" id="access" aria-labelledby="close-h" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="close" style="padding-top:56px">
+                    <div>
+                        <h2 class="display" id="close-h">See your own numbers, on the record.</h2>
+                        <div class="cta-row">
+                            <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                        </div>
+                        <p class="reply-note">A founder replies within one business day.</p>
+                    </div>
+                    <div class="faq" id="faq">
+                        <details>
+                            <summary>Does our data leave our environment?</summary>
+                            <p>No. Raw data stays with you. We agree what is needed in the first conversation, and
+                                where possible the work runs inside your environment.</p>
+                        </details>
+                        <details>
+                            <summary>How do we start?</summary>
+                            <p>Request access and tell us what you are working on. A founder replies, and the first
+                                call settles scope. Nothing is priced on the site.</p>
+                        </details>
+                        <details>
+                            <summary>What is built today, and what is roadmap?</summary>
+                            <p>Assay and Tare are available to design partners, Scribe is in pilot, and seven more instruments
+                                are in build, previewed on the <a href="/instruments/#in-build" class="text-link">instruments page</a>. Our own fund runs
+                                its research stage live, on paper, with every decision audited. The rest is on the
+                                <a href="/roadmap/" class="text-link">roadmap</a>, stated plainly.</p>
+                        </details>
+                        <details>
+                            <summary>Does the AI trade on its own?</summary>
+                            <p>It proposes. Rules set by people decide what is allowed, and the rules are enforced
+                                below the agent, not in its prompt.</p>
+                        </details>
+                        <details>
+                            <summary>Can we see the maths?</summary>
+                            <p>The ideas, with toy numbers, are on <a href="/maths/" class="text-link">the maths
+                                    page</a>. The detail comes in the conversation.</p>
+                        </details>
+                    </div>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <!-- FOOTER: full-bleed black. FAQ lives here too, then the huge
-         animated-gradient wordmark, then the meta row. -->
     <footer class="site-footer">
-        <div class="footer-faq reveal-on-scroll" id="faq">
-            <div class="eyebrow">FAQ</div>
-            <h2 class="section-title">Questions worth asking up front.</h2>
-
-            <div class="faq-list">
-                <details class="faq-item">
-                    <summary>Does the AI trade on its own?</summary>
-                    <p>It proposes. Rules you set decide what is allowed, and a person approves those rules.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Can I see the maths?</summary>
-                    <p>Some of it is on <a href="/maths/" class="inline-link">this page</a>. Partners get more.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Can it work with our own models and data?</summary>
-                    <p>That's one of the things design partners help us shape.</p>
-                </details>
-                <details class="faq-item">
-                    <summary>Where are you based and who do you work with?</summary>
-                    <p>Two founders: Divyanshu Bhardwaj, from a data science background across credit-bureau and
-                        fintech systems, and Ayush Vaishnav, from an enterprise integration background. Reach either
-                        one through the secure contact channel above.</p>
-                </details>
+        <div class="wrap">
+            <div class="foot-top">
+                <div>
+                    <p>The operating system for AI-run investing, and the parts that make any fund's AI provable.
+                        We build software; nothing here is an offer to invest.</p>
+                </div>
+                <div class="foot-col">
+                    <h3>Instruments</h3>
+                    <ul>
+                        <li><a href="/instruments/assay/">Assay</a></li>
+                        <li><a href="/instruments/tare/">Tare</a></li>
+                        <li><a href="/instruments/scribe/">Scribe</a></li>
+                        <li><a href="/instruments/#in-build">In build</a></li>
+                    </ul>
+                </div>
+                <div class="foot-col">
+                    <h3>LocusQuant</h3>
+                    <ul>
+                        <li><a href="/loqos/">LoQOS</a></li>
+                        <li><a href="/maths/">The maths</a></li>
+                        <li><a href="/research/">Research</a></li>
+                        <li><a href="/roadmap/">Roadmap</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="footer-wordmark-band">
-            <span class="footer-wordmark" aria-hidden="true"><span class="brand-full">LocusQuant</span><span class="brand-short">LQ</span></span>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-meta-row">
-                <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
-                <p class="footer-meta">Paper-trading preview · no live capital ·
-                    <a href="/loqos/"><span class="loqos-mark">LoQOS</span></a></p>
+            <span class="foot-wordmark" aria-hidden="true"><span class="full">LocusQuant</span><span class="short">LQ</span></span>
+            <div class="foot-meta">
+                <span>&copy; 2026 LocusQuant &middot; a dAVb product</span>
+                <span>Paper-trading preview &middot; no live capital at risk</span>
             </div>
         </div>
     </footer>
 
-    <!-- Reusable contact modal (recipient set per trigger via data-modal) -->
-    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
-            <button type="button" class="modal-close" id="modal-close" aria-label="Close">✕</button>
-            <div class="modal-heading" id="modal-heading">Request Access</div>
-            <div class="modal-recipient" id="modal-recipient"></div>
-            <form id="contact-form" novalidate>
-                <label class="modal-label" for="cf-name">Name</label>
-                <input class="modal-input" id="cf-name" name="name" type="text" required
-                    autocomplete="name" placeholder="your name">
-
-                <label class="modal-label" for="cf-email">Email</label>
-                <input class="modal-input" id="cf-email" name="email" type="email" required
-                    autocomplete="email" placeholder="your email address">
-
-                <label class="modal-label" for="cf-message">Message</label>
-                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
-                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
-
-                <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
-                    aria-hidden="true">
-
-                <button type="submit" class="modal-submit" id="modal-submit">Send request →</button>
-                <div class="modal-status" id="modal-status" role="status" aria-live="polite"></div>
-            </form>
-        </div>
-    </div>
-
-    <script src="app.js?v=10"></script>
-
-    <script>
-        var header = document.getElementById('main-header');
-        var wm = document.getElementById('brand-wm');
-        var introDone = false;
-
-        // Place the docked wordmark: centred small on desktop, top-left "LQ" on mobile
-        function dockWordmark() {
-            var mobile = window.innerWidth <= 680;
-            if (mobile) {
-                wm.textContent = 'LQ';
-                wm.style.left = '14%';
-                wm.style.top = '14px';
-                wm.style.fontSize = '26px';
-            } else {
-                wm.textContent = 'LocusQuant';
-                wm.style.left = '50%';
-                wm.style.top = '16px';
-                wm.style.fontSize = '30px';
-            }
-        }
-
-        // The ~1.1s brand moment: hold the big wordmark, then dock it and reveal
-        function startIntro() {
-            if (introDone) return;
-            introDone = true;
-            dockWordmark();
-            header.classList.remove('nav-hidden');
-            document.body.classList.add('intro-done');
-        }
-
-        function armIntro() { setTimeout(startIntro, 1100); }
-        if (document.readyState === 'complete') armIntro();
-        else window.addEventListener('load', armIntro);
-
-        window.addEventListener('resize', function () { if (introDone) dockWordmark(); });
-
-        // Header background once you begin scrolling
-        window.addEventListener('scroll', function () {
-            header.classList.toggle('scrolled', window.scrollY > 40);
-        }, { passive: true });
-
-        // Audit-trail: stream decision entries into the mock (respecting reduced motion)
-        (function () {
-            var log = document.getElementById('audit-log');
-            if (!log) return;
-            var events = [
-                ['research', 'house view logged', 'ok', '✓'],
-                ['risk', 'exposure within limits', 'ok', 'pass'],
-                ['execution', 'order ticket', 'ok', 'gate ✓'],
-                ['compliance', 'OTR ratio check', 'ok', '✓'],
-                ['prediction', 'forecast scored', 'ok', '✓'],
-                ['steward', 'thesis re-underwritten', 'ok', '✓'],
-                ['execution', 'entry outside window', 'blk', 'held'],
-                ['bias-gate', 'herding check', 'ok', '✓']
-            ];
-            var i = 0;
-            function pad(n) { return (n < 10 ? '0' : '') + n; }
-            function stamp() { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); }
-            function add(animate) {
-                var e = events[i % events.length]; i++;
-                var row = document.createElement('div');
-                row.className = 'log' + (animate ? ' log-enter' : '');
-                row.innerHTML = '<span class="t">' + stamp() + '</span>' +
-                    '<span class="ag">' + e[0] + '</span>' +
-                    '<span class="desc">' + e[1] + '</span>' +
-                    '<span class="' + e[2] + '">' + e[3] + '</span>';
-                log.insertBefore(row, log.firstChild);
-                while (log.children.length > 6) log.removeChild(log.lastChild);
-                if (animate) requestAnimationFrame(function () { row.classList.remove('log-enter'); });
-            }
-            for (var s = 0; s < 6; s++) add(false);
-            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (!reduce) setInterval(function () { add(true); }, 2600);
-        })();
-
-        // Fiber-optic "grass" field: idle sway, bends away from the cursor
-        // like blades of grass, springs back when you move away.
-        (function () {
-            var canvas = document.getElementById('fiber-canvas');
-            var stage = document.querySelector('.fiber-stage');
-            if (!canvas || !stage || !canvas.getContext) return;
-            var ctx = canvas.getContext('2d');
-            var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            var canInteract = window.matchMedia && !window.matchMedia('(pointer: coarse)').matches;
-            var dpr = Math.min(window.devicePixelRatio || 1, 2);
-            var W = 0, H = 0, originX = 0, originY = 0;
-            var blades = [];
-            var COUNT = 220;
-
-            // Same multi-hue sweep as the brand gradient (the "defensible"
-            // word, the footer wordmark) — the grass shimmers through it too.
-            var GRAD_STOPS = [
-                [150, 128, 204], [110, 178, 200], [150, 196, 132],
-                [220, 156, 120], [212, 142, 184], [150, 128, 204]
-            ];
-            var GRAD_CYCLE = 18; // seconds, matches the CSS gradWord sweep
-            function gradColor(t) {
-                var pos = ((t % 1) + 1) % 1 * (GRAD_STOPS.length - 1);
-                var i = Math.min(Math.floor(pos), GRAD_STOPS.length - 2);
-                var frac = pos - i;
-                var a = GRAD_STOPS[i], b = GRAD_STOPS[i + 1];
-                return [
-                    Math.round(a[0] + (b[0] - a[0]) * frac),
-                    Math.round(a[1] + (b[1] - a[1]) * frac),
-                    Math.round(a[2] + (b[2] - a[2]) * frac)
-                ];
-            }
-
-            function build() {
-                blades = [];
-                for (var i = 0; i < COUNT; i++) {
-                    var spread = (Math.random() * 2 - 1) * (Math.PI * 0.58); // ~ ±104°
-                    var baseAngle = -Math.PI / 2 + spread;
-                    var lenT = Math.pow(Math.random(), 1.4);
-                    var length = 26 + lenT * (H * 0.66);
-                    blades.push({
-                        baseAngle: baseAngle,
-                        length: length,
-                        phase: Math.random() * Math.PI * 2,
-                        swaySpeed: 0.4 + Math.random() * 0.3,
-                        swayAmp: 0.018 + Math.random() * 0.02,
-                        colorOffset: Math.random() * 0.5,
-                        curX: 0, curY: 0, inited: false
-                    });
-                }
-            }
-
-            function resize() {
-                var r = stage.getBoundingClientRect();
-                W = r.width; H = r.height;
-                canvas.width = W * dpr;
-                canvas.height = H * dpr;
-                canvas.style.width = W + 'px';
-                canvas.style.height = H + 'px';
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                originX = W * 0.5;
-                originY = H * 1.02;
-                build();
-            }
-            resize();
-            window.addEventListener('resize', resize);
-
-            var mouse = { x: -9999, y: -9999, active: false };
-            if (canInteract) {
-                stage.addEventListener('mousemove', function (e) {
-                    var r = stage.getBoundingClientRect();
-                    mouse.x = e.clientX - r.left;
-                    mouse.y = e.clientY - r.top;
-                    mouse.active = true;
-                });
-                stage.addEventListener('mouseleave', function () { mouse.active = false; });
-            }
-
-            var RADIUS = 130, MAX_PUSH = 42;
-
-            function drawFrame(t, animate) {
-                ctx.clearRect(0, 0, W, H);
-                var cyclePos = t / GRAD_CYCLE;
-                for (var i = 0; i < blades.length; i++) {
-                    var b = blades[i];
-                    var angle = animate ? b.baseAngle + Math.sin(t * b.swaySpeed + b.phase) * b.swayAmp : b.baseAngle;
-                    var restX = originX + Math.cos(angle) * b.length;
-                    var restY = originY + Math.sin(angle) * b.length;
-
-                    var targetX = restX, targetY = restY;
-                    if (animate && mouse.active) {
-                        var dx = restX - mouse.x, dy = restY - mouse.y;
-                        var dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < RADIUS && dist > 0.001) {
-                            var force = 1 - dist / RADIUS;
-                            force *= force;
-                            targetX = restX + (dx / dist) * force * MAX_PUSH;
-                            targetY = restY + (dy / dist) * force * MAX_PUSH;
-                        }
-                    }
-
-                    if (!b.inited) { b.curX = targetX; b.curY = targetY; b.inited = true; }
-                    else if (animate) {
-                        b.curX += (targetX - b.curX) * 0.14;
-                        b.curY += (targetY - b.curY) * 0.14;
-                    } else { b.curX = targetX; b.curY = targetY; }
-
-                    var lenFrac = b.length / (H * 0.66 + 26);
-                    var alpha = 0.16 + lenFrac * 0.5;
-                    var mx = originX + (b.curX - originX) * 0.5;
-                    var my = originY + (b.curY - originY) * 0.5;
-
-                    var col = gradColor(cyclePos + b.colorOffset);
-                    var colStr = col[0] + ', ' + col[1] + ', ' + col[2];
-
-                    ctx.beginPath();
-                    ctx.moveTo(originX, originY);
-                    ctx.quadraticCurveTo(mx, my, b.curX, b.curY);
-                    ctx.lineWidth = 0.6 + lenFrac * 0.9;
-                    ctx.strokeStyle = 'rgba(' + colStr + ', ' + alpha.toFixed(3) + ')';
-                    ctx.stroke();
-
-                    ctx.beginPath();
-                    ctx.arc(b.curX, b.curY, 1.1 + lenFrac * 1.1, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(' + colStr + ', ' + Math.min(alpha + 0.28, 0.95).toFixed(3) + ')';
-                    ctx.fill();
-                }
-            }
-
-            if (reduce) {
-                drawFrame(0, false);
-                return;
-            }
-
-            // Pause the render loop while the field is scrolled out of view —
-            // otherwise it keeps redrawing 220 blades every frame even at the
-            // bottom of the page, competing with the ink trail for main-thread
-            // time and making the cursor trail feel laggy/stuck.
-            var visible = true;
-            var rafId = null;
-            if ('IntersectionObserver' in window) {
-                new IntersectionObserver(function (entries) {
-                    visible = entries[0].isIntersecting;
-                    if (visible && rafId === null) rafId = requestAnimationFrame(frame);
-                }, { rootMargin: '200px 0px' }).observe(stage);
-            }
-
-            function frame(now) {
-                drawFrame(now / 1000, true);
-                rafId = visible ? requestAnimationFrame(frame) : null;
-            }
-            rafId = requestAnimationFrame(frame);
-        })();
-
-        // Subtle 3D tilt on the hero product panel as the cursor moves
-        (function () {
-            if (!window.matchMedia) return;
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            if (window.matchMedia('(pointer: coarse)').matches) return;
-            var hv = document.querySelector('.hero-visual');
-            var grid = document.querySelector('.hero-grid');
-            if (!hv || !grid) return;
-            grid.style.perspective = '1200px';
-            hv.style.transformStyle = 'preserve-3d';
-            hv.style.transition = 'transform 0.25s cubic-bezier(0.22,1,0.36,1)';
-            grid.addEventListener('mousemove', function (e) {
-                var r = hv.getBoundingClientRect();
-                var dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-                var dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-                hv.style.transform = 'rotateY(' + (dx * 6).toFixed(2) + 'deg) rotateX(' + (-dy * 6).toFixed(2) + 'deg)';
-            });
-            grid.addEventListener('mouseleave', function () { hv.style.transform = ''; });
-        })();
-    </script>
+    <script src="/app.js?v=20"></script>
 </body>
 
 </html>

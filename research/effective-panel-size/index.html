@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Five agreeing analysts are worth 1.47 opinions. | LocusQuant research</title>
+    <meta name="description" content="Why a panel of AI agents that agree is weaker evidence than it looks, and how to discount it.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://locusquant.com/research/effective-panel-size/">
+    <meta property="og:title" content="Five agreeing analysts are worth 1.47 opinions. | LocusQuant research">
+    <meta property="og:description" content="Why a panel of AI agents that agree is weaker evidence than it looks, and how to discount it.">
+    <meta property="og:site_name" content="LocusQuant">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/theme.css?v=20">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="wrap nav">
+            <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
+            <nav class="nav-links" id="nav-links" aria-label="Primary">
+                <a href="/instruments/" class="nav-link" data-sub="Assay, Tare, Scribe, and a look at what is in build">Instruments</a>
+                <a href="/loqos/" class="nav-link" data-sub="The operating system beneath them"><span class="loqos-mark">LoQOS</span></a>
+                <a href="/maths/" class="nav-link" data-sub="The arithmetic, with toy numbers">The maths</a>
+                <a href="/research/" class="nav-link" data-sub="Short, dated notes" aria-current="page">Research</a>
+                <a href="/roadmap/" class="nav-link" data-sub="What is built, and what is next">Roadmap</a>
+                <button type="button" class="btn btn-primary btn-sm nav-cta" data-modal="both">Request Access</button>
+                <p class="nav-note">A founder replies within one business day.</p>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="page-hero" style="padding-bottom:40px">
+            <div class="wrap">
+                <p class="eyebrow"><a href="/research/" class="crumb">Research</a><span>Note 02</span></p>
+                <h1 class="display" style="max-width:20ch">Five agreeing analysts are worth 1.47 opinions.</h1>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">02</span><time class="eyebrow" datetime="2026-10-08">8 Oct 2026</time></div>
+                    <article class="article">
+
+                        <p class="byline"><span>LocusQuant</span><span>4 minute read</span></p>
+                        <p>Put five analysts in a room, ask each for a view, and all five say buy. It feels like
+                            strong evidence. It is only as strong as their independence, and analysts who read the
+                            same news, use the same models and talk to each other are not independent.</p>
+                        <p>Statistics has a clean way to say how much a correlated panel is worth. If <em>N</em>
+                            analysts make errors with an average correlation of <em>&rho;</em>, the panel is worth</p>
+                        <p style="font-size:1.25rem;color:var(--ink);font-weight:600;text-align:center;margin:26px 0">N / (1 + (N &minus; 1) &rho;)</p>
+                        <p>independent opinions. With five analysts and a correlation of 0.6, that is 5 / 3.4, or
+                            <strong>1.47</strong>. Five voices, one and a half opinions.</p>
+
+                        <div data-neff style="margin:32px 0;padding:24px;border-radius:18px;background:var(--bg-elevated);border:1px solid var(--line-soft)">
+                            <div class="slider-row" style="margin-top:0">
+                                <label for="n2"><span>Analysts (N)</span><span data-neff-n-out>5</span></label>
+                                <input type="range" id="n2" min="1" max="20" step="1" value="5" data-neff-n>
+                            </div>
+                            <div class="slider-row">
+                                <label for="r2"><span>Average correlation of their errors</span><span data-neff-rho-out>0.60</span></label>
+                                <input type="range" id="r2" min="0" max="1" step="0.01" value="0.6" data-neff-rho>
+                            </div>
+                            <div class="slider-out">
+                                <div class="num" data-neff-out aria-live="polite">1.47</div>
+                                <div class="label">effective independent opinions</div>
+                            </div>
+                        </div>
+
+                        <h3>Adding more voices barely helps</h3>
+                        <p>Move the first slider. At a correlation of 0.6, twenty analysts are worth 1.6 opinions.
+                            The ceiling is 1 / &rho;, about 1.67, however many you add. Past a handful, a bigger
+                            panel buys almost nothing.</p>
+
+                        <h3>Why this matters more for AI</h3>
+                        <p>A panel of AI agents is often the same model with different instructions. Their errors
+                            can be far more correlated than any human team&rsquo;s. Without a discount, a system
+                            that sizes positions by how strongly its agents agree will bet biggest exactly when
+                            its agents are most alike, which is when agreement means least.</p>
+                        <p>The fix is simple to state: measure how correlated the agents&rsquo; errors really are,
+                            and let agreement count only for the independent opinions it represents.</p>
+
+                        <h3>What to ask of any AI research process</h3>
+                        <p>How many independent views does your panel actually contain? If nobody has measured
+                            it, the honest answer is &ldquo;fewer than it looks&rdquo;.</p>
+                        <p class="small" style="margin-top:28px">The arithmetic is textbook. Numbers here are
+                            illustrative. More ideas like this are on <a href="/maths/" class="text-link">the maths
+                            page</a>.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="close" style="padding-top:56px">
+                    <div>
+                        <h2 class="display">See your own numbers, on the record.</h2>
+                    </div>
+                    <div>
+                        <p class="lede">Tell us what you are working on. A founder replies, and the first call settles scope. No prices, no packages; those come in the conversation.</p>
+                        <div class="cta-row" style="margin-top:28px">
+                            <button type="button" class="btn btn-primary" data-modal="research">Request Access</button>
+                        </div>
+                        <p class="reply-note" style="margin-top:14px">A founder replies within one business day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="foot-top">
+                <div>
+                    <p>The operating system for AI-run investing, and the parts that make any fund's AI provable.
+                        We build software; nothing here is an offer to invest.</p>
+                </div>
+                <div class="foot-col">
+                    <h3>Instruments</h3>
+                    <ul>
+                        <li><a href="/instruments/assay/">Assay</a></li>
+                        <li><a href="/instruments/tare/">Tare</a></li>
+                        <li><a href="/instruments/scribe/">Scribe</a></li>
+                        <li><a href="/instruments/#in-build">In build</a></li>
+                    </ul>
+                </div>
+                <div class="foot-col">
+                    <h3>LocusQuant</h3>
+                    <ul>
+                        <li><a href="/loqos/">LoQOS</a></li>
+                        <li><a href="/maths/">The maths</a></li>
+                        <li><a href="/research/">Research</a></li>
+                        <li><a href="/roadmap/">Roadmap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <span class="foot-wordmark" aria-hidden="true"><span class="full">LocusQuant</span><span class="short">LQ</span></span>
+            <div class="foot-meta">
+                <span>&copy; 2026 LocusQuant &middot; a dAVb product</span>
+                <span>Paper-trading preview &middot; no live capital at risk</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/app.js?v=20"></script>
+</body>
+
+</html>

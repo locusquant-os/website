@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Assay by LocusQuant</title>
+    <meta name="description" content="Assay re-scores a backtest for the number of trials behind it, so you know how much of the result is skill and how much is selection, before an allocator asks.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://locusquant.com/instruments/assay/">
+    <meta property="og:title" content="Assay by LocusQuant">
+    <meta property="og:description" content="Assay re-scores a backtest for the number of trials behind it, so you know how much of the result is skill and how much is selection, before an allocator asks.">
+    <meta property="og:site_name" content="LocusQuant">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/theme.css?v=20">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="wrap nav">
+            <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
+            <nav class="nav-links" id="nav-links" aria-label="Primary">
+                <a href="/instruments/" class="nav-link" data-sub="Assay, Tare, Scribe, and a look at what is in build" aria-current="page">Instruments</a>
+                <a href="/loqos/" class="nav-link" data-sub="The operating system beneath them"><span class="loqos-mark">LoQOS</span></a>
+                <a href="/maths/" class="nav-link" data-sub="The arithmetic, with toy numbers">The maths</a>
+                <a href="/research/" class="nav-link" data-sub="Short, dated notes">Research</a>
+                <a href="/roadmap/" class="nav-link" data-sub="What is built, and what is next">Roadmap</a>
+                <button type="button" class="btn btn-primary btn-sm nav-cta" data-modal="both">Request Access</button>
+                <p class="nav-note">A founder replies within one business day.</p>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="page-hero">
+            <div class="wrap">
+                <p class="eyebrow"><a href="/instruments/" class="crumb">Instruments</a><span class="status status-available">Available</span><span>For CIOs, quant PMs and allocators</span></p>
+                <h1 class="display">How much of your Sharpe ratio is real?</h1>
+                <p class="lede">Assay re-scores a backtest for the number of trials behind it, so you know how much of the result is skill and how much is selection, before an allocator asks.</p>
+                <div class="cta-row">
+                    <button type="button" class="btn btn-primary" data-modal="assay">Request Access</button>
+                    <a href="#receive" class="btn btn-ghost">What you receive &rarr;</a>
+                </div>
+                <p class="reply-note">A founder replies within one business day.</p>
+            </div>
+        </section>
+
+        <section class="sec">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">01</span><span class="eyebrow">The problem</span></div>
+                    <div>
+
+                        <blockquote data-reveal>
+                            <p class="buyer-q">&ldquo;We tried 400 variations and promoted the best one. How much of that Sharpe is real?&rdquo;</p>
+                            <p class="buyer-q-cite">The question Assay answers.</p>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" id="receive" style="padding-top:0">
+            <div class="wrap">
+                <div class="ink" data-reveal>
+                    <div class="receive">
+                        <div>
+                            <p class="eyebrow">02 &middot; What you receive</p>
+                            <h2 class="h2" style="margin-top:16px">A report you can forward to an allocator.</h2>
+                            <p class="body">The headline result restated after the trials behind it, how much of it selection explains, whether it holds on data it never saw, and a verdict in one paragraph of plain English.</p>
+                        </div>
+                        <div>
+                            <div class="report" aria-label="Specimen page of an Assay report">
+                                <div class="report-head"><span class="wordmark">Assay</span><span>Specimen &middot; public strategy</span></div>
+                                <h4>Momentum, top decile, monthly rebalance</h4>
+                                <p class="sub">Backtest supplied with 400 recorded variations</p>
+                                <table>
+                                    <tr><td>Sharpe, as reported</td><td>1.84</td></tr>
+                                    <tr><td>Sharpe, after the trials behind it</td><td>0.52</td></tr>
+                                    <tr><td>Share of the result explained by selection</td><td>71%</td></tr>
+                                    <tr><td>Holds out of sample</td><td class="st st-held">partly</td></tr>
+                                </table>
+                                <p class="verdict">Most of the headline result comes from choosing the best of many
+                                    tries. A smaller, real effect remains.</p>
+                            </div>
+                            <p class="specimen-note">Layout specimen. Figures are illustrative, not a client result.</p>
+                            <p style="margin-top:18px"><a href="/instruments/assay/sample/" class="text-link">Read the full specimen report &rarr;</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">03</span><span class="eyebrow">How it works</span></div>
+                    <div>
+
+                        <div class="sec-head"><h2 class="h2">Four steps, in plain words.</h2></div>
+                        <div class="verbs" data-reveal>
+                            <div class="verb"><div class="no">01</div><div class="k">Send</div><p>Your backtest and the record of what was tried, including the versions you dropped.</p></div>
+                            <div class="verb"><div class="no">02</div><div class="k">Check</div><p>We rebuild the result and confirm the record of trials is complete.</p></div>
+                            <div class="verb"><div class="no">03</div><div class="k">Score</div><p>We score the result against everything that was tried to reach it.</p></div>
+                            <div class="verb"><div class="no">04</div><div class="k">Report</div><p>You receive a short report written for an allocator, not for us.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">04</span><span class="eyebrow">Why it is different</span></div>
+                    <div>
+
+                        <div data-reveal>
+                            <p class="claim">It counts the tries you did not show, not only the one you did.</p>
+                            <p class="claim">It is independent of the team that built the strategy, so the answer carries weight in diligence.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">05</span><span class="eyebrow">What we need</span></div>
+                    <div>
+
+                        <div class="split" data-reveal>
+                            <div>
+                                <p class="list-title">What we need from you</p>
+                                <ul class="list">
+                                <li>The return series of the strategy you want assayed</li>
+                                <li>A record, or an honest count, of the variations tried</li>
+                                <li>A paragraph on what the strategy does</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="list-title">What stays with you</p>
+                                <ul class="list">
+                                <li>Your code, signals and parameters</li>
+                                <li>Your raw data; it never leaves your environment</li>
+                                <li>Position-level detail, unless you choose to share it</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="close" style="padding-top:56px">
+                    <div>
+                        <h2 class="display">Know the number before an allocator does.</h2>
+                    </div>
+                    <div>
+                        <p class="lede">Tell us what you are working on. A founder replies, and the first call settles scope. No prices, no packages; those come in the conversation.</p>
+                        <div class="cta-row" style="margin-top:28px">
+                            <button type="button" class="btn btn-primary" data-modal="assay">Request Access</button>
+                        </div>
+                        <p class="reply-note" style="margin-top:14px">A founder replies within one business day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec-tight">
+            <div class="wrap">
+                <a href="/loqos/" class="seal">Runs on <span class="loqos-mark">LoQOS</span></a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="foot-top">
+                <div>
+                    <p>The operating system for AI-run investing, and the parts that make any fund's AI provable.
+                        We build software; nothing here is an offer to invest.</p>
+                </div>
+                <div class="foot-col">
+                    <h3>Instruments</h3>
+                    <ul>
+                        <li><a href="/instruments/assay/">Assay</a></li>
+                        <li><a href="/instruments/tare/">Tare</a></li>
+                        <li><a href="/instruments/scribe/">Scribe</a></li>
+                        <li><a href="/instruments/#in-build">In build</a></li>
+                    </ul>
+                </div>
+                <div class="foot-col">
+                    <h3>LocusQuant</h3>
+                    <ul>
+                        <li><a href="/loqos/">LoQOS</a></li>
+                        <li><a href="/maths/">The maths</a></li>
+                        <li><a href="/research/">Research</a></li>
+                        <li><a href="/roadmap/">Roadmap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <span class="foot-wordmark" aria-hidden="true"><span class="full">LocusQuant</span><span class="short">LQ</span></span>
+            <div class="foot-meta">
+                <span>&copy; 2026 LocusQuant &middot; a dAVb product</span>
+                <span>Paper-trading preview &middot; no live capital at risk</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/app.js?v=20"></script>
+</body>
+
+</html>

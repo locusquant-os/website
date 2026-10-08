@@ -5,196 +5,220 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <title>LoQOS: the agentic operating system beneath LocusQuant</title>
-    <meta name="description"
-        content="LoQOS is the operating-system layer beneath LocusQuant: an immutable image that runs every agent in its own micro-VM under a policy kernel no agent can route around. Mandate and budget envelopes enforced at the OS level.">
+    <title>LoQOS: where the guardrails live, below every agent</title>
+    <meta name="description" content="An operating system for AI agents in finance. Limits are set once by people, enforced below the agent, and explained when they bind.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://locusquant.com/loqos/">
-    <meta property="og:title" content="LoQOS: the agentic operating system beneath LocusQuant">
-    <meta property="og:description"
-        content="An immutable OS that runs every agent in its own micro-VM under a policy kernel no agent can route around.">
+    <meta property="og:title" content="LoQOS: where the guardrails live, below every agent">
+    <meta property="og:description" content="An operating system for AI agents in finance. Limits are set once by people, enforced below the agent, and explained when they bind.">
     <meta property="og:site_name" content="LocusQuant">
+    <meta name="twitter:card" content="summary">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
-
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
-    <link rel="stylesheet" href="/theme.css?v=10">
+    <link rel="stylesheet" href="/theme.css?v=20">
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header id="main-header" class="scrolled">
-        <div class="nav-wrapper">
-            <a href="/" class="nav-brand" aria-label="LocusQuant home"><span class="nb-full">LocusQuant</span><span class="nb-mono" aria-hidden="true">LQ</span></a>
-            <nav class="nav-links" aria-label="Primary">
-                <a href="/loqos/" class="nav-link"><span class="loqos-mark">LoQOS</span></a>
-                <a href="/whats-next/" class="nav-link">What's Next</a>
-                <a href="/maths/" class="nav-link">The maths</a>
-                <button type="button" class="btn btn-primary nav-cta" data-modal="both">Request Access</button>
+    <header class="site-header">
+        <div class="wrap nav">
+            <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
+            <nav class="nav-links" id="nav-links" aria-label="Primary">
+                <a href="/instruments/" class="nav-link" data-sub="Assay, Tare, Scribe, and a look at what is in build">Instruments</a>
+                <a href="/loqos/" class="nav-link" data-sub="The operating system beneath them" aria-current="page"><span class="loqos-mark">LoQOS</span></a>
+                <a href="/maths/" class="nav-link" data-sub="The arithmetic, with toy numbers">The maths</a>
+                <a href="/research/" class="nav-link" data-sub="Short, dated notes">Research</a>
+                <a href="/roadmap/" class="nav-link" data-sub="What is built, and what is next">Roadmap</a>
+                <button type="button" class="btn btn-primary btn-sm nav-cta" data-modal="both">Request Access</button>
+                <p class="nav-note">A founder replies within one business day.</p>
             </nav>
         </div>
     </header>
 
-    <section class="subpage-hero">
-        <div class="eyebrow">The operating system</div>
-        <h1><span class="loqos-mark" style="font-size:1.15em;">LoQOS</span> is where the guardrails live,
-            <em>below every agent.</em></h1>
-        <p class="subpage-sub"><span class="loqos-mark">LoQOS</span> is the runtime beneath LocusQuant: an immutable, reproducible operating-system
-            image that runs every agent in its own micro-VM. Validated rules and human-signed mandates compile into a
-            policy kernel no agent, however clever, however compromised, can route around.</p>
-        <a href="/" class="back-link">← Back to the main page</a>
-    </section>
-
-    <main>
-
-        <!-- WHY AN OS -->
-        <section class="block reveal-on-scroll" id="why">
-            <div class="eyebrow">Why an OS</div>
-            <h2 class="section-title">Not policy an agent obeys, physics it cannot break.</h2>
-            <p class="section-intro">Prompt-level guardrails are guidance a model can talk its way around. <span class="loqos-mark">LoQOS</span> moves
-                the guardrails below the agents entirely: what an agent may touch, spend, or reach is enforced by the
-                operating system, so an out-of-bounds action isn't forbidden, it's impossible.</p>
-
-            <div class="spec-grid">
-                <div class="spec-card">
-                    <h4>Immutable image</h4>
-                    <p>A reproducible OS image built on NixOS: the same fund, byte-for-byte, every time it boots. No
-                        drift, no snowflake servers, a clean audit of exactly what is running.</p>
-                </div>
-                <div class="spec-card">
-                    <h4>Per-agent micro-VMs</h4>
-                    <p>Every agent runs isolated in its own Firecracker micro-VM. A compromised or misbehaving agent is
-                        contained to its own sandbox, unable to reach the rest of the fund.</p>
-                </div>
-                <div class="spec-card">
-                    <h4>OS-level policy kernel</h4>
-                    <p>Validated "golden rules" compile to an OPA policy layer that adjudicates every tool call, file
-                        write and spend: the single choke point no agent can bypass.</p>
-                </div>
-                <div class="spec-card">
-                    <h4>Kernel-level egress</h4>
-                    <p>eBPF network rules physically constrain what each VM can reach. An experiment on-path can work; the
-                        same experiment off-path simply has nowhere to go.</p>
+    <main id="main">
+        <section class="page-hero">
+            <div class="wrap">
+                <p class="eyebrow">The platform</p>
+                <h1 class="display"><span class="loqos-mark">LoQOS</span> is where the guardrails live, below every
+                    agent.</h1>
+                <p class="lede">An operating system for AI agents in finance. Limits are set once by people, enforced
+                    below the agent, and explained when they bind, so agents re-plan instead of guessing.</p>
+                <div class="cta-row">
+                    <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                    <a href="#physics" class="btn btn-ghost">How it holds &rarr;</a>
                 </div>
             </div>
         </section>
 
-        <!-- ENVELOPES -->
-        <section class="block reveal-on-scroll" id="envelopes">
-            <div class="eyebrow">Mandate &amp; budget envelopes</div>
-            <h2 class="section-title">Humans approve the envelope once. Agents are free inside it.</h2>
-            <p class="section-intro">Every autonomous campaign, whether research or self-improvement, runs strictly inside a
-                human-signed <strong>Mandate</strong>: its objective, the exact files it may touch, its budget in
-                tokens, dollars and wall-clock, its legal scope, and what earns promotion to human review.</p>
+        <section class="sec">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">01</span><span class="eyebrow">Physics, not policy</span></div>
+                    <div>
 
-            <div class="guard-grid">
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Compiled two ways</h4></div>
-                    <p>A mandate compiles to <strong>OPA policy at the control layer</strong> (denying any tool call,
-                        file write or spend outside the envelope) and to <strong>eBPF egress rules at the network
-                        layer</strong> (so the VM physically cannot reach anything off-path).</p>
-                </div>
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Autonomy inside, hard-stop outside</h4></div>
-                    <p>Within the envelope the agent has full autonomy, with no per-step approvals. Budget exhaustion
-                        hard-stops the run and returns the best artifact plus unresolved issues; it never hides a partial
-                        failure.</p>
-                </div>
-                <div class="guard-item">
-                    <div class="guard-head"><span class="guard-glyph">◆</span><h4>Budget envelopes</h4></div>
-                    <p>The Budget Governor enforces spend caps with priority-class shedding that always exempts safety
-                        spend, so cost control can never quietly disable the fund's own guardrails.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- STACK -->
-        <section class="block reveal-on-scroll" id="stack">
-            <div class="eyebrow">The stack</div>
-            <h2 class="section-title">Deliberately boring, deliberately layered.</h2>
-            <p class="section-intro">No kernel fork. <span class="loqos-mark">LoQOS</span> is assembled from proven components, each doing one job, so
-                the security story is legible to an examiner and to us.</p>
-
-            <div class="today-grid">
-                <div class="stack-panel">
-                    <div class="panel-caption">Runtime</div>
-                    <div class="stack-badges">
-                        <span class="stack-badge">NixOS</span>
-                        <span class="stack-badge">Firecracker</span>
-                        <span class="stack-badge">OPA</span>
-                        <span class="stack-badge">eBPF</span>
+                        <div class="sec-head" id="physics">
+                            <h2 class="h2">Not policy an agent obeys, physics it cannot break.</h2>
+                            <p class="body">Prompt-level guardrails are guidance a model can talk its way around.
+                                <span class="loqos-mark">LoQOS</span> moves them below the agent, built from proven,
+                                deliberately boring parts.</p>
+                        </div>
+                        <div class="spec-rows" data-reveal>
+                            <div class="spec"><p class="k">NixOS</p><h3 class="h3">Immutable image</h3><p>The same system, byte for byte, every time it boots. Nothing drifts.</p></div>
+                            <div class="spec"><p class="k">Firecracker</p><h3 class="h3">One micro-VM per agent</h3><p>A misbehaving agent is contained to its own sandbox.</p></div>
+                            <div class="spec"><p class="k">OPA</p><h3 class="h3">Policy kernel at the OS</h3><p>Every tool call, write and spend passes one choke point no agent can bypass.</p></div>
+                            <div class="spec"><p class="k">eBPF</p><h3 class="h3">Kernel-level egress</h3><p>An agent can reach only what its mandate grants. Off-path has nowhere to go.</p></div>
+                        </div>
                     </div>
-                    <p class="stack-note">An immutable image, per-agent micro-VMs, a policy kernel, and kernel-level
-                        network enforcement: the four layers that make the envelope real.</p>
-                </div>
-                <div class="stack-panel">
-                    <div class="panel-caption">Enforced at the OS</div>
-                    <div class="status-line"><span class="ok">✓</span> No self-modification outside an approved mandate</div>
-                    <div class="status-line"><span class="ok">✓</span> No spend outside an approved budget envelope</div>
-                    <div class="status-line"><span class="ok">✓</span> No network path an agent's mandate didn't grant</div>
-                    <div class="status-line"><span class="ok">✓</span> Every action append-only and hash-chained</div>
                 </div>
             </div>
         </section>
 
-        <!-- ROADMAP POINTER -->
-        <section class="block reveal-on-scroll" id="when">
-            <div class="eyebrow">When it ships</div>
-            <h2 class="section-title"><span class="loqos-mark">LoQOS</span> lands at v0.9, with the Foundry.</h2>
-            <p class="section-intro">The platform is designed now and hardened over the roadmap: policy and mandate
-                consoles arrive at v0.8, and the OS image itself, with self-improvement running inside it, at v0.9.</p>
-            <a href="/whats-next/" class="btn btn-ghost ink-final">See the full roadmap →</a>
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">02</span><span class="eyebrow">Guardrails that guide</span></div>
+                    <div>
+
+                        <div class="sec-head">
+                            <h2 class="h2">A guardrail should steer, not just stop.</h2>
+                            <p class="body">Five promises <span class="loqos-mark">LoQOS</span> makes to the people who
+                                set the limits, and to the agents that work inside them.</p>
+                        </div>
+                        <ol class="promises" data-reveal>
+                            <li><div>Limits bound outcomes, not every step.<span>Agents are free in how they work, and held to where they may end up.</span></div></li>
+                            <li><div>Every denial says which rule applied, and how to re-plan.<span>An agent that is stopped learns why, so it does not guess its way into the next wall.</span></div></li>
+                            <li><div>A safe, reduce-only path is always open.<span>Whatever binds, there is always a way to make the book smaller and safer.</span></div></li>
+                            <li><div>Every guardrail is proven by trying to break it.<span>A rule that has not been attacked is a hope, not a control.</span></div></li>
+                            <li><div>Its cost is measured, not guessed.<span>You see what each guardrail costs in missed opportunity, and decide with that in view.</span></div></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </section>
 
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">03</span><span class="eyebrow">Mandates</span></div>
+                    <div>
+
+                        <div data-reveal>
+                            <h2 class="h2" style="max-width:20ch">Humans approve the envelope once. Agents are free inside it.</h2>
+                            <p class="lede" style="margin-top:20px">The kill switch has no exceptions, and no agent can read or
+                                change its own limits.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">04</span><span class="eyebrow">What runs on it</span></div>
+                    <div>
+
+                        <div class="sec-head"><h2 class="h2">Our instruments, our own fund, and in time, your agents.</h2></div>
+                        <div class="stack-drawing" data-reveal role="img"
+                            aria-label="Assay, Tare, Scribe and the LocusQuant fund sit on LoQOS, beside an outline for your own agents">
+                            <div class="stack-row five">
+                                <div class="stack-block"><span class="k">Assay</span><span class="v">instrument</span></div>
+                                <div class="stack-block"><span class="k">Tare</span><span class="v">instrument</span></div>
+                                <div class="stack-block"><span class="k">Scribe</span><span class="v">instrument</span></div>
+                                <div class="stack-block fund"><span class="k">Our fund</span><span class="v">paper trading</span></div>
+                                <div class="stack-block ghost"><span class="k">Your own agents</span><span class="v">later</span></div>
+                            </div>
+                            <div class="stack-base"><span class="loqos-mark">LoQOS</span><span>one set of limits, enforced below all of them</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">05</span><span class="eyebrow">When it ships</span></div>
+                    <div>
+
+                        <div class="sec-head"><h2 class="h2">In three phases, each usable on its own.</h2></div>
+                        <ol class="phases" data-reveal>
+                            <li><div class="no">01</div><h3 class="h3">Consoles</h3><p>Mandates, limits and kill switches, set by people in one place.</p></li>
+                            <li><div class="no">02</div><h3 class="h3">The OS image</h3><p>Every agent in its own sandbox, under the policy kernel.</p></li>
+                            <li><div class="no">03</div><h3 class="h3">Outside agents</h3><p>Your own agents, held to the same limits as ours.</p></li>
+                        </ol>
+                        <p class="small" style="margin-top:22px">More detail, including the architecture, is shared with
+                            partners in conversation. <a href="/roadmap/" class="text-link">See the roadmap</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="close" style="padding-top:56px">
+                    <div>
+                        <h2 class="display">Put your agents under limits they cannot talk past.</h2>
+                    </div>
+                    <div>
+                        <p class="lede">Tell us what you are working on. A founder replies, and the first call settles scope. No prices, no packages; those come in the conversation.</p>
+                        <div class="cta-row" style="margin-top:28px">
+                            <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                        </div>
+                        <p class="reply-note" style="margin-top:14px">A founder replies within one business day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- FOOTER: full-bleed black, huge animated-gradient wordmark -->
     <footer class="site-footer">
-        <div class="footer-wordmark-band">
-            <span class="footer-wordmark" aria-hidden="true"><span class="brand-full">LocusQuant</span><span class="brand-short">LQ</span></span>
-        </div>
-        <div class="footer-bottom">
-            <div class="footer-meta-row">
-                <p class="footer-meta">&copy; 2026 LocusQuant · a dAVb product</p>
-                <p class="footer-meta">Paper-trading preview · no live capital ·
-                    <a href="/whats-next/">What's Next</a></p>
+        <div class="wrap">
+            <div class="foot-top">
+                <div>
+                    <p>The operating system for AI-run investing, and the parts that make any fund's AI provable.
+                        We build software; nothing here is an offer to invest.</p>
+                </div>
+                <div class="foot-col">
+                    <h3>Instruments</h3>
+                    <ul>
+                        <li><a href="/instruments/assay/">Assay</a></li>
+                        <li><a href="/instruments/tare/">Tare</a></li>
+                        <li><a href="/instruments/scribe/">Scribe</a></li>
+                        <li><a href="/instruments/#in-build">In build</a></li>
+                    </ul>
+                </div>
+                <div class="foot-col">
+                    <h3>LocusQuant</h3>
+                    <ul>
+                        <li><a href="/loqos/">LoQOS</a></li>
+                        <li><a href="/maths/">The maths</a></li>
+                        <li><a href="/research/">Research</a></li>
+                        <li><a href="/roadmap/">Roadmap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <span class="foot-wordmark" aria-hidden="true"><span class="full">LocusQuant</span><span class="short">LQ</span></span>
+            <div class="foot-meta">
+                <span>&copy; 2026 LocusQuant &middot; a dAVb product</span>
+                <span>Paper-trading preview &middot; no live capital at risk</span>
             </div>
         </div>
     </footer>
 
-    <!-- Reusable contact modal -->
-    <div class="modal-overlay" id="contact-modal" aria-hidden="true">
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
-            <button type="button" class="modal-close" id="modal-close" aria-label="Close">✕</button>
-            <div class="modal-heading" id="modal-heading">Request Access</div>
-            <div class="modal-recipient" id="modal-recipient"></div>
-            <form id="contact-form" novalidate>
-                <label class="modal-label" for="cf-name">Name</label>
-                <input class="modal-input" id="cf-name" name="name" type="text" required
-                    autocomplete="name" placeholder="your name">
-
-                <label class="modal-label" for="cf-email">Email</label>
-                <input class="modal-input" id="cf-email" name="email" type="email" required
-                    autocomplete="email" placeholder="your email address">
-
-                <label class="modal-label" for="cf-message">Message</label>
-                <textarea class="modal-input modal-textarea" id="cf-message" name="message" required
-                    placeholder="reason for reaching out / anything you'd like to share"></textarea>
-
-                <input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off"
-                    aria-hidden="true">
-
-                <button type="submit" class="modal-submit" id="modal-submit">Send request →</button>
-                <div class="modal-status" id="modal-status" role="status" aria-live="polite"></div>
-            </form>
-        </div>
-    </div>
-
-    <script src="/app.js?v=10"></script>
+    <script src="/app.js?v=20"></script>
 </body>
 
 </html>

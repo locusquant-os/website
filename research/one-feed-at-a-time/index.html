@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Why dropping one data feed at a time can cancel the wrong one. | LocusQuant research</title>
+    <meta name="description" content="When two data feeds overlap, each looks worthless on its own. A toy example, and what to do instead.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://locusquant.com/research/one-feed-at-a-time/">
+    <meta property="og:title" content="Why dropping one data feed at a time can cancel the wrong one. | LocusQuant research">
+    <meta property="og:description" content="When two data feeds overlap, each looks worthless on its own. A toy example, and what to do instead.">
+    <meta property="og:site_name" content="LocusQuant">
+    <meta name="twitter:card" content="summary">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/theme.css?v=20">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+        <div class="wrap nav">
+            <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
+            <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
+            <nav class="nav-links" id="nav-links" aria-label="Primary">
+                <a href="/instruments/" class="nav-link" data-sub="Assay, Tare, Scribe, and a look at what is in build">Instruments</a>
+                <a href="/loqos/" class="nav-link" data-sub="The operating system beneath them"><span class="loqos-mark">LoQOS</span></a>
+                <a href="/maths/" class="nav-link" data-sub="The arithmetic, with toy numbers">The maths</a>
+                <a href="/research/" class="nav-link" data-sub="Short, dated notes" aria-current="page">Research</a>
+                <a href="/roadmap/" class="nav-link" data-sub="What is built, and what is next">Roadmap</a>
+                <button type="button" class="btn btn-primary btn-sm nav-cta" data-modal="both">Request Access</button>
+                <p class="nav-note">A founder replies within one business day.</p>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main">
+        <section class="page-hero" style="padding-bottom:40px">
+            <div class="wrap">
+                <p class="eyebrow"><a href="/research/" class="crumb">Research</a><span>Note 05</span></p>
+                <h1 class="display" style="max-width:20ch">Why dropping one data feed at a time can cancel the wrong one.</h1>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="sec-grid" style="padding-top:40px">
+                    <div class="folio"><span class="no">05</span><time class="eyebrow" datetime="2026-10-08">8 Oct 2026</time></div>
+                    <article class="article">
+
+                        <p class="byline"><span>LocusQuant</span><span>3 minute read</span></p>
+                        <p>The usual way to judge a data subscription is to switch it off and see what breaks. Do that
+                            for each feed in turn, rank the feeds by the damage, and cancel the ones at the bottom. It
+                            sounds rigorous. When feeds overlap, it gives the wrong answer.</p>
+
+                        <h3>A toy example</h3>
+                        <p>Three feeds inform a set of decisions. Feeds A and B carry much the same information; feed
+                            C carries something neither of the others has. Score the decisions at 100 with all three
+                            in place, then drop one feed at a time.</p>
+
+                        <div class="table-scroll" style="margin:24px 0">
+                            <table class="ledger-table">
+                                <thead><tr><th>Feeds kept</th><th>Decision score</th><th>Loss from dropping</th></tr></thead>
+                                <tbody>
+                                    <tr><td>A, B and C</td><td>100</td><td>&ndash;</td></tr>
+                                    <tr><td>B and C (drop A)</td><td>98</td><td>2</td></tr>
+                                    <tr><td>A and C (drop B)</td><td>98</td><td>2</td></tr>
+                                    <tr><td>A and B (drop C)</td><td>80</td><td>20</td></tr>
+                                    <tr><td>C only (drop A and B)</td><td><span class="st st-held">60</span></td><td>40</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>One at a time, A and B each look nearly worthless: two points apiece. Cancel both on that
+                            evidence and the score falls by forty, twice what C was worth. Each feed was covering for
+                            the other, so neither could show its value alone.</p>
+
+                        <h3>What to do instead</h3>
+                        <p>Weigh feeds together, so that what two of them share is counted once and credited
+                            fairly, rather than credited to neither. Then decide renewals on that. The cheaper of two
+                            overlapping feeds is usually the one to keep.</p>
+                        <p class="small" style="margin-top:28px">Numbers here are illustrative. This is the question
+                            <a href="/instruments/tare/" class="text-link">Tare</a> answers on your own feeds.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec" style="padding-top:0">
+            <div class="wrap">
+                <hr class="ledger" data-reveal>
+                <div class="close" style="padding-top:56px">
+                    <div>
+                        <h2 class="display">See your own numbers, on the record.</h2>
+                    </div>
+                    <div>
+                        <p class="lede">Tell us what you are working on. A founder replies, and the first call settles scope. No prices, no packages; those come in the conversation.</p>
+                        <div class="cta-row" style="margin-top:28px">
+                            <button type="button" class="btn btn-primary" data-modal="research">Request Access</button>
+                        </div>
+                        <p class="reply-note" style="margin-top:14px">A founder replies within one business day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="foot-top">
+                <div>
+                    <p>The operating system for AI-run investing, and the parts that make any fund's AI provable.
+                        We build software; nothing here is an offer to invest.</p>
+                </div>
+                <div class="foot-col">
+                    <h3>Instruments</h3>
+                    <ul>
+                        <li><a href="/instruments/assay/">Assay</a></li>
+                        <li><a href="/instruments/tare/">Tare</a></li>
+                        <li><a href="/instruments/scribe/">Scribe</a></li>
+                        <li><a href="/instruments/#in-build">In build</a></li>
+                    </ul>
+                </div>
+                <div class="foot-col">
+                    <h3>LocusQuant</h3>
+                    <ul>
+                        <li><a href="/loqos/">LoQOS</a></li>
+                        <li><a href="/maths/">The maths</a></li>
+                        <li><a href="/research/">Research</a></li>
+                        <li><a href="/roadmap/">Roadmap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <span class="foot-wordmark" aria-hidden="true"><span class="full">LocusQuant</span><span class="short">LQ</span></span>
+            <div class="foot-meta">
+                <span>&copy; 2026 LocusQuant &middot; a dAVb product</span>
+                <span>Paper-trading preview &middot; no live capital at risk</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/app.js?v=20"></script>
+</body>
+
+</html>

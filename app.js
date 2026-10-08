@@ -1,383 +1,421 @@
-// Shared behaviour for every LocusQuant page: the reusable contact modal.
-// Page-specific effects (wordmark dock, scroll reveals) stay inline on their
-// own page.
+// Shared behaviour for every LocusQuant page.
 (function () {
     'use strict';
 
-    // ── Contact modal (single reusable component, recipient-parameterized) ──
-    var modal = document.getElementById('contact-modal');
-    if (!modal) return; // page without the modal markup, nothing more to wire
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    var WEB3FORMS_KEY = "a91d092d-9247-49a5-98f2-77c461eee51d";
-    var RECIPIENTS = {
-        both: { intended_for: "Both founders", tag: "[ACCESS REQUEST]", heading: "Request Access" },
-        divyanshu: { intended_for: "Divyanshu", tag: "[FOR: DIVYANSHU]", heading: "Contact Divyanshu" },
-        ayush: { intended_for: "Ayush", tag: "[FOR: AYUSH]", heading: "Contact Ayush" },
-        partner: { intended_for: "Both founders", tag: "[PARTNERSHIP]", heading: "Talk to us about a partnership" }
-    };
-
-    var modalHeading = document.getElementById('modal-heading');
-    var modalRecipient = document.getElementById('modal-recipient');
-    var contactForm = document.getElementById('contact-form');
-    var modalStatus = document.getElementById('modal-status');
-    var modalSubmit = document.getElementById('modal-submit');
-    var firstField = document.getElementById('cf-name');
-    var currentRecipient = RECIPIENTS.both;
-
-    function openModal(key) {
-        currentRecipient = RECIPIENTS[key] || RECIPIENTS.both;
-        modalHeading.textContent = currentRecipient.heading;
-        modalRecipient.textContent = "// intended_for: " + currentRecipient.intended_for;
-        contactForm.reset();
-        contactForm.style.display = '';
-        modalStatus.textContent = '';
-        modalStatus.className = 'modal-status';
-        modalSubmit.disabled = false;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        // Focus the first field once the modal is painted.
-        if (firstField) {
-            setTimeout(function () { firstField.focus(); }, 50);
-        }
+    // ── Analytics: three numbers, cookieless, live domain only ────
+    // product pages reached · forms opened · requests sent
+    var LIVE = /(^|\.)locusquant\.com$/.test(window.location.hostname);
+    if (LIVE) {
+        window.plausible = window.plausible || function () { (window.plausible.q = window.plausible.q || []).push(arguments); };
+        var sc = document.createElement('script');
+        sc.defer = true;
+        sc.setAttribute('data-domain', 'locusquant.com');
+        sc.src = 'https://plausible.io/js/script.js';
+        document.head.appendChild(sc);
+    }
+    function track(name, props) {
+        if (LIVE && typeof window.plausible === 'function') window.plausible(name, { props: props || {} });
+    }
+    if (/^\/instruments\/[^/]+\//.test(window.location.pathname)) {
+        track('Product page', { page: window.location.pathname });
     }
 
-    function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('[data-modal]').forEach(function (el) {
-        el.addEventListener('click', function () { openModal(el.getAttribute('data-modal')); });
-    });
-    document.getElementById('modal-close').addEventListener('click', closeModal);
-    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
-    });
-
-    contactForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        var fd = new FormData(contactForm);
-        // Honeypot: if the hidden checkbox is set, silently drop (treat as bot).
-        if (fd.get('botcheck')) return;
-
-        var name = (fd.get('name') || '').toString().trim();
-        var email = (fd.get('email') || '').toString().trim();
-        var message = (fd.get('message') || '').toString().trim();
-        if (!name || !email || !message) {
-            modalStatus.className = 'modal-status failure';
-            modalStatus.innerHTML = '$ missing_fields ✕<span class="modal-status-sub">Name, email and message are all required.</span>';
-            return;
+    // ── Header: hairline once scrolled, menu below 900px ──────────
+    (function () {
+        var header = document.querySelector('.site-header');
+        if (!header) return;
+        function onScroll() {
+            header.classList.toggle('scrolled', window.scrollY > 8);
+            header.classList.toggle('brand-collapsed', window.scrollY > 80);
         }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
 
-        var payload = {
-            access_key: WEB3FORMS_KEY,
-            subject: "LocusQuant " + currentRecipient.tag + " from " + (name || "anonymous"),
-            name: name,
-            email: email,
-            message: message,
-            intended_for: currentRecipient.intended_for,
-            from_url: window.location.href,
-            botcheck: false
-        };
+        var toggle = header.querySelector('.menu-toggle');
+        var links = header.querySelector('.nav-links');
+        if (!toggle || !links) return;
+        var label = toggle.querySelector('.menu-label');
+        function isOpen() { return links.classList.contains('open'); }
+        function setOpen(open, restoreFocus) {
+            if (open === isOpen()) return;
+            links.classList.toggle('open', open);
+            header.classList.toggle('menu-open', open);
+            toggle.setAttribute('aria-expanded', String(open));
+            toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            if (label) label.textContent = open ? 'Close' : 'Menu';
+            document.documentElement.style.overflow = open ? 'hidden' : '';
+            if (open) {
+                links.setAttribute('tabindex', '-1');
+                setTimeout(function () { links.focus({ preventScroll: true }); }, 60);
+            } else if (restoreFocus) {
+                toggle.focus();
+            }
+        }
+        toggle.addEventListener('click', function () { setOpen(!isOpen(), true); });
+        links.addEventListener('click', function (e) { if (e.target.closest('a, button')) setOpen(false); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && isOpen()) setOpen(false, true);
+        });
+        window.addEventListener('resize', function () { if (window.innerWidth > 900) setOpen(false); });
+    })();
 
-        modalSubmit.disabled = true;
-        modalStatus.className = 'modal-status pending';
-        modalStatus.textContent = '$ transmitting...';
-
-        try {
-            var res = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(payload)
+    // ── Reveals: words are always on the page; motion only follows ─
+    (function () {
+        var els = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+        if (!els.length || reduceMotion || !('IntersectionObserver' in window)) return;
+        var vh = window.innerHeight;
+        els.forEach(function (el) {
+            if (el.getBoundingClientRect().top < vh) el.classList.add('in');
+        });
+        document.documentElement.classList.add('has-motion');
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
             });
-            var data = await res.json().catch(function () { return {}; });
-            if (res.ok && data.success) {
-                contactForm.style.display = 'none';
-                modalStatus.className = 'modal-status success';
-                modalStatus.innerHTML = '$ request_transmitted ✓<span class="modal-status-sub">We\'ll be in touch. You can close this window.</span>';
-            } else {
-                throw new Error((data && data.message) || 'submit failed');
-            }
-        } catch (err) {
-            modalSubmit.disabled = false;
-            modalStatus.className = 'modal-status failure';
-            modalStatus.innerHTML = '$ transmission_failed ✕<span class="modal-status-sub">Please try again in a moment.</span>';
+        }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach(function (el) { if (!el.classList.contains('in')) io.observe(el); });
+    })();
+
+    // ── Audit trail: decisions stream into the hero panel ─────────
+    (function () {
+        var log = document.getElementById('audit-log');
+        if (!log) return;
+        var events = [
+            ['research', 'house view logged', 'pass', 'recorded'],
+            ['scribe', 'claim verified against filing', 'pass', 'verified'],
+            ['risk', 'exposure within mandate', 'pass', 'pass'],
+            ['execution', 'ticket denied: limit', 'held', 'denied'],
+            ['assay', 'backtest assayed', 'pass', 'scored'],
+            ['steward', 'thesis re-underwritten', 'pass', 'recorded'],
+            ['execution', 'entry outside window', 'held', 'held'],
+            ['bias-gate', 'herding check', 'pass', 'pass']
+        ];
+        var i = 0;
+        var t0 = new Date();
+        function pad(n) { return (n < 10 ? '0' : '') + n; }
+        function stamp(offset) {
+            var d = new Date(t0.getTime() + offset * 1000);
+            return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
         }
-    });
-})();
+        function add(animate, offset) {
+            var e = events[i % events.length]; i++;
+            var row = document.createElement('div');
+            row.className = 'log' + (animate ? ' log-enter' : '');
+            var cells = [['t', stamp(offset)], ['ag', e[0]], ['desc', e[1]], ['st st-' + e[2], e[3]]];
+            cells.forEach(function (c) {
+                var span = document.createElement('span');
+                span.className = c[0];
+                span.textContent = c[1];
+                row.appendChild(span);
+            });
+            log.insertBefore(row, log.firstChild);
+            while (log.children.length > 7) log.removeChild(log.lastChild);
+            if (animate) requestAnimationFrame(function () {
+                requestAnimationFrame(function () { row.classList.remove('log-enter'); });
+            });
+        }
+        for (var s = 7; s > 0; s--) add(false, -s * 11);
+        if (reduceMotion) return;
+        var tick = 0;
+        setInterval(function () {
+            if (document.hidden) return;
+            tick += 3;
+            add(true, tick);
+        }, 2800);
+    })();
 
-// ── Sub-page header wordmark: collapse LocusQuant → LQ on scroll ──
-(function () {
-    var header = document.querySelector('header');
-    var brand = document.querySelector('.nav-brand');
-    if (!header || !brand) return; // homepage uses the animated wordmark instead
-    function onScroll() {
-        header.classList.toggle('brand-collapsed', window.scrollY > 80);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-})();
+    // ── The quill: an ink trail that lives in the hero only ───────
+    (function () {
+        var hero = document.querySelector('[data-quill]');
+        if (!hero || reduceMotion || !finePointer) return;
+        var canvas = document.createElement('canvas');
+        canvas.className = 'quill-canvas';
+        canvas.setAttribute('aria-hidden', 'true');
+        hero.appendChild(canvas);
+        var ctx = canvas.getContext('2d');
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var W = 0, H = 0;
 
-// ── Staggered scroll reveals (runs on every page) ──────────────
-(function () {
-    var sections = document.querySelectorAll('.reveal-on-scroll');
-    if (!sections.length) return;
+        function resize() {
+            W = hero.offsetWidth; H = hero.offsetHeight;
+            canvas.width = W * dpr; canvas.height = H * dpr;
+            canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resize();
+        window.addEventListener('resize', resize);
 
-    function stagger(section) {
-        var kids = section.querySelectorAll(
-            '.features-grid > *, .guard-grid > *, .team-grid > *, .spec-grid > *, ' +
-            '.pipeline > *, .wn-timeline > *, .roadmap-row, .status-line');
-        kids.forEach(function (k, i) { k.style.transitionDelay = (0.05 + i * 0.06).toFixed(2) + 's'; });
-        // Clear the delays after the entrance so hover stays snappy.
-        setTimeout(function () {
-            kids.forEach(function (k) { k.style.transitionDelay = ''; });
-        }, 1500);
-    }
+        var anchor = hero.querySelector('.panel');
+        var mouse = { x: W * 0.7, y: H * 0.4 };
+        var pen = { x: mouse.x, y: mouse.y };
+        var pts = [];
+        var angle = 0;
+        var lastMove = -1e9;
+        var running = false;
 
-    if (!('IntersectionObserver' in window)) {
-        sections.forEach(function (s) { s.classList.add('is-visible'); });
-        return;
-    }
-    var io = new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            stagger(entry.target);
-            entry.target.classList.add('is-visible');
-            obs.unobserve(entry.target);
+        hero.addEventListener('mousemove', function (e) {
+            var r = hero.getBoundingClientRect();
+            mouse.x = e.clientX - r.left;
+            mouse.y = e.clientY - r.top;
+            lastMove = performance.now();
         });
-    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    sections.forEach(function (s) { io.observe(s); });
-})();
 
-// ── Count-up stat numbers when the stat row scrolls into view ──
-(function () {
-    var rows = document.querySelectorAll('.stat-row');
-    if (!rows.length) return;
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function run(num) {
-        var span = num.querySelector('span');
-        var suffix = span ? span.outerHTML : '';
-        var m = num.textContent.match(/(\$?)(\d+)/);
-        if (!m) return;
-        var prefix = m[1], target = parseInt(m[2], 10);
-        if (reduce || target === 0) { num.innerHTML = prefix + target + suffix; return; }
-        var dur = 1600, start = null;
-        function tick(now) {
-            if (!start) start = now;
-            var t = Math.min((now - start) / dur, 1);
-            var eased = 1 - Math.pow(1 - t, 3);
-            num.innerHTML = prefix + Math.round(eased * target) + suffix;
-            if (t < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-    }
-
-    // The hero stat row is geometrically in view on load but the hero is held
-    // invisible for the ~1.1s brand intro, so defer the count until it reveals,
-    // otherwise the roll finishes off-screen and you only ever see the final value.
-    function startWhenReady(row) {
-        var needsIntro = document.querySelector('.hero-clarity') &&
-            !document.body.classList.contains('intro-done');
-        if (!needsIntro) { row.querySelectorAll('.num').forEach(run); return; }
-        var mo = new MutationObserver(function () {
-            if (document.body.classList.contains('intro-done')) {
-                mo.disconnect();
-                setTimeout(function () { row.querySelectorAll('.num').forEach(run); }, 150);
-            }
-        });
-        mo.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    }
-
-    if (!('IntersectionObserver' in window)) {
-        rows.forEach(startWhenReady);
-        return;
-    }
-    var io = new IntersectionObserver(function (entries, obs) {
-        entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            obs.unobserve(entry.target);
-            startWhenReady(entry.target);
-        });
-    }, { threshold: 0.4 });
-    rows.forEach(function (r) { io.observe(r); });
-})();
-
-// ── Autonomous ink pen (pointer devices only) ──────────────────
-// Trails the cursor while you move. When you go idle (incl. while
-// scrolling) it wanders off and orbits the section box in view; the
-// moment you move again it eases back to your cursor and trails you.
-(function () {
-    if (!window.matchMedia) return;
-    if (window.matchMedia('(hover: none)').matches) return;
-    if (window.matchMedia('(pointer: coarse)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var canvas = document.createElement('canvas');
-    canvas.setAttribute('aria-hidden', 'true');
-    canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:1500';
-    document.body.appendChild(canvas);
-    var ctx = canvas.getContext('2d');
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    function resize() {
-        canvas.width = window.innerWidth * dpr;
-        canvas.height = window.innerHeight * dpr;
-        canvas.style.width = window.innerWidth + 'px';
-        canvas.style.height = window.innerHeight + 'px';
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    var mouse = { x: window.innerWidth / 2, y: window.innerHeight * 0.4 };
-    var pen = { x: mouse.x, y: mouse.y };
-    var center = { x: mouse.x, y: mouse.y };
-    var pts = [];
-    var angle = Math.random() * Math.PI * 2;
-    var lastMove = -1e9;
-
-    window.addEventListener('mousemove', function (e) {
-        // Safari fires mousemove on scroll with the cursor stationary; ignore
-        // those (same coords) so scrolling doesn't yank the pen to the cursor.
-        if (e.clientX === mouse.x && e.clientY === mouse.y) return;
-        mouse.x = e.clientX; mouse.y = e.clientY; lastMove = performance.now();
-    });
-
-    // Section boxes the pen will orbit when idle.
-    var SEL = '.hero-visual, .signal-band, .pipeline, .features-grid, .guard-grid, .dark-panel, ' +
-        '.today-grid, .road-panel, .team-grid, .wn-rel, .spec-grid, .stat-row, .ink-final';
-    var targets = Array.prototype.slice.call(document.querySelectorAll(SEL));
-    var finals = Array.prototype.slice.call(document.querySelectorAll('.ink-final'));
-    var darkEls = Array.prototype.slice.call(document.querySelectorAll('.dark-panel, .signal-band, .site-footer, .btn-primary'));
-    var homepage = !!document.querySelector('.hero-clarity');
-    function ready() { return !homepage || document.body.classList.contains('intro-done'); }
-
-    // Ink turns cream over dark backgrounds (the Trust panel, signal band, footer, primary buttons).
-    function overDark(x, y) {
-        for (var i = 0; i < darkEls.length; i++) {
-            var r = darkEls[i].getBoundingClientRect();
-            if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return true;
-        }
-        return false;
-    }
-    var inkMix = 0; // 0 = dark ink, 1 = cream ink
-
-    // The fiber-grass field has its own cursor interaction (blades bend away);
-    // the ink trail steps aside there so the two effects don't fight.
-    var fiberEl = document.querySelector('.fiber-stage');
-    function overFiber(x, y) {
-        if (!fiberEl) return false;
-        var r = fiberEl.getBoundingClientRect();
-        return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
-    }
-
-    var focus = null, lastFocus = 0;
-    function pickFocus() {
-        // At the very bottom, frame the final call-to-action so it invites a click.
-        var atBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 130);
-        if (atBottom) {
-            for (var f = 0; f < finals.length; f++) {
-                var fr = finals[f].getBoundingClientRect();
-                if (fr.bottom > 40 && fr.top < window.innerHeight - 20) return fr;
-            }
-        }
-        var vc = window.innerHeight / 2, best = null, bestD = 1e9;
-        for (var i = 0; i < targets.length; i++) {
-            var r = targets[i].getBoundingClientRect();
-            if (r.bottom < 60 || r.top > window.innerHeight - 60) continue;
-            if (r.width < 40 || r.height < 20) continue;
-            var d = Math.abs((r.top + r.bottom) / 2 - vc);
-            if (d < bestD) { bestD = d; best = r; }
-        }
-        return best;
-    }
-
-    function frame(now) {
-        var inGrass = overFiber(mouse.x, mouse.y);
-        var active = (now - lastMove) < 3200 && !inGrass;
-        var canAuto = ready() && !inGrass;
-        var auto = !active && canAuto;
-
-        if (active || canAuto) {
+        function frame(now) {
+            var active = now - lastMove < 2400;
             var tx, ty, ease;
             if (active) {
                 tx = mouse.x; ty = mouse.y;
-                // Smooth glide back when far (returning from an orbit); snappier up close.
-                var dx = mouse.x - pen.x, dy = mouse.y - pen.y;
-                ease = Math.sqrt(dx * dx + dy * dy) > 150 ? 0.08 : 0.26;
+                var dx = tx - pen.x, dy = ty - pen.y;
+                ease = Math.sqrt(dx * dx + dy * dy) > 160 ? 0.08 : 0.26;
             } else {
-                if (now - lastFocus > 180) { focus = pickFocus(); lastFocus = now; }
-                if (focus) {
-                    center.x += (focus.left + focus.width / 2 - center.x) * 0.06;
-                    center.y += (focus.top + focus.height / 2 - center.y) * 0.06;
-                    angle += 0.011;
-                    tx = center.x + Math.cos(angle) * (focus.width / 2 + 30);
-                    ty = center.y + Math.sin(angle) * (focus.height / 2 + 30);
-                } else {
-                    angle += 0.01;
-                    tx = window.innerWidth / 2 + Math.cos(angle) * 150;
-                    ty = window.innerHeight / 2 + Math.sin(angle * 1.3) * 90;
-                }
-                ease = 0.12;
+                var hr = hero.getBoundingClientRect();
+                var ar = anchor ? anchor.getBoundingClientRect() : hr;
+                var cx = ar.left - hr.left + ar.width / 2;
+                var cy = ar.top - hr.top + ar.height / 2;
+                angle += 0.009;
+                tx = cx + Math.cos(angle) * (ar.width / 2 + 26);
+                ty = cy + Math.sin(angle) * (ar.height / 2 + 26);
+                ease = 0.1;
             }
             pen.x += (tx - pen.x) * ease;
             pen.y += (ty - pen.y) * ease;
             pts.push({ x: pen.x, y: pen.y, life: 1 });
-            if (pts.length > 55) pts.shift();
-        }
+            if (pts.length > 54) pts.shift();
 
-        // Blend the ink colour toward cream while over a dark background.
-        inkMix += ((overDark(pen.x, pen.y) ? 1 : 0) - inkMix) * 0.2;
-        var ink = Math.round(23 + 222 * inkMix) + ',' +
-            Math.round(20 + 222 * inkMix) + ',' + Math.round(13 + 221 * inkMix) + ',';
-
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        var n = pts.length;
-        for (var i = 0; i < n; i++) pts[i].life -= 0.04;
-        while (pts.length && pts[0].life <= 0) pts.shift();
-        n = pts.length;
-        var alpha = auto ? 0.58 : 1;
-        if (n > 1) {
+            ctx.clearRect(0, 0, W, H);
+            for (var i = 0; i < pts.length; i++) pts[i].life -= 0.04;
+            while (pts.length && pts[0].life <= 0) pts.shift();
+            var n = pts.length;
+            var alpha = active ? 1 : 0.5;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             for (var j = 1; j < n; j++) {
                 var a = pts[j - 1], b = pts[j];
-                var frac = j / n;                       // 0 = tail, 1 = at nib
-                var life = (a.life + b.life) / 2;
-                ctx.lineWidth = (frac * frac * 12 * life + 0.4) * (auto ? 0.7 : 1);
-                ctx.strokeStyle = 'rgba(' + ink + ((0.12 + frac * 0.62 * life) * alpha).toFixed(3) + ')';
+                var frac = j / n, life = (a.life + b.life) / 2;
+                ctx.lineWidth = (frac * frac * 11 * life + 0.4) * (active ? 1 : 0.7);
+                ctx.strokeStyle = 'rgba(23,20,13,' + ((0.1 + frac * 0.6 * life) * alpha).toFixed(3) + ')';
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
-                var mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-                ctx.quadraticCurveTo(a.x, a.y, mx, my);
+                ctx.quadraticCurveTo(a.x, a.y, (a.x + b.x) / 2, (a.y + b.y) / 2);
                 ctx.lineTo(b.x, b.y);
                 ctx.stroke();
             }
-            var head = pts[n - 1];
-            ctx.fillStyle = 'rgba(' + ink + (0.88 * head.life * alpha).toFixed(3) + ')';
-            ctx.beginPath();
-            ctx.arc(head.x, head.y, (auto ? 4 : 6) * (0.55 + head.life * 0.45), 0, Math.PI * 2);
-            ctx.fill();
+            if (n) {
+                var head = pts[n - 1];
+                ctx.fillStyle = 'rgba(23,20,13,' + (0.85 * head.life * alpha).toFixed(3) + ')';
+                ctx.beginPath();
+                ctx.arc(head.x, head.y, (active ? 5.5 : 3.8) * (0.55 + head.life * 0.45), 0, Math.PI * 2);
+                ctx.fill();
+            }
+            if (running) requestAnimationFrame(frame);
         }
-        requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-})();
 
-// ── FAQ: true accordion — opening one closes any other open item ──
-(function () {
-    var items = document.querySelectorAll('.faq-item');
-    if (!items.length) return;
-    items.forEach(function (item) {
-        item.addEventListener('toggle', function () {
-            if (!item.open) return;
-            items.forEach(function (other) {
-                if (other !== item) other.open = false;
+        function start() { if (!running) { running = true; requestAnimationFrame(frame); } }
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting) start(); else running = false;
+            }).observe(hero);
+        } else {
+            start();
+        }
+    })();
+
+    // ── Effective panel size: N / (1 + (N-1)ρ) ────────────────────
+    document.querySelectorAll('[data-neff]').forEach(function (root) {
+        var n = root.querySelector('[data-neff-n]');
+        var rho = root.querySelector('[data-neff-rho]');
+        var nOut = root.querySelector('[data-neff-n-out]');
+        var rhoOut = root.querySelector('[data-neff-rho-out]');
+        var out = root.querySelector('[data-neff-out]');
+        if (!n || !rho || !out) return;
+        function update() {
+            var N = parseInt(n.value, 10), R = parseFloat(rho.value);
+            if (nOut) nOut.textContent = N;
+            if (rhoOut) rhoOut.textContent = R.toFixed(2);
+            out.textContent = (N / (1 + (N - 1) * R)).toFixed(2);
+        }
+        n.addEventListener('input', update);
+        rho.addEventListener('input', update);
+        update();
+    });
+
+    document.querySelectorAll('[data-print]').forEach(function (b) {
+        b.addEventListener('click', function () { window.print(); });
+    });
+
+    // ── FAQ: a true accordion ─────────────────────────────────────
+    (function () {
+        var items = document.querySelectorAll('.faq details');
+        items.forEach(function (item) {
+            item.addEventListener('toggle', function () {
+                if (!item.open) return;
+                items.forEach(function (other) { if (other !== item) other.open = false; });
             });
         });
-    });
+    })();
+
+    // ── Request Access: one form, everywhere ──────────────────────
+    (function () {
+        var triggers = document.querySelectorAll('[data-modal]');
+        if (!triggers.length) return;
+
+        var WEB3FORMS_KEY = 'a91d092d-9247-49a5-98f2-77c461eee51d';
+        var RECIPIENTS = {
+            both: { intended_for: 'Both founders', tag: '[ACCESS REQUEST]', heading: 'Request Access' },
+            partner: { intended_for: 'Both founders', tag: '[PARTNERSHIP]', heading: 'Request Access' },
+            divyanshu: { intended_for: 'Divyanshu', tag: '[FOR: DIVYANSHU]', heading: 'Write to Divyanshu' },
+            ayush: { intended_for: 'Ayush', tag: '[FOR: AYUSH]', heading: 'Write to Ayush' },
+            assay: { intended_for: 'Both founders', tag: '[ASSAY]', heading: 'Request Access', instrument: 'Assay' },
+            tare: { intended_for: 'Both founders', tag: '[TARE]', heading: 'Request Access', instrument: 'Tare' },
+            scribe: { intended_for: 'Both founders', tag: '[SCRIBE]', heading: 'Request Access', instrument: 'Scribe' },
+            research: { intended_for: 'Both founders', tag: '[RESEARCH]', heading: 'Request Access' },
+            peek: { intended_for: 'Both founders', tag: '[IN BUILD]', heading: 'Ask about it' }
+        };
+
+        var wrap = document.createElement('div');
+        wrap.innerHTML =
+            '<div class="modal-overlay" id="contact-modal" aria-hidden="true">' +
+            '<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-heading">' +
+            '<button type="button" class="modal-close" id="modal-close" aria-label="Close">&times;</button>' +
+            '<div class="modal-heading" id="modal-heading">Request Access</div>' +
+            '<div class="modal-recipient" id="modal-recipient"></div>' +
+            '<form id="contact-form" novalidate>' +
+            '<div class="field"><label for="cf-name">Name</label>' +
+            '<input class="modal-input" id="cf-name" name="name" type="text" required autocomplete="name"></div>' +
+            '<div class="field"><label for="cf-email">Email</label>' +
+            '<input class="modal-input" id="cf-email" name="email" type="email" required autocomplete="email"></div>' +
+            '<div class="field"><label for="cf-message">Message</label>' +
+            '<textarea class="modal-input modal-textarea" id="cf-message" name="message" required ' +
+            'placeholder="Tell us which instrument interests you and what you are working on."></textarea></div>' +
+            '<input type="checkbox" name="botcheck" class="modal-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+            '<button type="submit" class="modal-submit" id="modal-submit">Send request &rarr;</button>' +
+            '<p class="modal-promise">A founder replies within one business day.</p>' +
+            '<div class="modal-status" id="modal-status" role="status" aria-live="polite"></div>' +
+            '</form></div></div>';
+        document.body.appendChild(wrap.firstChild);
+
+        var modal = document.getElementById('contact-modal');
+        var heading = document.getElementById('modal-heading');
+        var recipient = document.getElementById('modal-recipient');
+        var form = document.getElementById('contact-form');
+        var status = document.getElementById('modal-status');
+        var submit = document.getElementById('modal-submit');
+        var nameEl = document.getElementById('cf-name');
+        var emailEl = document.getElementById('cf-email');
+        var msgEl = document.getElementById('cf-message');
+        var current = RECIPIENTS.both;
+        var lastTrigger = null;
+
+        function setStatus(cls, main, sub) {
+            status.className = 'modal-status ' + cls;
+            status.textContent = main;
+            if (sub) {
+                var s = document.createElement('span');
+                s.className = 'modal-status-sub';
+                s.textContent = sub;
+                status.appendChild(s);
+            }
+        }
+
+        function open(key, trigger) {
+            current = Object.assign({}, RECIPIENTS[key] || RECIPIENTS.both);
+            var named = trigger && trigger.getAttribute('data-instrument');
+            if (named) {
+                current.instrument = named;
+                current.tag = '[IN BUILD: ' + named.toUpperCase() + ']';
+                current.heading = 'Ask about ' + named;
+            }
+            lastTrigger = trigger || null;
+            track('Form open', { source: current.instrument || key, page: window.location.pathname });
+            heading.textContent = current.heading;
+            recipient.textContent = current.instrument
+                ? 'About ' + current.instrument + '. Goes to both founders.'
+                : 'Goes to ' + (current.intended_for === 'Both founders' ? 'both founders.' : current.intended_for + ' directly.');
+            form.reset();
+            form.style.display = '';
+            [nameEl, emailEl, msgEl].forEach(function (f) { f.removeAttribute('aria-invalid'); });
+            if (current.instrument) msgEl.value = current.instrument + ': ';
+            status.className = 'modal-status';
+            status.textContent = '';
+            submit.disabled = false;
+            modal.classList.add('open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(function () { nameEl.focus(); }, 50);
+        }
+
+        function close() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            if (lastTrigger) lastTrigger.focus();
+        }
+
+        triggers.forEach(function (el) {
+            el.addEventListener('click', function () { open(el.getAttribute('data-modal'), el); });
+        });
+        document.getElementById('modal-close').addEventListener('click', close);
+        modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('open')) close();
+        });
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            var fd = new FormData(form);
+            if (fd.get('botcheck')) return;
+
+            var name = nameEl.value.trim();
+            var email = emailEl.value.trim();
+            var message = msgEl.value.trim();
+            var bad = [];
+            if (!name) bad.push(nameEl);
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) bad.push(emailEl);
+            if (!message || (current.instrument && message === current.instrument + ':')) bad.push(msgEl);
+            [nameEl, emailEl, msgEl].forEach(function (f) {
+                if (bad.indexOf(f) === -1) f.removeAttribute('aria-invalid');
+                else f.setAttribute('aria-invalid', 'true');
+            });
+            if (bad.length) {
+                setStatus('failure', bad.length > 1 ? 'A few fields need another look.' : 'One field needs another look.',
+                    'Name, a valid email and a short message are all we ask for.');
+                bad[0].focus();
+                return;
+            }
+
+            submit.disabled = true;
+            setStatus('pending', 'Sending…');
+
+            try {
+                var res = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: WEB3FORMS_KEY,
+                        subject: 'LocusQuant ' + current.tag + ' from ' + name,
+                        name: name,
+                        email: email,
+                        message: message,
+                        intended_for: current.intended_for,
+                        from_url: window.location.href,
+                        botcheck: false
+                    })
+                });
+                var data = await res.json().catch(function () { return {}; });
+                if (!res.ok || !data.success) throw new Error('submit failed');
+                track('Request sent', { source: current.instrument || 'general', page: window.location.pathname });
+                form.style.display = 'none';
+                setStatus('success', 'Request received.',
+                    'A founder will reply within one business day. You can close this window.');
+            } catch (err) {
+                submit.disabled = false;
+                setStatus('failure', 'That did not go through.', 'Please try again in a moment.');
+            }
+        });
+    })();
 })();
