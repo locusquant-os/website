@@ -167,7 +167,7 @@ svg { display: block; max-width: 100%; }
 }
 
 .wm-full, .wm-short { grid-area: 1 / 1; transition: opacity 0.45s var(--ease), transform 0.45s var(--ease); }
-.wm-short { font-family: var(--sans); font-weight: 700; letter-spacing: -0.04em; opacity: 0; transform: translateX(-6px); pointer-events: none; }
+.wm-short { opacity: 0; transform: translateX(-6px); pointer-events: none; }
 
 .nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; }
 .nav-links:focus { outline: none; }

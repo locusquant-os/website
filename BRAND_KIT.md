@@ -49,7 +49,7 @@ anywhere, including metadata.
   body copy, headings, or UI labels. Mixing an old-world blackletter mark
   with a clean modern sans body is the core visual tension of the brand;
   don't dilute it by using the blackletter face anywhere else.
-- **Mobile monogram**: "LQ" (plain sans, not blackletter) replaces the
+- **Mobile monogram**: "LQ", set in the same blackletter as the wordmark, replaces the
   full wordmark under ~680px viewport width.
 - **Positioning line**: *"LocusQuant builds the operating system for
   AI-run investing, and sells the parts that make any fund's AI
