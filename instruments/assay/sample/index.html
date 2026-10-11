@@ -17,16 +17,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/theme.css?v=20">
+    <link rel="stylesheet" href="/site.css?v=2">
 </head>
 
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-        <div class="wrap nav">
+        <div class="nav">
             <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
             <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
             <nav class="nav-links" id="nav-links" aria-label="Primary">
@@ -49,13 +49,13 @@
                 <p class="lede">The layout and the language of an Assay report, page for page. Forward it, print it,
                     or keep it as the attachment for your next diligence pack.</p>
                 <div class="cta-row">
-                    <button type="button" class="btn btn-primary" data-modal="assay">Request Access</button>
+                    <button type="button" class="btn btn-primary" data-magnetic data-modal="assay">Request Access</button>
                     <button type="button" class="btn btn-ghost" data-print>Save as PDF</button>
                 </div>
             </div>
         </section>
 
-        <section class="sec" style="padding-top:0">
+        <section class="sec">
             <div class="wrap">
                 <p class="specimen-banner"><strong>Specimen.</strong> Figures are illustrative: not a client
                     result, and not the measured performance of any real strategy. The first real sample, on a public
@@ -137,17 +137,17 @@
             </div>
         </section>
 
-        <section class="sec" style="padding-top:0">
+        <section class="sec">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="close" style="padding-top:56px">
+                <hr class="ledger">
+                <div class="close">
                     <div>
                         <h2 class="display">Assay your own result.</h2>
                     </div>
                     <div>
                         <p class="lede">Send the backtest and the record of what was tried. A founder replies, and the first call settles scope. No prices on the site; those come in the conversation.</p>
                         <div class="cta-row" style="margin-top:28px">
-                            <button type="button" class="btn btn-primary" data-modal="assay">Request Access</button>
+                            <button type="button" class="btn btn-primary" data-magnetic data-modal="assay">Request Access</button>
                         </div>
                         <p class="reply-note" style="margin-top:14px">A founder replies within one business day.</p>
                     </div>
@@ -179,6 +179,7 @@
                         <li><a href="/maths/">The maths</a></li>
                         <li><a href="/research/">Research</a></li>
                         <li><a href="/roadmap/">Roadmap</a></li>
+                        <li><a href="/film/">The film</a></li>
                     </ul>
                 </div>
             </div>
@@ -190,7 +191,9 @@
         </div>
     </footer>
 
-    <script src="/app.js?v=20"></script>
+    <script src="/app.js?v=21"></script>
+    <script src="/lq-motion.js?v=2" defer></script>
+    <script src="/motion.js?v=2" defer></script>
 </body>
 
 </html>

@@ -17,16 +17,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/theme.css?v=20">
+    <link rel="stylesheet" href="/site.css?v=2">
 </head>
 
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-        <div class="wrap nav">
+        <div class="nav">
             <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
             <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
             <nav class="nav-links" id="nav-links" aria-label="Primary">
@@ -57,8 +57,8 @@
 
         <section class="sec">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="sec-grid" style="padding-top:40px">
+                <hr class="ledger">
+                <div class="sec-grid">
                     <div class="folio"><span class="no">01</span><span class="eyebrow">By capability</span></div>
                     <div>
 
@@ -75,10 +75,10 @@
             </div>
         </section>
 
-        <section class="sec" style="padding-top:0">
+        <section class="sec">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="sec-grid" style="padding-top:40px">
+                <hr class="ledger">
+                <div class="sec-grid">
                     <div class="folio"><span class="no">02</span><span class="eyebrow">Humans in the loop</span></div>
                     <div>
 
@@ -105,17 +105,17 @@
             </div>
         </section>
 
-        <section class="sec" style="padding-top:0">
+        <section class="sec">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="close" style="padding-top:56px">
+                <hr class="ledger">
+                <div class="close">
                     <div>
                         <h2 class="display">Follow the build, or start with an instrument.</h2>
                     </div>
                     <div>
                         <p class="lede">Tell us what you are working on. A founder replies, and the first call settles scope. No prices, no packages; those come in the conversation.</p>
                         <div class="cta-row" style="margin-top:28px">
-                            <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                            <button type="button" class="btn btn-primary" data-magnetic data-modal="both">Request Access</button>
                         </div>
                         <p class="reply-note" style="margin-top:14px">A founder replies within one business day.</p>
                     </div>
@@ -147,6 +147,7 @@
                         <li><a href="/maths/">The maths</a></li>
                         <li><a href="/research/">Research</a></li>
                         <li><a href="/roadmap/">Roadmap</a></li>
+                        <li><a href="/film/">The film</a></li>
                     </ul>
                 </div>
             </div>
@@ -158,7 +159,9 @@
         </div>
     </footer>
 
-    <script src="/app.js?v=20"></script>
+    <script src="/app.js?v=21"></script>
+    <script src="/lq-motion.js?v=2" defer></script>
+    <script src="/motion.js?v=2" defer></script>
 </body>
 
 </html>

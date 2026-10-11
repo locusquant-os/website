@@ -6,7 +6,7 @@ product pages. Read this before generating copy or UI. If a future
 request conflicts with something here, flag the conflict rather than
 silently picking one.
 
-This file describes the system as implemented in this repo (`theme.css`,
+This file describes the system as implemented in this repo (`site.css`,
 `app.js`, and the pages: `/`, `/instruments/` + `assay|tare|scribe`,
 `/loqos/`, `/maths/`, `/research/`, `/roadmap/`; `/whats-next/` redirects
 to `/roadmap/`). If the live site and this file ever disagree,
@@ -159,12 +159,13 @@ component's CSS.
 ## 3. Typography
 
 ```css
---font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
-    "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+--sans: "Geist", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+--mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;  /* figures, timestamps, labels */
 --font-frak: 'UnifrakturCook', 'Pinyon Script', serif;  /* brand/product name ONLY */
 ```
 
-- Body text: system sans stack, `line-height: 1.6`, `letter-spacing: -0.011em`.
+- Body text: Geist, `line-height: 1.6`, `letter-spacing: -0.011em`.
 - Headings use `clamp()` for fluid sizing, always with tight negative
   letter-spacing (`-0.03em` to `-0.04em`) and `font-weight: 600–700`.
   Typical scale: hero H1 `clamp(2.2rem, 4.7vw, 3.7rem)`, section H2
@@ -287,6 +288,6 @@ Non-negotiable on every new page/component:
   "add a big glowing drop-shadow everywhere"), say so explicitly and
   confirm before proceeding — don't silently override brand rules or
   silently comply and quietly erode the system.
-- When the live site's `theme.css` changes in a way that should update
+- When the live site's `site.css` changes in a way that should update
   this file (new component pattern, new color, new motion rule), update
   this file in the same change — don't let it drift out of sync.

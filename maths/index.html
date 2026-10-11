@@ -17,9 +17,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/theme.css?v=20">
+    <link rel="stylesheet" href="/site.css?v=2">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 </head>
 
@@ -27,7 +27,7 @@
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-        <div class="wrap nav">
+        <div class="nav">
             <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
             <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
             <nav class="nav-links" id="nav-links" aria-label="Primary">
@@ -53,9 +53,9 @@
             </div>
         </section>
 
-        <section class="sec" style="padding-top:0">
+        <section class="sec">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
+                <hr class="ledger">
                 <div class="sec-grid" style="padding-top:48px">
                     <div class="folio"><span class="no">01&ndash;07</span><span class="eyebrow">Seven ideas</span></div>
                     <div>
@@ -87,6 +87,7 @@
                                 <label for="rho-slider"><span>Average correlation (&rho;&#772;)</span><span data-neff-rho-out>0.60</span></label>
                                 <input type="range" id="rho-slider" min="0" max="1" step="0.01" value="0.6" data-neff-rho>
                             </div>
+                            <div class="neff-dots" data-neff-dots aria-hidden="true"></div>
                             <div class="slider-out">
                                 <div class="num" data-neff-out aria-live="polite">1.47</div>
                                 <div class="label">effective independent opinions</div>
@@ -200,17 +201,17 @@
             </div>
         </section>
 
-        <section class="sec" style="padding-top:0">
+        <section class="sec">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="close" style="padding-top:56px">
+                <hr class="ledger">
+                <div class="close">
                     <div>
                         <h2 class="display">See the arithmetic on your own numbers.</h2>
                     </div>
                     <div>
                         <p class="lede">Request access and a founder will walk you through it. Design partners get more of the maths, and the production versions are discussed in conversation.</p>
                         <div class="cta-row" style="margin-top:28px">
-                            <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                            <button type="button" class="btn btn-primary" data-magnetic data-modal="both">Request Access</button>
                         </div>
                         <p class="reply-note" style="margin-top:14px">A founder replies within one business day.</p>
                     </div>
@@ -242,6 +243,7 @@
                         <li><a href="/maths/">The maths</a></li>
                         <li><a href="/research/">Research</a></li>
                         <li><a href="/roadmap/">Roadmap</a></li>
+                        <li><a href="/film/">The film</a></li>
                     </ul>
                 </div>
             </div>
@@ -253,7 +255,9 @@
         </div>
     </footer>
 
-    <script src="/app.js?v=20"></script>
+    <script src="/app.js?v=21"></script>
+    <script src="/lq-motion.js?v=2" defer></script>
+    <script src="/motion.js?v=2" defer></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
         onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}]});"></script>

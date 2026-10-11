@@ -19,16 +19,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/theme.css?v=20">
+    <link rel="stylesheet" href="/site.css?v=2">
 </head>
 
-<body>
+<body class="v2">
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-header">
-        <div class="wrap nav">
+        <div class="nav">
             <a href="/" class="wordmark" aria-label="LocusQuant home"><span class="wm-full">LocusQuant</span><span class="wm-short" aria-hidden="true">LQ</span></a>
             <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Open menu"><span class="bars" aria-hidden="true"><i></i><i></i></span><span class="menu-label" aria-hidden="true">Menu</span></button>
             <nav class="nav-links" id="nav-links" aria-label="Primary">
@@ -45,39 +45,51 @@
 
     <main id="main">
 
-        <!-- 1 · HERO -->
+        <!-- 01 · HERO -->
         <section class="hero" data-quill>
-            <div class="wrap">
-                <div class="hero-grid">
-                    <div>
-                        <p class="eyebrow">The operating system for AI-run investing</p>
-                        <h1 class="display">Every AI decision in your fund, provable.</h1>
-                        <p class="lede">LocusQuant verifies what your AI reads, governs what it does and records every
-                            decision, so you can show an allocator or an examiner exactly why. We are proving it first
-                            on our own fund.</p>
-                        <div class="cta-row">
-                            <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
-                            <a href="#fund" class="btn btn-ghost">See it run &rarr;</a>
-                        </div>
-                        <p class="reply-note">A founder replies within one business day.</p>
+            <div class="wrap hero-grid">
+                <div class="hero-copy">
+                    <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>The operating system for AI-run investing</p>
+                    <h1 class="display">Every AI decision in your fund, <span class="underlined">provable.<svg class="scribble" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path d="M3 11 C 60 4, 140 3, 200 7 S 280 12, 297 6" pathLength="1"/></svg></span></h1>
+                    <p class="lede">LocusQuant verifies what your AI reads, governs what it does and records every
+                        decision, so you can show an allocator or an examiner exactly why. We are proving it first
+                        on our own fund.</p>
+                    <div class="cta-row">
+                        <button type="button" class="btn btn-primary" data-modal="both" data-magnetic>Request Access</button>
+                        <a href="#film" class="btn btn-ghost btn-play"><span class="play-glyph" aria-hidden="true"></span>Watch the film <span class="btn-meta">1:20</span></a>
                     </div>
+                    <p class="reply-note">A founder replies within one business day.</p>
+                </div>
 
-                    <div class="panel" aria-label="Illustration of a live audit trail">
+                <div class="hero-object" data-tilt>
+                    <div class="panel panel-audit" aria-label="Illustration of a live audit trail">
                         <div class="panel-head">
                             <span class="panel-title">Audit trail</span>
                             <span class="live"><span class="live-dot"></span>append-only</span>
                         </div>
-                        <div class="audit-log" id="audit-log" aria-hidden="true"></div>
+                        <div class="audit-log" aria-hidden="true">
+                            <div class="log"><span class="t">09:41:02</span><span class="ag">research</span><span class="desc">house view logged</span><span class="st st-pass">recorded</span></div>
+                            <div class="log"><span class="t">09:41:09</span><span class="ag">scribe</span><span class="desc">claim verified against filing</span><span class="st st-pass">verified</span></div>
+                            <div class="log"><span class="t">09:41:15</span><span class="ag">risk</span><span class="desc">exposure within mandate</span><span class="st st-pass">pass</span></div>
+                            <div class="log"><span class="t">09:41:24</span><span class="ag">execution</span><span class="desc">ticket denied: limit</span><span class="st st-held">denied</span></div>
+                            <div class="log"><span class="t">09:41:31</span><span class="ag">assay</span><span class="desc">backtest assayed</span><span class="st st-pass">scored</span></div>
+                            <div class="log"><span class="t">09:41:38</span><span class="ag">bias-gate</span><span class="desc">herding check</span><span class="st st-pass">pass</span></div>
+                        </div>
                         <div class="panel-foot">
                             <span>every row signed and kept</span>
                             <span>paper book</span>
                         </div>
                     </div>
+                    <div class="float-chip" aria-hidden="true">
+                        <span class="chip-k">Risk gate</span>
+                        <span class="st st-held">denied before the trade</span>
+                    </div>
                 </div>
+            </div>
 
-                <!-- 2 · THE LEDGER STRIP -->
-                <hr class="ledger" data-reveal style="margin-top:80px">
-                <div class="stats" style="margin-top:0">
+            <div class="wrap">
+                <hr class="ledger">
+                <div class="stats">
                     <div class="stat"><div class="num">5</div><div class="label">agent desks live</div></div>
                     <div class="stat"><div class="num">100<small>%</small></div><div class="label">of decisions audited</div></div>
                     <div class="stat"><div class="num">All</div><div class="label">guardrails tested by breaking them</div></div>
@@ -86,130 +98,168 @@
             </div>
         </section>
 
-        <!-- 3 · THE PROBLEM -->
-        <section class="sec" aria-labelledby="problem-h">
-            <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="sec-grid" style="padding-top:40px">
-                    <div class="folio"><span class="no">03</span><span class="eyebrow">The problem</span></div>
-                    <div class="problem" data-reveal>
-                        <h2 class="sr-only" id="problem-h">The problem</h2>
-                        <p><strong>Funds are adding AI to research and trading.</strong> Allocators now ask how it is
-                            validated, and regulators ask how it is supervised. Most firms answer with a policy
-                            document.</p>
-                        <p class="answer">We answer with a record.</p>
-                    </div>
+        <!-- 03 · THE PROBLEM -->
+        <section class="sec sec-problem" aria-labelledby="problem-h">
+            <div class="wrap sec-grid">
+                <div class="folio"><span class="no">03</span><span class="eyebrow">The problem</span></div>
+                <div class="problem">
+                    <h2 class="sr-only" id="problem-h">The problem</h2>
+                    <p class="illuminate" data-illuminate>Funds are adding AI to research and trading. Allocators now ask how it is
+                        validated, and regulators ask how it is supervised. Most firms answer with a policy document.</p>
+                    <p class="answer">We answer with a <span class="seal-stamp">record.</span></p>
                 </div>
             </div>
         </section>
 
-        <!-- 4 · AVAILABLE NOW -->
-        <section class="sec" id="instruments" aria-labelledby="inst-h" style="padding-top:0">
+        <!-- 04 · AVAILABLE NOW -->
+        <section class="sec" id="instruments" aria-labelledby="inst-h">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="sec-grid" style="padding-top:40px">
+                <hr class="ledger">
+                <div class="sec-grid">
                     <div class="folio"><span class="no">04</span><span class="eyebrow">Available now</span></div>
                     <div>
-                        <div class="sec-head">
+                        <div class="sec-head" data-reveal>
                             <h2 class="h2" id="inst-h">Three instruments a fund can use this month.</h2>
                             <p class="body">Each one names a problem, hands back a result you can forward, and starts
                                 with a short conversation. No prices on the site; every engagement starts with
                                 Request Access.</p>
                         </div>
-
-                        <div class="inst-grid" data-reveal>
-                            <a href="/instruments/assay/" class="inst inst-lead">
-                                <div class="inst-top">
-                                    <span class="status status-available">Available</span>
-                                    <span class="inst-for">For CIOs, quant PMs, allocators</span>
-                                </div>
-                                <div class="inst-name">Assay<sub>by LocusQuant</sub></div>
-                                <p class="inst-line">Find out how much of your Sharpe ratio is luck, before an allocator
-                                    does.</p>
-                                <div class="mini" aria-hidden="true">
-                                    <div class="mini-row"><span>Variations tried</span><b>400</b></div>
-                                    <div class="mini-row"><span>Sharpe, as reported</span><b>1.84</b></div>
-                                    <div class="mini-row"><span>Sharpe, after the trials behind it</span><b>0.52</b></div>
-                                </div>
-                                <p class="mini-cap">Illustrative figures.</p>
-                                <div class="inst-foot"><span>Read about Assay</span><span class="arrow">&rarr;</span></div>
-                            </a>
-
-                            <a href="/instruments/tare/" class="inst">
-                                <div class="inst-top">
-                                    <span class="status status-available">Available</span>
-                                    <span class="inst-for">For heads of data</span>
-                                </div>
-                                <div class="inst-name">Tare</div>
-                                <p class="inst-line">Weigh what each data subscription is really worth to your
-                                    decisions.</p>
-                                <div class="inst-foot"><span>Read about Tare</span><span class="arrow">&rarr;</span></div>
-                            </a>
-
-                            <a href="/instruments/scribe/" class="inst">
-                                <div class="inst-top">
-                                    <span class="status status-pilot">Pilot</span>
-                                    <span class="inst-for">For research heads</span>
-                                </div>
-                                <div class="inst-name">Scribe</div>
-                                <p class="inst-line">Every claim your AI pulls from a filing, checked against the
-                                    sentence it came from.</p>
-                                <div class="inst-foot"><span>Read about Scribe</span><span class="arrow">&rarr;</span></div>
-                            </a>
-                        </div>
-
-                        <div class="peek-strip" data-reveal>
-                            <span class="status status-build">In build</span>
-                            <ul aria-label="Instruments in build"><li>Folio</li><li>Charter</li><li>Keystone</li><li>Hourglass</li><li>Notary</li><li>Quorum</li><li>Bursar</li></ul>
-                            <a href="/instruments/#in-build" class="text-link">Take a sneak peek &rarr;</a>
-                        </div>
                     </div>
+                </div>
+
+                <div class="bento" data-reveal>
+                    <a href="/instruments/assay/" class="inst inst-lead" data-mark="assay" data-spot>
+                        <div class="inst-top">
+                            <span class="status status-available">Available</span>
+                            <span class="inst-for">For CIOs, quant PMs, allocators</span>
+                        </div>
+                        <div class="inst-name">Assay<sub>by LocusQuant</sub></div>
+                        <p class="inst-line">Find out how much of your Sharpe ratio is luck, before an allocator
+                            does.</p>
+                        <div class="sharpe" aria-hidden="true">
+                            <div class="sharpe-row"><span>Variations tried</span><b class="num">400</b></div>
+                            <div class="sharpe-row"><span>Sharpe, as reported</span><b class="num">1.84</b><i class="bar" style="--w:1"></i></div>
+                            <div class="sharpe-row is-true"><span>Sharpe, after the trials behind it</span><b class="num">0.52</b><i class="bar" style="--w:.283"></i></div>
+                        </div>
+                        <p class="mini-cap">Illustrative figures.</p>
+                        <div class="inst-foot"><span>Read about Assay</span><span class="arrow" aria-hidden="true">&rarr;</span></div>
+                    </a>
+
+                    <a href="/instruments/tare/" class="inst" data-mark="tare" data-spot>
+                        <div class="inst-top">
+                            <span class="status status-available">Available</span>
+                            <span class="inst-for">For heads of data</span>
+                        </div>
+                        <div class="inst-name">Tare</div>
+                        <p class="inst-line">Weigh what each data subscription is really worth to your
+                            decisions.</p>
+                        <div class="inst-foot"><span>Read about Tare</span><span class="arrow" aria-hidden="true">&rarr;</span></div>
+                    </a>
+
+                    <a href="/instruments/scribe/" class="inst" data-mark="scribe" data-spot>
+                        <div class="inst-top">
+                            <span class="status status-pilot">Pilot</span>
+                            <span class="inst-for">For research heads</span>
+                        </div>
+                        <div class="inst-name">Scribe</div>
+                        <p class="inst-line">Every claim your AI pulls from a filing, checked against the
+                            sentence it came from.</p>
+                        <div class="inst-foot"><span>Read about Scribe</span><span class="arrow" aria-hidden="true">&rarr;</span></div>
+                    </a>
+                </div>
+
+                <div class="peek-rail" data-reveal>
+                    <div class="peek-rail-head">
+                        <span class="status status-build">In build</span>
+                        <a href="/instruments/#in-build" class="text-link">Take a sneak peek &rarr;</a>
+                    </div>
+                    <ul class="peek-marks" aria-label="Instruments in build">
+                        <li><a href="/instruments/#in-build" class="peek-chip" data-mark="folio"><span>Folio</span></a></li>
+                        <li><a href="/instruments/#in-build" class="peek-chip" data-mark="charter"><span>Charter</span></a></li>
+                        <li><a href="/instruments/#in-build" class="peek-chip" data-mark="keystone"><span>Keystone</span></a></li>
+                        <li><a href="/instruments/#in-build" class="peek-chip" data-mark="hourglass"><span>Hourglass</span></a></li>
+                        <li><a href="/instruments/#in-build" class="peek-chip" data-mark="notary"><span>Notary</span></a></li>
+                        <li><a href="/instruments/#in-build" class="peek-chip" data-mark="quorum"><span>Quorum</span></a></li>
+                        <li><a href="/instruments/#in-build" class="peek-chip" data-mark="bursar"><span>Bursar</span></a></li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- 5 · THE PLATFORM UNDERNEATH -->
-        <section class="sec" aria-labelledby="platform-h" style="padding-top:0">
+        <!-- 05 · UNDERNEATH: THE FILM -->
+        <section class="sec sec-film" id="film" aria-labelledby="platform-h">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="sec-grid" style="padding-top:40px">
+                <hr class="ledger">
+                <div class="sec-grid">
                     <div class="folio"><span class="no">05</span><span class="eyebrow">Underneath</span></div>
-                    <div>
-                        <div class="sec-head">
-                            <h2 class="h2" id="platform-h">One <span class="seal-word">operating system</span>
-                                beneath every instrument.</h2>
-                        </div>
-                        <div class="stack-drawing" data-reveal role="img"
-                            aria-label="Assay, Tare and Scribe sit on the LoQOS band, beside an outline for more instruments in build">
-                            <div class="stack-row">
-                                <div class="stack-block"><span class="k">Assay</span><span class="v">available</span></div>
-                                <div class="stack-block"><span class="k">Tare</span><span class="v">available</span></div>
-                                <div class="stack-block"><span class="k">Scribe</span><span class="v">pilot</span></div>
-                                <a href="/instruments/#in-build" class="stack-block ghost" style="text-decoration:none;color:inherit"><span class="k">Seven more in build</span><span class="v">sneak peek &rarr;</span></a>
-                            </div>
-                            <div class="stack-base"><span class="loqos-mark">LoQOS</span><span>limits set by people, enforced below every agent</span></div>
-                        </div>
-                        <p class="body stack-caption">Start with one. Each runs on <a href="/loqos/" class="text-link"><span class="loqos-mark">LoQOS</span></a>,
-                            so each one you add reuses what the last one built.</p>
+                    <div class="sec-head film-head" data-reveal>
+                        <h2 class="h2" id="platform-h">One <span class="seal-word">operating system</span>
+                            beneath every instrument.</h2>
+                        <p class="body">Eighty seconds, ten instruments, each shown doing its one job. Every one of
+                            them runs on <span class="loqos-mark">LoQOS</span>.</p>
                     </div>
                 </div>
             </div>
+
+            <div class="theater" data-theater>
+                <div class="theater-dim" aria-hidden="true"></div>
+                <div class="wrap theater-inner">
+                    <div class="screen" data-screen>
+                        <div class="screen-skeleton" aria-hidden="true"><span></span><span></span><span></span></div>
+                        <iframe src="/film/?embed" title="LocusQuant film: ten instruments that make AI in investing provable, all running on LoQOS" loading="lazy" tabindex="-1"></iframe>
+                    </div>
+
+                    <div class="console" data-console>
+                        <button type="button" class="console-play" data-film-toggle aria-label="Pause film">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path class="i-pause" d="M6 4.5v11M14 4.5v11"/><path class="i-play" d="M6.5 4.2 L15.5 10 L6.5 15.8 Z"/></svg>
+                        </button>
+                        <div class="console-track" data-film-track role="slider" tabindex="0" aria-label="Film position" aria-valuemin="0" aria-valuemax="80" aria-valuenow="0" aria-valuetext="0:00">
+                            <div class="track-ticks" data-film-ticks></div>
+                            <i class="track-fill" data-film-fill></i>
+                        </div>
+                        <span class="console-time num" data-film-time>0:00 / 1:20</span>
+                        <button type="button" class="console-full" data-film-full aria-label="Watch full screen">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 7.5V3.5h4M16.5 7.5V3.5h-4M3.5 12.5v4h4M16.5 12.5v4h-4"/></svg>
+                        </button>
+                    </div>
+
+                    <nav class="chapters" aria-label="Film chapters">
+                        <ol data-film-chapters></ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="wrap">
+                <div class="stack" data-reveal role="img"
+                    aria-label="Assay, Tare and Scribe sit on the LoQOS band, beside an outline for more instruments in build">
+                    <div class="stack-row">
+                        <div class="stack-block"><span class="k">Assay</span><span class="v">available</span></div>
+                        <div class="stack-block"><span class="k">Tare</span><span class="v">available</span></div>
+                        <div class="stack-block"><span class="k">Scribe</span><span class="v">pilot</span></div>
+                        <a href="/instruments/#in-build" class="stack-block ghost"><span class="k">Seven more in build</span><span class="v">sneak peek &rarr;</span></a>
+                    </div>
+                    <div class="stack-base seal"><span class="loqos-mark">LoQOS</span><span>limits set by people, enforced below every agent</span></div>
+                </div>
+                <p class="body stack-caption">Start with one. Each runs on <a href="/loqos/" class="text-link"><span class="loqos-mark">LoQOS</span></a>,
+                    so each one you add reuses what the last one built. <a href="/film/" class="text-link">Open the film on its own page &rarr;</a></p>
+            </div>
         </section>
 
-        <!-- 6 · PROOF IN INK -->
-        <section class="sec" id="proof" aria-labelledby="proof-h" style="padding-top:0">
+        <!-- 06 · PROOF IN INK -->
+        <section class="sec" id="proof" aria-labelledby="proof-h">
             <div class="wrap">
-                <div class="ink" data-reveal>
-                    <p class="eyebrow">06 &middot; Evidence</p>
-                    <h2 class="h2" id="proof-h" style="margin-top:16px;max-width:20ch">Most AI asks for trust. We
-                        would rather show the arithmetic.</h2>
+                <div class="ink">
+                    <div class="ink-head">
+                        <p class="eyebrow">06 &middot; Evidence</p>
+                        <h2 class="h2" id="proof-h">Most AI asks for trust. We would rather show the arithmetic.</h2>
+                    </div>
 
                     <div class="evidence">
-                        <div class="ev">
+                        <div class="ev ev-report">
                             <p class="ev-label">From an Assay report</p>
                             <div class="report" aria-label="Specimen page of an Assay report">
                                 <div class="report-head"><span class="wordmark">Assay</span><span>Specimen &middot; public strategy</span></div>
-                                <h4>Momentum, top decile, monthly rebalance</h4>
+                                <h3>Momentum, top decile, monthly rebalance</h3>
                                 <p class="sub">Backtest supplied with 400 recorded variations</p>
                                 <table>
                                     <tr><td>Sharpe, as reported</td><td>1.84</td></tr>
@@ -220,23 +270,28 @@
                                 <p class="verdict">Most of the headline result comes from choosing the best of many
                                     tries. A smaller, real effect remains.</p>
                             </div>
-                            <p class="specimen-note">Layout specimen. Figures are illustrative, not a client
-                                result.</p>
+                            <p class="specimen-note">Layout specimen. Figures are illustrative, not a client result.</p>
                             <p class="ev-foot"><a href="/instruments/assay/sample/" class="text-link">Read the full specimen report &rarr;</a></p>
                         </div>
 
-                        <div class="ev">
+                        <div class="ev ev-neff" data-neff>
                             <p class="ev-label">Effective panel size</p>
-                            <div class="ev-big num">1.47<small>opinions</small></div>
-                            <div class="dots" aria-hidden="true">
-                                <i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i>
-                                <span class="eq">&rarr;</span>
-                                <i class="f"></i><i class="p"></i>
+                            <div class="ev-big"><span class="num" data-neff-out>1.47</span><small>opinions</small></div>
+                            <div class="neff-dots" data-neff-dots aria-hidden="true"></div>
+                            <div class="neff-controls">
+                                <label class="slider">
+                                    <span>Analysts <b class="num" data-neff-n-out>5</b></span>
+                                    <input type="range" min="2" max="12" step="1" value="5" data-neff-n>
+                                </label>
+                                <label class="slider">
+                                    <span>Error correlation <b class="num" data-neff-rho-out>0.60</b></span>
+                                    <input type="range" min="0" max="0.95" step="0.05" value="0.6" data-neff-rho>
+                                </label>
                             </div>
                             <p class="body">Five analysts who read the same news, with errors correlated at 0.6, are
                                 worth 1.47 independent opinions, not five. A room of agreeing agents does not get to bet
                                 bigger.</p>
-                            <p class="ev-foot"><a href="/research/effective-panel-size/" class="text-link">Try it with your own numbers &rarr;</a></p>
+                            <p class="ev-foot"><a href="/research/effective-panel-size/" class="text-link">Read the note &rarr;</a></p>
                         </div>
 
                         <div class="ev-quote">
@@ -248,110 +303,101 @@
             </div>
         </section>
 
-        <!-- 7 · OUR OWN FUND -->
-        <section class="sec" id="fund" aria-labelledby="fund-h" style="padding-top:24px">
+        <!-- 07 · OUR OWN FUND -->
+        <section class="sec" id="fund" aria-labelledby="fund-h">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="sec-grid" style="padding-top:40px">
+                <hr class="ledger">
+                <div class="sec-grid">
                     <div class="folio"><span class="no">07</span><span class="eyebrow">Our own fund</span></div>
-                    <div>
-                        <div class="sec-head">
-                            <h2 class="h2" id="fund-h">On the record, on ourselves first.</h2>
-                            <p class="body">We run our own fund on the same system. Today it is in paper trading, and
-                                every decision is recorded.</p>
+                    <div class="sec-head" data-reveal>
+                        <h2 class="h2" id="fund-h">On the record, on ourselves first.</h2>
+                        <p class="body">We run our own fund on the same system. Today it is in paper trading, and
+                            every decision is recorded.</p>
+                    </div>
+                </div>
+                <div class="fund-grid">
+                    <div class="panel panel-board" data-reveal aria-label="Illustration of the Boardroom deliberating">
+                        <div class="panel-head">
+                            <span class="panel-title">Boardroom</span>
+                            <span class="live"><span class="live-dot"></span>deliberating</span>
                         </div>
-                        <div class="fund-grid">
-                            <div class="panel" data-reveal aria-label="Illustration of the Boardroom deliberating">
-                                <div class="panel-head">
-                                    <span class="panel-title">Boardroom</span>
-                                    <span class="live"><span class="live-dot"></span>deliberating</span>
-                                </div>
-                                <div class="mock-ticker">NVDA &middot; 5-day horizon &middot; paper</div>
-                                <div class="desk"><span>Fundamental desk</span><span class="st st-pass">bullish</span></div>
-                                <div class="desk"><span>Sentiment desk</span><span class="st st-pass">bullish</span></div>
-                                <div class="desk"><span>Technical desk</span><span class="st st-neutral">neutral</span></div>
-                                <div class="desk"><span>Risk gate</span><span class="st st-pass">within limits</span></div>
-                                <div class="verdict-line">House view &middot; <strong>long, half size</strong>
-                                    <div class="conf"><i></i></div>
-                                </div>
-                            </div>
-                            <div data-reveal>
-                                <ol class="stages">
-                                    <li>Live market feed<span class="tag">roadmap</span></li>
-                                    <li>Thematic segregation<span class="tag">roadmap</span></li>
-                                    <li>Research and selection<span class="tag on">live</span></li>
-                                    <li>Risk and direction gates<span class="tag">roadmap</span></li>
-                                    <li>Execution and allocation<span class="tag">roadmap</span></li>
-                                    <li>Continuous stewardship<span class="tag">roadmap</span></li>
-                                </ol>
-                                <p class="small stages-note">Outcomes flow back into research. Fills, not code, set the
-                                    date for live capital. <a href="/roadmap/" class="text-link">See the roadmap</a></p>
-                            </div>
+                        <div class="mock-ticker num">NVDA &middot; 5-day horizon &middot; paper</div>
+                        <div class="desk"><span>Fundamental desk</span><span class="st st-pass">bullish</span></div>
+                        <div class="desk"><span>Sentiment desk</span><span class="st st-pass">bullish</span></div>
+                        <div class="desk"><span>Technical desk</span><span class="st st-neutral">neutral</span></div>
+                        <div class="desk"><span>Risk gate</span><span class="st st-pass">within limits</span></div>
+                        <div class="verdict-line">House view &middot; <strong>long, half size</strong>
+                            <div class="conf"><i></i></div>
                         </div>
+                    </div>
+                    <div class="pipeline" data-reveal data-pipeline>
+                        <svg class="pipeline-line" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 2 100"><path d="M1 0 V100" pathLength="1"/></svg>
+                        <ol class="stages">
+                            <li><span class="k">Live market feed</span><span class="tag">roadmap</span></li>
+                            <li><span class="k">Thematic segregation</span><span class="tag">roadmap</span></li>
+                            <li class="is-live"><span class="k">Research and selection</span><span class="tag on">live</span></li>
+                            <li><span class="k">Risk and direction gates</span><span class="tag">roadmap</span></li>
+                            <li><span class="k">Execution and allocation</span><span class="tag">roadmap</span></li>
+                            <li><span class="k">Continuous stewardship</span><span class="tag">roadmap</span></li>
+                        </ol>
+                        <p class="small stages-note">Outcomes flow back into research. Fills, not code, set the
+                            date for live capital. <a href="/roadmap/" class="text-link">See the roadmap</a></p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 8 · WHO WE WORK WITH -->
-        <section class="sec" id="who" aria-labelledby="who-h" style="padding-top:0">
+        <!-- 08 · WHO WE WORK WITH -->
+        <section class="sec" id="who" aria-labelledby="who-h">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="sec-grid" style="padding-top:40px">
+                <hr class="ledger">
+                <div class="sec-grid">
                     <div class="folio"><span class="no">08</span><span class="eyebrow">Who we work with</span></div>
-                    <div>
-                        <div class="sec-head">
-                            <h2 class="h2" id="who-h">For firms that have to explain their AI to someone else.</h2>
-                        </div>
-                        <div class="rows" data-reveal>
-                            <div class="row">
-                                <h3 class="h3">Emerging managers</h3>
-                                <p>Due-diligence ready from day one.</p>
-                            </div>
-                            <div class="row">
-                                <h3 class="h3">Quant teams</h3>
-                                <p>Validation before promotion, not after the drawdown.</p>
-                            </div>
-                            <div class="row">
-                                <h3 class="h3">Data vendors</h3>
-                                <p>Independent proof that your data predicts.</p>
-                            </div>
-                            <div class="row">
-                                <h3 class="h3">Platforms and wealth apps</h3>
-                                <p>Governance for the AI features you ship to clients.</p>
-                            </div>
-                        </div>
+                    <div class="sec-head" data-reveal>
+                        <h2 class="h2" id="who-h">For firms that have to explain their AI to someone else.</h2>
+                    </div>
+                </div>
+                <div class="rows" data-reveal>
+                    <div class="row"><span class="row-no num">i</span><h3 class="h3">Emerging managers</h3><p>Due-diligence ready from day one.</p></div>
+                    <div class="row"><span class="row-no num">ii</span><h3 class="h3">Quant teams</h3><p>Validation before promotion, not after the drawdown.</p></div>
+                    <div class="row"><span class="row-no num">iii</span><h3 class="h3">Data vendors</h3><p>Independent proof that your data predicts.</p></div>
+                    <div class="row"><span class="row-no num">iv</span><h3 class="h3">Platforms and wealth apps</h3><p>Governance for the AI features you ship to clients.</p></div>
+                </div>
 
-                        <div class="founders" data-reveal>
-                            <div class="founder">
-                                <div class="name">Divyanshu Bhardwaj</div>
-                                <div class="role">Co-founder &middot; data science</div>
-                                <p>Data science across credit-bureau and fintech systems. Builds the quantitative and
-                                    modelling core of LocusQuant.</p>
-                                <button type="button" class="btn btn-ghost btn-sm" data-modal="divyanshu">Write to Divyanshu</button>
-                            </div>
-                            <div class="founder">
-                                <div class="name">Ayush Vaishnav</div>
-                                <div class="role">Co-founder &middot; enterprise integration</div>
-                                <p>Enterprise integration background. Wires the operating system into production-grade
-                                    infrastructure.</p>
-                                <button type="button" class="btn btn-ghost btn-sm" data-modal="ayush">Write to Ayush</button>
-                            </div>
+                <div class="founders" data-reveal>
+                    <div class="founder">
+                        <span class="monogram" aria-hidden="true">DB</span>
+                        <div>
+                            <div class="name">Divyanshu Bhardwaj</div>
+                            <div class="role">Co-founder &middot; data science</div>
+                            <p>Data science across credit-bureau and fintech systems. Builds the quantitative and
+                                modelling core of LocusQuant.</p>
+                            <button type="button" class="btn btn-ghost btn-sm" data-modal="divyanshu">Write to Divyanshu</button>
+                        </div>
+                    </div>
+                    <div class="founder">
+                        <span class="monogram" aria-hidden="true">AV</span>
+                        <div>
+                            <div class="name">Ayush Vaishnav</div>
+                            <div class="role">Co-founder &middot; enterprise integration</div>
+                            <p>Enterprise integration background. Wires the operating system into production-grade
+                                infrastructure.</p>
+                            <button type="button" class="btn btn-ghost btn-sm" data-modal="ayush">Write to Ayush</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 9 · CLOSE + FAQ -->
-        <section class="sec" id="access" aria-labelledby="close-h" style="padding-top:0">
+        <!-- 09 · CLOSE + FAQ -->
+        <section class="sec sec-close" id="access" aria-labelledby="close-h">
             <div class="wrap">
-                <hr class="ledger" data-reveal>
-                <div class="close" style="padding-top:56px">
-                    <div>
+                <hr class="ledger">
+                <div class="close">
+                    <div class="close-copy" data-reveal>
                         <h2 class="display" id="close-h">See your own numbers, on the record.</h2>
                         <div class="cta-row">
-                            <button type="button" class="btn btn-primary" data-modal="both">Request Access</button>
+                            <button type="button" class="btn btn-primary" data-modal="both" data-magnetic>Request Access</button>
                         </div>
                         <p class="reply-note">A founder replies within one business day.</p>
                     </div>
@@ -413,6 +459,7 @@
                         <li><a href="/maths/">The maths</a></li>
                         <li><a href="/research/">Research</a></li>
                         <li><a href="/roadmap/">Roadmap</a></li>
+                        <li><a href="/film/">The film</a></li>
                     </ul>
                 </div>
             </div>
@@ -424,7 +471,21 @@
         </div>
     </footer>
 
-    <script src="/app.js?v=20"></script>
+    <script src="/app.js?v=21"></script>
+    <script>
+        window.LQMotionConfig = {
+            ledgerRows: [
+                { actor: 'scribe', event: 'claim verified against filing', st: 'pass', label: 'verified' },
+                { actor: 'risk', event: 'exposure within mandate', st: 'pass', label: 'pass' },
+                { actor: 'execution', event: 'entry outside window', st: 'held', label: 'held' },
+                { actor: 'steward', event: 'thesis re-underwritten', st: 'pass', label: 'recorded' },
+                { actor: 'execution', event: 'ticket denied: limit', st: 'held', label: 'denied' },
+                { actor: 'assay', event: 'backtest assayed', st: 'pass', label: 'scored' }
+            ]
+        };
+    </script>
+    <script src="/lq-motion.js?v=2" defer></script>
+    <script src="/motion.js?v=2" defer></script>
 </body>
 
 </html>
